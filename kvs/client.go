@@ -2,7 +2,7 @@ package kvs
 
 import "context"
 
-type Client[T any] interface {
+type Client interface {
 	Get(key string) (*Item, error)
 	GetWithContext(ctx context.Context, key string) (*Item, error)
 	Save(key string, item *Item) error
