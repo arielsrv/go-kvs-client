@@ -21,7 +21,7 @@ func (_m *MockBuilderOptions) EXPECT() *MockBuilderOptions_Expecter {
 }
 
 // Execute provides a mock function with given fields: f
-func (_m *MockBuilderOptions) Execute(f *dynamodb.AWSBuilder) {
+func (_m *MockBuilderOptions) Execute(f *dynamodb.Builder) {
 	_m.Called(f)
 }
 
@@ -31,14 +31,14 @@ type MockBuilderOptions_Execute_Call struct {
 }
 
 // Execute is a helper method to define mock.On call
-//   - f *dynamodb.AWSBuilder
+//   - f *dynamodb.Builder
 func (_e *MockBuilderOptions_Expecter) Execute(f interface{}) *MockBuilderOptions_Execute_Call {
 	return &MockBuilderOptions_Execute_Call{Call: _e.mock.On("Execute", f)}
 }
 
-func (_c *MockBuilderOptions_Execute_Call) Run(run func(f *dynamodb.AWSBuilder)) *MockBuilderOptions_Execute_Call {
+func (_c *MockBuilderOptions_Execute_Call) Run(run func(f *dynamodb.Builder)) *MockBuilderOptions_Execute_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(*dynamodb.AWSBuilder))
+		run(args[0].(*dynamodb.Builder))
 	})
 	return _c
 }
@@ -48,7 +48,7 @@ func (_c *MockBuilderOptions_Execute_Call) Return() *MockBuilderOptions_Execute_
 	return _c
 }
 
-func (_c *MockBuilderOptions_Execute_Call) RunAndReturn(run func(*dynamodb.AWSBuilder)) *MockBuilderOptions_Execute_Call {
+func (_c *MockBuilderOptions_Execute_Call) RunAndReturn(run func(*dynamodb.Builder)) *MockBuilderOptions_Execute_Call {
 	_c.Call.Return(run)
 	return _c
 }

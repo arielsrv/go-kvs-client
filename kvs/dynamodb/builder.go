@@ -8,15 +8,15 @@ import (
 	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
 )
 
-type AWSBuilder struct {
+type Builder struct {
 	ttl           int
 	containerName string
 }
 
-type BuilderOptions func(f *AWSBuilder)
+type BuilderOptions func(f *Builder)
 
-func NewBuilder(options ...BuilderOptions) *AWSBuilder {
-	builder := &AWSBuilder{}
+func NewBuilder(options ...BuilderOptions) *Builder {
+	builder := &Builder{}
 
 	for i := range options {
 		opt := options[i]
@@ -27,18 +27,18 @@ func NewBuilder(options ...BuilderOptions) *AWSBuilder {
 }
 
 func WithTTL(ttl int) BuilderOptions {
-	return func(f *AWSBuilder) {
+	return func(f *Builder) {
 		f.ttl = ttl
 	}
 }
 
 func WithContainerName(containerName string) BuilderOptions {
-	return func(f *AWSBuilder) {
+	return func(f *Builder) {
 		f.containerName = containerName
 	}
 }
 
-func (r AWSBuilder) Build() *Client {
+func (r Builder) Build() *Client {
 	cfg, err := config.LoadDefaultConfig(context.Background())
 	if err != nil {
 		log.Fatal(err)
