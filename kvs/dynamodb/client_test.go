@@ -51,4 +51,9 @@ func TestClient_Get(t *testing.T) {
 	require.Error(t, err)
 	require.Equal(t, kvs.ErrKeyNotFound, err)
 	require.Nil(t, item)
+
+	item, err = kvsClient.Get("")
+	require.Error(t, err)
+	require.Equal(t, kvs.ErrEmptyKey, err)
+	require.Nil(t, item)
 }

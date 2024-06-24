@@ -77,31 +77,30 @@ func (r Client) GetWithContext(ctx context.Context, key string) (*kvs.Item, erro
 		return nil, err
 	}
 
-	kvsItem := new(kvs.Item)
-	kvsItem.Key = item.Key
-	kvsItem.Value = item.Value
-
-	return kvsItem, nil
+	return &kvs.Item{
+		Key:   item.Key,
+		Value: item.Value,
+	}, nil
 }
 
 func (r Client) Save(key string, kvsItem *kvs.Item) error {
 	return r.SaveWithContext(context.Background(), key, kvsItem)
 }
 
-func (r Client) SaveWithContext(ctx context.Context, key string, kvsItem *kvs.Item) error {
+func (r Client) SaveWithContext(ctx context.Context, key string, item *kvs.Item) error {
 	if strings.TrimSpace(key) == "" {
 		return kvs.ErrEmptyKey
 	}
 
-	if kvsItem == nil {
+	if item == nil {
 		return kvs.ErrNilItem
 	}
 
 	if r.ttl > 0 {
-		kvsItem.TTL = r.ttl
+		item.TTL = r.ttl
 	}
 
-	bytes, err := json.Marshal(kvsItem.Value)
+	bytes, err := json.Marshal(item.Value)
 	if err != nil {
 		return err
 	}
