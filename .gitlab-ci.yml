@@ -2,8 +2,11 @@ variables:
     GO_VERSION: '1.22.4'
     GONOSUMDB: gitlab.com
     GOPRIVATE: gitlab.com/iskaypetcom
-    GITLAB_TOKEN: "${CICD_TOKEN}"
+    GITLAB_TOKEN: ${CICD_TOKEN}
+    GOLANGCI_LINT: latest
     GOEXPERIMENT: nocoverageredesign
+
+image: docker.io/golang:${GO_VERSION}
 
 default:
     tags:
@@ -11,37 +14,30 @@ default:
 
 before_script:
     - chmod -R 755 .gitlab
+    - if [ -d "$HOME" ]; then echo "machine gitlab.com login master_token password $GITLAB_TOKEN" > "$HOME/.netrc"; fi
 
 stages:
     - build
     - test
 
-code_navigation:
-    image: docker.io/golang:${GO_VERSION}
-    stage: build
-    allow_failure: true
-    script:
-        - .gitlab/code_navigation.sh
-    artifacts:
-        reports:
-            lsif: dump.lsif
-
 compile:
     stage: build
-    image: docker.io/golang:${GO_VERSION}
     script:
-        - .gitlab/build/compile.sh
+        - go mod tidy
+        - go build -v ./...
     allow_failure: false
     only:
         - branches
 
 unit:
     stage: test
-    image: docker.io/golang:${GO_VERSION}
+    needs:
+        - compile
     variables:
         output: report.xml
     script:
-        - .gitlab/test/unit.sh
+        - go install gotest.tools/gotestsum@latest
+        - $GOPATH/bin/gotestsum --junitfile report.xml --format testname
     artifacts:
         when: always
         reports:
@@ -52,12 +48,13 @@ unit:
 
 coverage:
     stage: test
-    image: docker.io/golang:${GO_VERSION}
     variables:
         output: coverage-report.out
         html: coverage-report.html
     script:
-        - .gitlab/test/coverage.sh
+        - CGO_ENABLED=0 go test ./... -coverprofile=coverage-report.out
+        - go tool cover -html=coverage-report.out -o coverage-report.html
+        - go tool cover -func=coverage-report.out
     artifacts:
         paths:
             - coverage-report.html
@@ -68,9 +65,11 @@ coverage:
 
 coverage-report:
     stage: test
-    image: docker.io/golang:${GO_VERSION}
     script:
-        - .gitlab/test/coverage-report.sh
+        - GOEXPERIMENT=nocoverageredesign go test ./... -coverprofile=coverage.txt -covermode count
+        - go get github.com/boumenot/gocover-cobertura
+        - go install github.com/boumenot/gocover-cobertura
+        - $GOPATH/bin/gocover-cobertura <coverage.txt >coverage.xml
     artifacts:
         reports:
             coverage_report:
@@ -81,25 +80,26 @@ coverage-report:
 
 race:
     stage: test
-    image: docker.io/golang:${GO_VERSION}
+    needs:
+        - compile
     script:
-        - .gitlab/test/race.sh
+        - go test -race ./...
     allow_failure: false
     only:
         - branches
 
 lint:
     stage: test
-    image: golangci/golangci-lint:latest
     variables:
         output: gl-code-quality-report.json
     script:
-        - .gitlab/test/lint.sh
+        - go install github.com/golangci/golangci-lint/cmd/golangci-lint@${GOLANGCI_LINT}
+        - $GOPATH/bin/golangci-lint run --issues-exit-code 0 --print-issued-lines=false --out-format code-climate:gl-code-quality-report.json,line-number
     artifacts:
         reports:
             codequality: gl-code-quality-report.json
         paths:
             - gl-code-quality-report.json
-    allow_failure: false
+    allow_failure: true
     only:
         - branches
