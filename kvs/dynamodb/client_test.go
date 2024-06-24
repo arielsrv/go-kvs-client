@@ -13,7 +13,7 @@ type Test struct {
 	Name string
 }
 
-func TestClient_Save(t *testing.T) {
+func TestClient_SaveAndGet(t *testing.T) {
 	kvsClient := dynamodb.NewClient(dynamodb.NewLowLevelMockClient(), "test", 60)
 
 	input := struct {
@@ -44,15 +44,19 @@ func TestClient_Save(t *testing.T) {
 	require.Equal(t, input.Key, actual.Key)
 }
 
-func TestClient_Get(t *testing.T) {
-	kvsClient := dynamodb.NewClient(dynamodb.NewLowLevelMockClient(), "test", 60)
+func TestClient_Get_ErrKeyNotFound(t *testing.T) {
+	kvsClient := dynamodb.NewClient(dynamodb.NewLowLevelMockClient(), "test")
 
 	item, err := kvsClient.Get("1")
 	require.Error(t, err)
 	require.Equal(t, kvs.ErrKeyNotFound, err)
 	require.Nil(t, item)
+}
 
-	item, err = kvsClient.Get("")
+func TestClient_Get_ErrEmptyKey(t *testing.T) {
+	kvsClient := dynamodb.NewClient(dynamodb.NewLowLevelMockClient(), "test")
+
+	item, err := kvsClient.Get("")
 	require.Error(t, err)
 	require.Equal(t, kvs.ErrEmptyKey, err)
 	require.Nil(t, item)
