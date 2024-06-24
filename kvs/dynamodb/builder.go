@@ -44,10 +44,6 @@ func (r Builder) Build() *Client {
 		log.Fatal(err)
 	}
 
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	return NewClient(
 		dynamodb.NewFromConfig(cfg, func(opts *dynamodb.Options) {
 			opts.EndpointResolverV2 = new(Resolver)
