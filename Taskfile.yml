@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://json.schemastore.org/taskfile.json
+version: '3'
+
+env:
+    TF_FOLDER: resources/setup/terraform
+
+tasks:
+    tf:init:
+        cmds:
+            - (cd {{.TF_FOLDER}} || exit ; tflocal init)
+    tf:apply:
+        cmds:
+            - (cd {{.TF_FOLDER}} || exit ; tflocal apply)
+    lint:
+        desc: Use golangci-lint (.golangci.yml).
+        cmds:
+            - golangci-lint run --fix
+    test:mock:
+        desc: Create mocks
+        cmds:
+            - mockery --config .mockery.yaml
+    download:
+        desc: Run go mod tidy.
+        cmds:
+            - go mod tidy
+    upgrade:
+        desc: Check for latest direct dependencies.
+        cmds:
+            - go-mod-upgrade

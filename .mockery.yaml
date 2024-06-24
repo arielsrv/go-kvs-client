@@ -1,0 +1,12 @@
+filename: "mock_{{.InterfaceName}}.go"
+dir: "resources/mocks/{{.InterfaceDirRelative}}"
+mockname: "Mock{{.InterfaceName}}"
+outpkg: "{{.PackageName}}"
+all: True
+disable-version-string: True
+with-expecter: True
+packages:
+    gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs:
+        config:
+            recursive: True
+log-level: Warn
