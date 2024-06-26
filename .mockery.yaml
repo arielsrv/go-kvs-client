@@ -6,6 +6,9 @@ all: True
 disable-version-string: True
 with-expecter: True
 packages:
+    gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd:
+        config:
+            recursive: True
     gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs:
         config:
             recursive: True

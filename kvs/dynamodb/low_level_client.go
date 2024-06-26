@@ -14,8 +14,8 @@ import (
 	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
 )
 
-type Client struct {
-	LowLevelClient
+type LowLevelClient struct {
+	AWSClient
 	containerName string
 	ttl           int
 }
@@ -25,31 +25,31 @@ const (
 	ValueName = "value"
 )
 
-func NewClient(lowLevelClient LowLevelClient, containerName string, ttl ...int) *Client {
-	client := &Client{
-		containerName:  containerName,
-		LowLevelClient: lowLevelClient,
+func NewLowLevelClient(bridge AWSClient, containerName string, ttl ...int) *LowLevelClient {
+	lowLevelClient := &LowLevelClient{
+		containerName: containerName,
+		AWSClient:     bridge,
 	}
 
 	log.Debugf("[kvs]: setting container name to %s", containerName)
 
 	if len(ttl) > 0 {
 		log.Debugf("[kvs]: setting TTL to %d", ttl[0])
-		client.ttl = ttl[0]
+		lowLevelClient.ttl = ttl[0]
 	}
 
-	return client
+	return lowLevelClient
 }
 
-func (r Client) getTableName() *string {
+func (r LowLevelClient) getTableName() *string {
 	return aws.String(fmt.Sprintf("__kvs-%s", r.containerName))
 }
 
-func (r Client) Get(key string) (*kvs.Item, error) {
+func (r LowLevelClient) Get(key string) (*kvs.Item, error) {
 	return r.GetWithContext(context.Background(), key)
 }
 
-func (r Client) GetWithContext(ctx context.Context, key string) (*kvs.Item, error) {
+func (r LowLevelClient) GetWithContext(ctx context.Context, key string) (*kvs.Item, error) {
 	if strings.TrimSpace(key) == "" {
 		return nil, kvs.ErrEmptyKey
 	}
@@ -63,7 +63,7 @@ func (r Client) GetWithContext(ctx context.Context, key string) (*kvs.Item, erro
 		},
 	}
 
-	getItemOutput, err := r.LowLevelClient.GetItem(ctx, input)
+	getItemOutput, err := r.AWSClient.GetItem(ctx, input)
 	if err != nil {
 		return nil, err
 	} else if getItemOutput.Item == nil {
@@ -82,11 +82,11 @@ func (r Client) GetWithContext(ctx context.Context, key string) (*kvs.Item, erro
 	}, nil
 }
 
-func (r Client) Save(key string, kvsItem *kvs.Item) error {
+func (r LowLevelClient) Save(key string, kvsItem *kvs.Item) error {
 	return r.SaveWithContext(context.Background(), key, kvsItem)
 }
 
-func (r Client) SaveWithContext(ctx context.Context, key string, item *kvs.Item) error {
+func (r LowLevelClient) SaveWithContext(ctx context.Context, key string, item *kvs.Item) error {
 	if strings.TrimSpace(key) == "" {
 		return kvs.ErrEmptyKey
 	}
@@ -104,7 +104,7 @@ func (r Client) SaveWithContext(ctx context.Context, key string, item *kvs.Item)
 		return err
 	}
 
-	putItemOutput, err := r.LowLevelClient.PutItem(ctx, &dynamodb.PutItemInput{
+	putItemOutput, err := r.AWSClient.PutItem(ctx, &dynamodb.PutItemInput{
 		TableName: r.getTableName(),
 		Item: map[string]types.AttributeValue{
 			KeyName: &types.AttributeValueMemberS{
@@ -125,22 +125,22 @@ func (r Client) SaveWithContext(ctx context.Context, key string, item *kvs.Item)
 	return nil
 }
 
-func (r Client) BulkGet(keys []string) (*kvs.Items, error) {
+func (r LowLevelClient) BulkGet(keys []string) (*kvs.Items, error) {
 	// TODO implement me
 	panic("implement me")
 }
 
-func (r Client) BulkGetWithContext(ctx context.Context, key []string) (*kvs.Items, error) {
+func (r LowLevelClient) BulkGetWithContext(ctx context.Context, key []string) (*kvs.Items, error) {
 	// TODO implement me
 	panic("implement me")
 }
 
-func (r Client) BulkSave(items *kvs.Items) error {
+func (r LowLevelClient) BulkSave(items *kvs.Items) error {
 	// TODO implement me
 	panic("implement me")
 }
 
-func (r Client) BulkSaveWithContext(ctx context.Context, items *kvs.Items) error {
+func (r LowLevelClient) BulkSaveWithContext(ctx context.Context, items *kvs.Items) error {
 	// TODO implement me
 	panic("implement me")
 }

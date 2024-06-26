@@ -14,7 +14,7 @@ type Test struct {
 }
 
 func TestClient_SaveAndGet(t *testing.T) {
-	kvsClient := dynamodb.NewClient(dynamodb.NewLowLevelMockClient(), "test", 60)
+	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test", 60)
 
 	input := struct {
 		Key   string
@@ -29,10 +29,10 @@ func TestClient_SaveAndGet(t *testing.T) {
 
 	item := kvs.NewItem(input.Key, input.Value)
 
-	err := kvsClient.Save(input.Key, item)
+	err := lowLevelClient.Save(input.Key, item)
 	require.NoError(t, err)
 
-	actual, err := kvsClient.Get("1")
+	actual, err := lowLevelClient.Get("1")
 	require.NoError(t, err)
 
 	actualValue := new(Test)
@@ -45,7 +45,7 @@ func TestClient_SaveAndGet(t *testing.T) {
 }
 
 func TestClient_Get_ErrKeyNotFound(t *testing.T) {
-	kvsClient := dynamodb.NewClient(dynamodb.NewLowLevelMockClient(), "test")
+	kvsClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
 
 	item, err := kvsClient.Get("1")
 	require.Error(t, err)
@@ -54,7 +54,7 @@ func TestClient_Get_ErrKeyNotFound(t *testing.T) {
 }
 
 func TestClient_Get_ErrEmptyKey(t *testing.T) {
-	kvsClient := dynamodb.NewClient(dynamodb.NewLowLevelMockClient(), "test")
+	kvsClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
 
 	item, err := kvsClient.Get("")
 	require.Error(t, err)

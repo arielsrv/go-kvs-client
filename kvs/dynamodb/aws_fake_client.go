@@ -14,18 +14,19 @@ import (
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 )
 
-type LowLevelMockClient struct {
+type AWSFakeClient struct {
 	cache cache.CacheInterface[[]byte]
 }
 
-func NewLowLevelMockClient() *LowLevelMockClient {
+func NewAWSFakeClient() *AWSFakeClient {
 	cacheStore := freecachestore.NewFreecache(freecache.NewCache(math.MaxInt32))
-	return &LowLevelMockClient{
+
+	return &AWSFakeClient{
 		cache: cache.New[[]byte](cacheStore),
 	}
 }
 
-func (r LowLevelMockClient) PutItem(ctx context.Context, params *dynamodb.PutItemInput, _ ...func(*dynamodb.Options)) (*dynamodb.PutItemOutput, error) {
+func (r AWSFakeClient) PutItem(ctx context.Context, params *dynamodb.PutItemInput, _ ...func(*dynamodb.Options)) (*dynamodb.PutItemOutput, error) {
 	keyMember, convert := params.Item[KeyName].(*types.AttributeValueMemberS)
 	if !convert {
 		return nil, kvs.ErrConvert
@@ -43,7 +44,7 @@ func (r LowLevelMockClient) PutItem(ctx context.Context, params *dynamodb.PutIte
 	return &dynamodb.PutItemOutput{}, nil
 }
 
-func (r LowLevelMockClient) GetItem(ctx context.Context, params *dynamodb.GetItemInput, _ ...func(*dynamodb.Options)) (*dynamodb.GetItemOutput, error) {
+func (r AWSFakeClient) GetItem(ctx context.Context, params *dynamodb.GetItemInput, _ ...func(*dynamodb.Options)) (*dynamodb.GetItemOutput, error) {
 	keyMember, convert := params.Key[KeyName].(*types.AttributeValueMemberS)
 	if !convert {
 		return nil, kvs.ErrConvert

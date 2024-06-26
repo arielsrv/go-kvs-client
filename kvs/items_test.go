@@ -9,8 +9,14 @@ import (
 
 func TestItems_Add(t *testing.T) {
 	items := new(kvs.Items)
-	item := kvs.NewItem("key", "value")
-	items.Add(item)
-	require.Equal(t, 1, items.Len())
-	require.Equal(t, item, items.GetOks()[0])
+
+	item1 := kvs.NewItem("key1", "value1")
+	items.Add(item1)
+
+	item2 := kvs.NewItem("key2", "value2")
+	items.Add(item2)
+
+	require.Equal(t, 2, items.Len())
+	require.Equal(t, item1, items.GetOks()[0])
+	require.Equal(t, item2, items.GetOks()[1])
 }
