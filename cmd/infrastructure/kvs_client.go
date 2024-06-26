@@ -2,7 +2,6 @@ package infrastructure
 
 import (
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 )
 
 type Client[T any] interface {
@@ -11,23 +10,17 @@ type Client[T any] interface {
 }
 
 type KVSClient[T any] struct {
-	kvsClient kvs.Client
+	lowLevelClient kvs.LowLevelClient
 }
 
-func NewKVSClient[T any]() *KVSClient[T] {
-	kvsClient := dynamodb.NewBuilder(
-		dynamodb.WithTTL(7*24*60*60), // 7 dias (hh dd mm ss)
-		dynamodb.WithContainerName("users"),
-		dynamodb.WithEndpointResolver("http://localhost:4566"),
-	).Build()
-
+func NewKVSClient[T any](lowLevelClient kvs.LowLevelClient) *KVSClient[T] {
 	return &KVSClient[T]{
-		kvsClient: kvsClient,
+		lowLevelClient: lowLevelClient,
 	}
 }
 
 func (r KVSClient[T]) Get(key string) (*T, error) {
-	item, err := r.kvsClient.Get(key)
+	item, err := r.lowLevelClient.Get(key)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +36,7 @@ func (r KVSClient[T]) Get(key string) (*T, error) {
 
 func (r KVSClient[T]) Save(key string, value *T) error {
 	item := kvs.NewItem(key, value)
-	err := r.kvsClient.Save(key, item)
+	err := r.lowLevelClient.Save(key, item)
 	if err != nil {
 		return err
 	}
