@@ -6,12 +6,11 @@ import (
 	"fmt"
 	"strings"
 
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
-
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
 )
 

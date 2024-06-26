@@ -4,10 +4,9 @@ import (
 	"context"
 	"net/url"
 
-	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
-
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	smithyendpoints "github.com/aws/smithy-go/endpoints"
+	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
 )
 
 type Resolver struct {

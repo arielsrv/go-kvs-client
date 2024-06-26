@@ -5,15 +5,13 @@ import (
 	"errors"
 	"math"
 
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
-
-	"github.com/eko/gocache/lib/v4/store"
-
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"github.com/coocood/freecache"
 	"github.com/eko/gocache/lib/v4/cache"
+	"github.com/eko/gocache/lib/v4/store"
 	freecachestore "github.com/eko/gocache/store/freecache/v4"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 )
 
 type LowLevelMockClient struct {

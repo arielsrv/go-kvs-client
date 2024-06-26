@@ -3,10 +3,8 @@ package main
 import (
 	"strconv"
 
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/model"
-
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/infrastructure"
-
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/model"
 	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
 )
 
