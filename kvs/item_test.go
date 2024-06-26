@@ -18,3 +18,12 @@ func TestNewItem(t *testing.T) {
 	require.Equal(t, "key", item.Key)
 	require.Equal(t, `{"name": "value"}`, item.Value.(string))
 }
+
+func TestNewItem_Err(t *testing.T) {
+	item := kvs.NewItem("key", `invalid`)
+
+	var out map[string]interface{}
+	err := item.TryGetValueAsObjectType(&out)
+
+	require.Error(t, err)
+}
