@@ -22,6 +22,216 @@ func (_m *MockClient) EXPECT() *MockClient_Expecter {
 	return &MockClient_Expecter{mock: &_m.Mock}
 }
 
+// BulkGet provides a mock function with given fields: keys
+func (_m *MockClient) BulkGet(keys []string) (*kvs.Items, error) {
+	ret := _m.Called(keys)
+
+	if len(ret) == 0 {
+		panic("no return value specified for BulkGet")
+	}
+
+	var r0 *kvs.Items
+	var r1 error
+	if rf, ok := ret.Get(0).(func([]string) (*kvs.Items, error)); ok {
+		return rf(keys)
+	}
+	if rf, ok := ret.Get(0).(func([]string) *kvs.Items); ok {
+		r0 = rf(keys)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*kvs.Items)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func([]string) error); ok {
+		r1 = rf(keys)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClient_BulkGet_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'BulkGet'
+type MockClient_BulkGet_Call struct {
+	*mock.Call
+}
+
+// BulkGet is a helper method to define mock.On call
+//   - keys []string
+func (_e *MockClient_Expecter) BulkGet(keys interface{}) *MockClient_BulkGet_Call {
+	return &MockClient_BulkGet_Call{Call: _e.mock.On("BulkGet", keys)}
+}
+
+func (_c *MockClient_BulkGet_Call) Run(run func(keys []string)) *MockClient_BulkGet_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].([]string))
+	})
+	return _c
+}
+
+func (_c *MockClient_BulkGet_Call) Return(_a0 *kvs.Items, _a1 error) *MockClient_BulkGet_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClient_BulkGet_Call) RunAndReturn(run func([]string) (*kvs.Items, error)) *MockClient_BulkGet_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// BulkGetWithContext provides a mock function with given fields: ctx, key
+func (_m *MockClient) BulkGetWithContext(ctx context.Context, key []string) (*kvs.Items, error) {
+	ret := _m.Called(ctx, key)
+
+	if len(ret) == 0 {
+		panic("no return value specified for BulkGetWithContext")
+	}
+
+	var r0 *kvs.Items
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, []string) (*kvs.Items, error)); ok {
+		return rf(ctx, key)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, []string) *kvs.Items); ok {
+		r0 = rf(ctx, key)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*kvs.Items)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, []string) error); ok {
+		r1 = rf(ctx, key)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClient_BulkGetWithContext_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'BulkGetWithContext'
+type MockClient_BulkGetWithContext_Call struct {
+	*mock.Call
+}
+
+// BulkGetWithContext is a helper method to define mock.On call
+//   - ctx context.Context
+//   - key []string
+func (_e *MockClient_Expecter) BulkGetWithContext(ctx interface{}, key interface{}) *MockClient_BulkGetWithContext_Call {
+	return &MockClient_BulkGetWithContext_Call{Call: _e.mock.On("BulkGetWithContext", ctx, key)}
+}
+
+func (_c *MockClient_BulkGetWithContext_Call) Run(run func(ctx context.Context, key []string)) *MockClient_BulkGetWithContext_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context), args[1].([]string))
+	})
+	return _c
+}
+
+func (_c *MockClient_BulkGetWithContext_Call) Return(_a0 *kvs.Items, _a1 error) *MockClient_BulkGetWithContext_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClient_BulkGetWithContext_Call) RunAndReturn(run func(context.Context, []string) (*kvs.Items, error)) *MockClient_BulkGetWithContext_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// BulkSave provides a mock function with given fields: items
+func (_m *MockClient) BulkSave(items *kvs.Items) error {
+	ret := _m.Called(items)
+
+	if len(ret) == 0 {
+		panic("no return value specified for BulkSave")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(*kvs.Items) error); ok {
+		r0 = rf(items)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// MockClient_BulkSave_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'BulkSave'
+type MockClient_BulkSave_Call struct {
+	*mock.Call
+}
+
+// BulkSave is a helper method to define mock.On call
+//   - items *kvs.Items
+func (_e *MockClient_Expecter) BulkSave(items interface{}) *MockClient_BulkSave_Call {
+	return &MockClient_BulkSave_Call{Call: _e.mock.On("BulkSave", items)}
+}
+
+func (_c *MockClient_BulkSave_Call) Run(run func(items *kvs.Items)) *MockClient_BulkSave_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(*kvs.Items))
+	})
+	return _c
+}
+
+func (_c *MockClient_BulkSave_Call) Return(_a0 error) *MockClient_BulkSave_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *MockClient_BulkSave_Call) RunAndReturn(run func(*kvs.Items) error) *MockClient_BulkSave_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// BulkSaveWithContext provides a mock function with given fields: ctx, items
+func (_m *MockClient) BulkSaveWithContext(ctx context.Context, items *kvs.Items) error {
+	ret := _m.Called(ctx, items)
+
+	if len(ret) == 0 {
+		panic("no return value specified for BulkSaveWithContext")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, *kvs.Items) error); ok {
+		r0 = rf(ctx, items)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// MockClient_BulkSaveWithContext_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'BulkSaveWithContext'
+type MockClient_BulkSaveWithContext_Call struct {
+	*mock.Call
+}
+
+// BulkSaveWithContext is a helper method to define mock.On call
+//   - ctx context.Context
+//   - items *kvs.Items
+func (_e *MockClient_Expecter) BulkSaveWithContext(ctx interface{}, items interface{}) *MockClient_BulkSaveWithContext_Call {
+	return &MockClient_BulkSaveWithContext_Call{Call: _e.mock.On("BulkSaveWithContext", ctx, items)}
+}
+
+func (_c *MockClient_BulkSaveWithContext_Call) Run(run func(ctx context.Context, items *kvs.Items)) *MockClient_BulkSaveWithContext_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context), args[1].(*kvs.Items))
+	})
+	return _c
+}
+
+func (_c *MockClient_BulkSaveWithContext_Call) Return(_a0 error) *MockClient_BulkSaveWithContext_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *MockClient_BulkSaveWithContext_Call) RunAndReturn(run func(context.Context, *kvs.Items) error) *MockClient_BulkSaveWithContext_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Get provides a mock function with given fields: key
 func (_m *MockClient) Get(key string) (*kvs.Item, error) {
 	ret := _m.Called(key)

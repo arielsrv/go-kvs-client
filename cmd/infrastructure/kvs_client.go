@@ -11,13 +11,14 @@ type Client[T any] interface {
 }
 
 type KVSClient[T any] struct {
-	kvsClient *dynamodb.Client
+	kvsClient kvs.Client
 }
 
 func NewKVSClient[T any]() *KVSClient[T] {
 	kvsClient := dynamodb.NewBuilder(
 		dynamodb.WithTTL(7*24*60*60), // 7 dias (hh dd mm ss)
 		dynamodb.WithContainerName("users"),
+		dynamodb.WithEndpointResolver("http://localhost:4566"),
 	).Build()
 
 	return &KVSClient[T]{

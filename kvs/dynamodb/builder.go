@@ -11,15 +11,16 @@ import (
 type Builder struct {
 	ttl           int
 	containerName string
+	rawURL        string
 }
 
 type BuilderOptions func(f *Builder)
 
-func NewBuilder(options ...BuilderOptions) *Builder {
+func NewBuilder(opts ...BuilderOptions) *Builder {
 	builder := &Builder{}
 
-	for i := range options {
-		opt := options[i]
+	for i := range opts {
+		opt := opts[i]
 		opt(builder)
 	}
 
@@ -38,6 +39,12 @@ func WithContainerName(containerName string) BuilderOptions {
 	}
 }
 
+func WithEndpointResolver(rawURL string) BuilderOptions {
+	return func(f *Builder) {
+		f.rawURL = rawURL
+	}
+}
+
 func (r Builder) Build() *Client {
 	cfg, err := config.LoadDefaultConfig(context.Background())
 	if err != nil {
@@ -46,7 +53,7 @@ func (r Builder) Build() *Client {
 
 	return NewClient(
 		dynamodb.NewFromConfig(cfg, func(opts *dynamodb.Options) {
-			opts.EndpointResolverV2 = new(Resolver)
+			opts.EndpointResolverV2 = NewResolver(r.rawURL)
 		}),
 		r.containerName,
 		r.ttl,

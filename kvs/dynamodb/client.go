@@ -125,3 +125,23 @@ func (r Client) SaveWithContext(ctx context.Context, key string, item *kvs.Item)
 
 	return nil
 }
+
+func (r Client) BulkGet(keys []string) (*kvs.Items, error) {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (r Client) BulkGetWithContext(ctx context.Context, key []string) (*kvs.Items, error) {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (r Client) BulkSave(items *kvs.Items) error {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (r Client) BulkSaveWithContext(ctx context.Context, items *kvs.Items) error {
+	// TODO implement me
+	panic("implement me")
+}
