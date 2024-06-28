@@ -4,7 +4,7 @@ import (
 	"context"
 )
 
-type Client[T any] interface {
+type KVSClient[T any] interface {
 	Get(key string) (*T, error)
 	BulkGet(key []string) ([]T, error)
 	Save(key string, item *T) error

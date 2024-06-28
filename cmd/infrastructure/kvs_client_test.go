@@ -3,8 +3,6 @@ package infrastructure_test
 import (
 	"testing"
 
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/infrastructure"
-
 	"github.com/stretchr/testify/require"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/infrastructure"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/model"
