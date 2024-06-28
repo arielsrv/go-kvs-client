@@ -69,3 +69,13 @@ func (r AWSFakeClient) GetItem(ctx context.Context, params *dynamodb.GetItemInpu
 		},
 	}, nil
 }
+
+func (r AWSFakeClient) BatchGetItem(ctx context.Context, params *dynamodb.BatchGetItemInput, optFns ...func(*dynamodb.Options)) (*dynamodb.BatchGetItemOutput, error) {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (r AWSFakeClient) BatchWriteItem(ctx context.Context, params *dynamodb.BatchWriteItemInput, optFns ...func(*dynamodb.Options)) (*dynamodb.BatchWriteItemOutput, error) {
+	// TODO implement me
+	panic("implement me")
+}

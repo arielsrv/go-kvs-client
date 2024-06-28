@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -23,6 +24,7 @@ type LowLevelClient struct {
 const (
 	KeyName   = "key"
 	ValueName = "value"
+	TTLName   = "ttl"
 )
 
 func NewLowLevelClient(bridge AWSClient, containerName string, ttl ...int) *LowLevelClient {
@@ -43,6 +45,16 @@ func NewLowLevelClient(bridge AWSClient, containerName string, ttl ...int) *LowL
 
 func (r LowLevelClient) getTableName() *string {
 	return aws.String(fmt.Sprintf("__kvs-%s", r.containerName))
+}
+
+func (r LowLevelClient) createItem(key string, value []byte, ttl int) map[string]types.AttributeValue {
+	item := make(map[string]types.AttributeValue, 3)
+
+	item[KeyName] = &types.AttributeValueMemberS{Value: key}
+	item[ValueName] = &types.AttributeValueMemberS{Value: string(value)}
+	item[TTLName] = &types.AttributeValueMemberN{Value: strconv.Itoa(ttl)}
+
+	return item
 }
 
 func (r LowLevelClient) Get(key string) (*kvs.Item, error) {
@@ -106,14 +118,7 @@ func (r LowLevelClient) SaveWithContext(ctx context.Context, key string, item *k
 
 	putItemOutput, err := r.AWSClient.PutItem(ctx, &dynamodb.PutItemInput{
 		TableName: r.getTableName(),
-		Item: map[string]types.AttributeValue{
-			KeyName: &types.AttributeValueMemberS{
-				Value: key,
-			},
-			ValueName: &types.AttributeValueMemberS{
-				Value: string(bytes),
-			},
-		},
+		Item:      r.createItem(key, bytes, item.TTL),
 	})
 
 	if err != nil {
@@ -126,18 +131,63 @@ func (r LowLevelClient) SaveWithContext(ctx context.Context, key string, item *k
 }
 
 func (r LowLevelClient) BulkGet(keys []string) (*kvs.Items, error) {
-	// TODO implement me
-	panic("implement me")
+	return r.BulkGetWithContext(context.Background(), keys)
 }
 
-func (r LowLevelClient) BulkGetWithContext(ctx context.Context, key []string) (*kvs.Items, error) {
-	// TODO implement me
-	panic("implement me")
+func (r LowLevelClient) BulkGetWithContext(ctx context.Context, keys []string) (*kvs.Items, error) {
+	if len(keys) > 100 {
+		return nil, kvs.ErrTooManyKeys
+	}
+
+	inputKeys := make([]map[string]types.AttributeValue, 0)
+	for i := range keys {
+		inputKeys = append(inputKeys, map[string]types.AttributeValue{
+			KeyName: &types.AttributeValueMemberS{
+				Value: keys[i],
+			},
+		})
+	}
+
+	input := &dynamodb.BatchGetItemInput{
+		RequestItems: map[string]types.KeysAndAttributes{
+			aws.ToString(r.getTableName()): {
+				Keys: inputKeys,
+			},
+		},
+	}
+
+	batchGetItemOutput, err := r.AWSClient.BatchGetItem(ctx, input)
+	if err != nil {
+		return nil, err
+	}
+
+	items := new(kvs.Items)
+
+	for key, value := range batchGetItemOutput.Responses {
+		log.Debugf("[kvs]: key: %v", key)
+
+		var found []Item
+		err = attributevalue.UnmarshalListOfMaps(value, &found)
+		if err != nil {
+			log.Errorf("[kvs]: error unmarshalling value: %v", err)
+			return nil, err
+		}
+
+		for i := range found {
+			items.Add(&kvs.Item{
+				Key:   found[i].Key,
+				Value: found[i].Value,
+			})
+		}
+	}
+
+	log.Debugf("[kvs]: batchGetItemOutput: %+v", batchGetItemOutput)
+
+	return items, nil
 }
 
 func (r LowLevelClient) BulkSave(items *kvs.Items) error {
-	// TODO implement me
-	panic("implement me")
+	return r.BulkSaveWithContext(context.Background(), items)
 }
 
 func (r LowLevelClient) BulkSaveWithContext(ctx context.Context, items *kvs.Items) error {

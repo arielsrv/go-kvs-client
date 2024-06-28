@@ -12,7 +12,6 @@ func TestItems_Add(t *testing.T) {
 
 	item1 := kvs.NewItem("key1", "value1")
 	items.Add(item1)
-
 	item2 := kvs.NewItem("key2", "value2")
 	items.Add(item2)
 

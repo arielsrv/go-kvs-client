@@ -33,4 +33,13 @@ func main() {
 
 		log.Info(value)
 	}
+
+	items, err := kvsClient.BulkGet([]string{"1", "2", "3", "4", "5"})
+	if err != nil {
+		log.Error(err)
+	}
+
+	for i := range items {
+		log.Infof("Item %d: %+v", i+1, items[i])
+	}
 }

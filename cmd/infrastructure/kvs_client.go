@@ -6,6 +6,7 @@ import (
 
 type Client[T any] interface {
 	Get(key string) (*T, error)
+	BulkGet(key []string) ([]T, error)
 	Save(key string, item *T) error
 }
 
@@ -32,6 +33,28 @@ func (r KVSClient[T]) Get(key string) (*T, error) {
 	}
 
 	return value, nil
+}
+
+func (r KVSClient[T]) BulkGet(keys []string) ([]T, error) {
+	result := make([]T, 0)
+
+	items, err := r.lowLevelClient.BulkGet(keys)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := range items.GetOks() {
+		item := items.Items[i]
+		value := new(T)
+		mErr := item.TryGetValueAsObjectType(&value)
+		if mErr != nil {
+			continue
+		}
+
+		result = append(result, *value)
+	}
+
+	return result, nil
 }
 
 func (r KVSClient[T]) Save(key string, value *T) error {

@@ -7,4 +7,5 @@ var (
 	ErrKeyNotFound = errors.New("[kvs]: key not found")
 	ErrNilItem     = errors.New("[kvs]: item cannot be nil")
 	ErrConvert     = errors.New("[kvs]: failed to convert item")
+	ErrTooManyKeys = errors.New("[kvs]: too many keys")
 )
