@@ -11,7 +11,7 @@ import (
 
 func TestKVSClient_SaveAndGet(t *testing.T) {
 	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "kvs-client")
-	kvsClient := infrastructure.NewDynamoDBKVSClient[model.UserDTO](lowLevelClient)
+	kvsClient := infrastructure.NewAWSKVSClient[model.UserDTO](lowLevelClient)
 
 	if err := kvsClient.Save("1", &model.UserDTO{ID: 1, Name: "John Doe"}); err != nil {
 		require.NoError(t, err)

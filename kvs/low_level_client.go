@@ -1,6 +1,10 @@
 package kvs
 
-import "context"
+import (
+	"context"
+
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/metrics"
+)
 
 type LowLevelClient interface {
 	Get(key string) (*Item, error)
@@ -12,4 +16,56 @@ type LowLevelClient interface {
 	SaveWithContext(ctx context.Context, key string, item *Item) error
 	BulkGetWithContext(ctx context.Context, key []string) (*Items, error)
 	BulkSaveWithContext(ctx context.Context, items *Items) error
+}
+
+type LowLevelClientProxy struct {
+	lowLevelClient LowLevelClient
+	collector      *metrics.Collector
+}
+
+func NewLowLevelClientProxy(lowLevelClient LowLevelClient) LowLevelClientProxy {
+	return LowLevelClientProxy{
+		lowLevelClient: lowLevelClient,
+		collector:      metrics.ProvideMetricCollector(),
+	}
+}
+
+func (r LowLevelClientProxy) Get(key string) (*Item, error) {
+	item, err := r.lowLevelClient.Get(key)
+	if err != nil {
+		r.collector.IncrementCounter("products-cache", "stats", "miss")
+		return nil, err
+	}
+
+	r.collector.IncrementCounter("products-cache", "stats", "hit")
+
+	return item, nil
+}
+
+func (r LowLevelClientProxy) BulkGet(keys []string) (*Items, error) {
+	return r.lowLevelClient.BulkGet(keys)
+}
+
+func (r LowLevelClientProxy) Save(key string, item *Item) error {
+	return r.lowLevelClient.Save(key, item)
+}
+
+func (r LowLevelClientProxy) BulkSave(items *Items) error {
+	return r.lowLevelClient.BulkSave(items)
+}
+
+func (r LowLevelClientProxy) GetWithContext(ctx context.Context, key string) (*Item, error) {
+	return r.lowLevelClient.GetWithContext(ctx, key)
+}
+
+func (r LowLevelClientProxy) SaveWithContext(ctx context.Context, key string, item *Item) error {
+	return r.lowLevelClient.SaveWithContext(ctx, key, item)
+}
+
+func (r LowLevelClientProxy) BulkGetWithContext(ctx context.Context, key []string) (*Items, error) {
+	return r.lowLevelClient.BulkGetWithContext(ctx, key)
+}
+
+func (r LowLevelClientProxy) BulkSaveWithContext(ctx context.Context, items *Items) error {
+	return r.lowLevelClient.BulkSaveWithContext(ctx, items)
 }
