@@ -1,6 +1,8 @@
 package infrastructure
 
 import (
+	"context"
+
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 )
 
@@ -9,6 +11,11 @@ type Client[T any] interface {
 	BulkGet(key []string) ([]T, error)
 	Save(key string, item *T) error
 	BulkSave(items []T, keyMapper func(item T) string) error
+
+	GetWithContext(ctx context.Context, key string) (*T, error)
+	BulkGetWithContext(ctx context.Context, keys []string) ([]T, error)
+	SaveWithContext(ctx context.Context, key string, item *T) error
+	BulkSaveWithContext(ctx context.Context, items []T, keyMapper func(item T) string) error
 }
 
 type KVSClient[T any] struct {
@@ -22,7 +29,23 @@ func NewKVSClient[T any](lowLevelClient kvs.LowLevelClient) *KVSClient[T] {
 }
 
 func (r KVSClient[T]) Get(key string) (*T, error) {
-	item, err := r.lowLevelClient.Get(key)
+	return r.GetWithContext(context.Background(), key)
+}
+
+func (r KVSClient[T]) BulkGet(key []string) ([]T, error) {
+	return r.BulkGetWithContext(context.Background(), key)
+}
+
+func (r KVSClient[T]) Save(key string, item *T) error {
+	return r.SaveWithContext(context.Background(), key, item)
+}
+
+func (r KVSClient[T]) BulkSave(items []T, keyMapper func(item T) string) error {
+	return r.BulkSaveWithContext(context.Background(), items, keyMapper)
+}
+
+func (r KVSClient[T]) GetWithContext(ctx context.Context, key string) (*T, error) {
+	item, err := r.lowLevelClient.GetWithContext(ctx, key)
 	if err != nil {
 		return nil, err
 	}
@@ -36,10 +59,10 @@ func (r KVSClient[T]) Get(key string) (*T, error) {
 	return value, nil
 }
 
-func (r KVSClient[T]) BulkGet(keys []string) ([]T, error) {
+func (r KVSClient[T]) BulkGetWithContext(ctx context.Context, keys []string) ([]T, error) {
 	result := make([]T, 0)
 
-	items, err := r.lowLevelClient.BulkGet(keys)
+	items, err := r.lowLevelClient.BulkGetWithContext(ctx, keys)
 	if err != nil {
 		return nil, err
 	}
@@ -58,9 +81,9 @@ func (r KVSClient[T]) BulkGet(keys []string) ([]T, error) {
 	return result, nil
 }
 
-func (r KVSClient[T]) Save(key string, value *T) error {
+func (r KVSClient[T]) SaveWithContext(ctx context.Context, key string, value *T) error {
 	item := kvs.NewItem(key, value)
-	err := r.lowLevelClient.Save(key, item)
+	err := r.lowLevelClient.SaveWithContext(ctx, key, item)
 	if err != nil {
 		return err
 	}
@@ -68,8 +91,8 @@ func (r KVSClient[T]) Save(key string, value *T) error {
 	return nil
 }
 
-func (r KVSClient[T]) BulkSave(items []T, keyMapper func(item T) string) error {
-	if items == nil || len(items) == 0 {
+func (r KVSClient[T]) BulkSaveWithContext(ctx context.Context, items []T, keyMapper func(item T) string) error {
+	if len(items) == 0 {
 		return nil
 	}
 
@@ -82,7 +105,7 @@ func (r KVSClient[T]) BulkSave(items []T, keyMapper func(item T) string) error {
 		})
 	}
 
-	err := r.lowLevelClient.BulkSave(kvsItems)
+	err := r.lowLevelClient.BulkSaveWithContext(ctx, kvsItems)
 	if err != nil {
 		return err
 	}

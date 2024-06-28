@@ -190,7 +190,41 @@ func (r LowLevelClient) BulkSave(items *kvs.Items) error {
 	return r.BulkSaveWithContext(context.Background(), items)
 }
 
-func (r LowLevelClient) BulkSaveWithContext(ctx context.Context, items *kvs.Items) error {
-	// TODO implement me
-	panic("implement me")
+func (r LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.Items) error {
+	items := make([]types.WriteRequest, 0, kvsItems.Len())
+
+	for i := range kvsItems.Items {
+		item := kvsItems.Items[i]
+		bytes, err := json.Marshal(item.Value)
+		if err != nil {
+			log.Errorf("[kvs]: error marshalling value: %v", err)
+			continue
+		}
+
+		items = append(items, types.WriteRequest{
+			PutRequest: &types.PutRequest{
+				Item: map[string]types.AttributeValue{
+					KeyName:   &types.AttributeValueMemberS{Value: item.Key},
+					ValueName: &types.AttributeValueMemberS{Value: string(bytes)},
+					TTLName:   &types.AttributeValueMemberN{Value: strconv.Itoa(item.TTL)},
+				},
+			},
+		})
+	}
+
+	batchInput := &dynamodb.BatchWriteItemInput{
+		RequestItems: map[string][]types.WriteRequest{
+			aws.ToString(r.getTableName()): items,
+		},
+	}
+
+	batchWriteItemOutput, err := r.AWSClient.BatchWriteItem(ctx, batchInput)
+	if err != nil {
+		log.Errorf("[kvs]: error writing kvsItems to DynamoDB: %v", err)
+		return err
+	}
+
+	log.Debugf("[kvs]: batchWriteItemOutput: %+v", batchWriteItemOutput)
+
+	return nil
 }
