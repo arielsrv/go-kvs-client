@@ -1,6 +1,7 @@
 package infrastructure_test
 
 import (
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/infrastructure"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -10,7 +11,7 @@ import (
 
 func TestKVSClient_SaveAndGet(t *testing.T) {
 	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "kvs-client")
-	kvsClient := NewKVSClient[model.UserDTO](lowLevelClient)
+	kvsClient := infrastructure.NewKVSClient[model.UserDTO](lowLevelClient)
 
 	if err := kvsClient.Save("1", &model.UserDTO{ID: 1, Name: "John Doe"}); err != nil {
 		require.NoError(t, err)
