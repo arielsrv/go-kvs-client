@@ -1,9 +1,9 @@
 package main
 
 import (
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/infrastructure"
 	"strconv"
 
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/infrastructure"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/model"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
@@ -16,6 +16,7 @@ func main() {
 			dynamodb.WithEndpointResolver("http://localhost:4566")).
 			Build())
 
+	// get and save a single item
 	for i := range 20 {
 		key := i + 1
 		err := kvsClient.Save(strconv.Itoa(key), &model.UserDTO{
@@ -34,17 +35,14 @@ func main() {
 		log.Info(value)
 	}
 
-	item1 := model.UserDTO{ID: 101, Name: "Jane Doe"}
-	item2 := model.UserDTO{ID: 102, Name: "Alice Doe"}
-	item3 := model.UserDTO{ID: 103, Name: "Bob Doe"}
-
+	// bulk get and save items
 	if err := kvsClient.BulkSave([]model.UserDTO{
-		item1,
-		item2,
-		item3,
+		{ID: 101, Name: "Jane Doe"},
+		{ID: 102, Name: "Alice Doe"},
+		{ID: 103, Name: "Bob Doe"},
 	},
-		func(item model.UserDTO) string {
-			return strconv.Itoa(item.ID)
+		func(userDTO model.UserDTO) string {
+			return strconv.Itoa(userDTO.ID)
 		}); err != nil {
 		log.Error(err)
 	}
