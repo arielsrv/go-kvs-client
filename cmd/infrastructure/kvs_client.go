@@ -8,6 +8,7 @@ type Client[T any] interface {
 	Get(key string) (*T, error)
 	BulkGet(key []string) ([]T, error)
 	Save(key string, item *T) error
+	BulkSave(items []T, keyMapper func(item T) string) error
 }
 
 type KVSClient[T any] struct {
@@ -60,6 +61,28 @@ func (r KVSClient[T]) BulkGet(keys []string) ([]T, error) {
 func (r KVSClient[T]) Save(key string, value *T) error {
 	item := kvs.NewItem(key, value)
 	err := r.lowLevelClient.Save(key, item)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r KVSClient[T]) BulkSave(items []T, keyMapper func(item T) string) error {
+	if items == nil || len(items) == 0 {
+		return nil
+	}
+
+	kvsItems := new(kvs.Items)
+	for i := range items {
+		item := items[i]
+		kvsItems.Add(&kvs.Item{
+			Key:   keyMapper(item),
+			Value: item,
+		})
+	}
+
+	err := r.lowLevelClient.BulkSave(kvsItems)
 	if err != nil {
 		return err
 	}

@@ -34,7 +34,22 @@ func main() {
 		log.Info(value)
 	}
 
-	items, err := kvsClient.BulkGet([]string{"1", "2", "3", "4", "5"})
+	item1 := model.UserDTO{ID: 101, Name: "Jane Doe"}
+	item2 := model.UserDTO{ID: 102, Name: "Alice Doe"}
+	item3 := model.UserDTO{ID: 103, Name: "Bob Doe"}
+
+	if err := kvsClient.BulkSave([]model.UserDTO{
+		item1,
+		item2,
+		item3,
+	},
+		func(item model.UserDTO) string {
+			return strconv.Itoa(item.ID)
+		}); err != nil {
+		log.Error(err)
+	}
+
+	items, err := kvsClient.BulkGet([]string{"101", "102", "103"})
 	if err != nil {
 		log.Error(err)
 	}

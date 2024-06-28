@@ -75,6 +75,53 @@ func (_c *MockClient_BulkGet_Call[T]) RunAndReturn(run func([]string) ([]T, erro
 	return _c
 }
 
+// BulkSave provides a mock function with given fields: items, keyMapper
+func (_m *MockClient[T]) BulkSave(items []T, keyMapper func(T) string) error {
+	ret := _m.Called(items, keyMapper)
+
+	if len(ret) == 0 {
+		panic("no return value specified for BulkSave")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func([]T, func(T) string) error); ok {
+		r0 = rf(items, keyMapper)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// MockClient_BulkSave_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'BulkSave'
+type MockClient_BulkSave_Call[T interface{}] struct {
+	*mock.Call
+}
+
+// BulkSave is a helper method to define mock.On call
+//   - items []T
+//   - keyMapper func(T) string
+func (_e *MockClient_Expecter[T]) BulkSave(items interface{}, keyMapper interface{}) *MockClient_BulkSave_Call[T] {
+	return &MockClient_BulkSave_Call[T]{Call: _e.mock.On("BulkSave", items, keyMapper)}
+}
+
+func (_c *MockClient_BulkSave_Call[T]) Run(run func(items []T, keyMapper func(T) string)) *MockClient_BulkSave_Call[T] {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].([]T), args[1].(func(T) string))
+	})
+	return _c
+}
+
+func (_c *MockClient_BulkSave_Call[T]) Return(_a0 error) *MockClient_BulkSave_Call[T] {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *MockClient_BulkSave_Call[T]) RunAndReturn(run func([]T, func(T) string) error) *MockClient_BulkSave_Call[T] {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Get provides a mock function with given fields: key
 func (_m *MockClient[T]) Get(key string) (*T, error) {
 	ret := _m.Called(key)
