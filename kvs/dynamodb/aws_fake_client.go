@@ -70,12 +70,74 @@ func (r AWSFakeClient) GetItem(ctx context.Context, params *dynamodb.GetItemInpu
 	}, nil
 }
 
-func (r AWSFakeClient) BatchGetItem(ctx context.Context, params *dynamodb.BatchGetItemInput, optFns ...func(*dynamodb.Options)) (*dynamodb.BatchGetItemOutput, error) {
-	// TODO implement me
-	panic("implement me")
+func (r AWSFakeClient) BatchGetItem(ctx context.Context, params *dynamodb.BatchGetItemInput, _ ...func(*dynamodb.Options)) (*dynamodb.BatchGetItemOutput, error) {
+	records, found := params.RequestItems["__kvs-test"]
+	if !found {
+		return nil, kvs.ErrNilItem
+	}
+
+	batchGetItemOutput := new(dynamodb.BatchGetItemOutput)
+	batchGetItemOutput.Responses = make(map[string][]map[string]types.AttributeValue, len(records.Keys))
+	batchGetItemOutput.Responses["__kvs-test"] = []map[string]types.AttributeValue{}
+
+	for i := range records.Keys {
+		key, exist := records.Keys[i][KeyName]
+		if !exist {
+			return nil, kvs.ErrInternal
+		}
+		keyValueMember, ok := key.(*types.AttributeValueMemberS)
+		if !ok {
+			return nil, kvs.ErrInternal
+		}
+
+		value, err := r.cache.Get(ctx, keyValueMember.Value)
+		if err != nil {
+			if errors.Is(err, &store.NotFound{}) {
+				continue
+			}
+			return nil, err
+		}
+
+		batchGetItemOutput.Responses["__kvs-test"] = append(batchGetItemOutput.Responses["__kvs-test"], []map[string]types.AttributeValue{
+			{
+				KeyName: &types.AttributeValueMemberS{
+					Value: keyValueMember.Value,
+				},
+				ValueName: &types.AttributeValueMemberS{
+					Value: string(value),
+				},
+			},
+		}...)
+	}
+	return batchGetItemOutput, nil
 }
 
-func (r AWSFakeClient) BatchWriteItem(ctx context.Context, params *dynamodb.BatchWriteItemInput, optFns ...func(*dynamodb.Options)) (*dynamodb.BatchWriteItemOutput, error) {
-	// TODO implement me
-	panic("implement me")
+func (r AWSFakeClient) BatchWriteItem(ctx context.Context, params *dynamodb.BatchWriteItemInput, _ ...func(*dynamodb.Options)) (*dynamodb.BatchWriteItemOutput, error) {
+	records, found := params.RequestItems["__kvs-test"]
+	if !found {
+		return nil, kvs.ErrInternal
+	}
+
+	for i := range records {
+		record := records[i]
+		if record.PutRequest == nil {
+			return nil, kvs.ErrInternal
+		}
+
+		keyMember, convert := record.PutRequest.Item[KeyName].(*types.AttributeValueMemberS)
+		if !convert {
+			return nil, kvs.ErrInternal
+		}
+
+		keyValue, convert := record.PutRequest.Item[ValueName].(*types.AttributeValueMemberS)
+		if !convert {
+			return nil, kvs.ErrInternal
+		}
+
+		if err := r.cache.Set(ctx, keyMember.Value, []byte(keyValue.Value)); err != nil {
+			return nil, err
+		}
+	}
+
+	return &dynamodb.BatchWriteItemOutput{}, nil
 }

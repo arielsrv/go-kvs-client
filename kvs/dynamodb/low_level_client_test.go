@@ -14,7 +14,7 @@ type Test struct {
 }
 
 func TestClient_SaveAndGet(t *testing.T) {
-	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test", 60)
+	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
 
 	input := struct {
 		Key   string
@@ -60,4 +60,53 @@ func TestClient_Get_ErrEmptyKey(t *testing.T) {
 	require.Error(t, err)
 	require.Equal(t, kvs.ErrEmptyKey, err)
 	require.Nil(t, item)
+}
+
+func TestClient_BulkSave_And_BulkGet(t *testing.T) {
+	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
+
+	input1 := struct {
+		Key   string
+		Value Test
+	}{
+		Key: "1",
+		Value: Test{
+			ID:   1,
+			Name: "John Doe",
+		},
+	}
+
+	item1 := kvs.NewItem(input1.Key, input1.Value)
+
+	input2 := struct {
+		Key   string
+		Value Test
+	}{
+		Key: "2",
+		Value: Test{
+			ID:   2,
+			Name: "Alice Doe",
+		},
+	}
+
+	item2 := kvs.NewItem(input2.Key, input2.Value)
+
+	items := new(kvs.Items)
+	items.Add(item1)
+	items.Add(item2)
+
+	err := lowLevelClient.BulkSave(items)
+	require.NoError(t, err)
+
+	actual, err := lowLevelClient.BulkGet([]string{"1", "2"})
+	require.NoError(t, err)
+
+	for i := range actual.GetOks() {
+		current := actual.GetOks()[i]
+		actualValue := new(Test)
+		err = current.TryGetValueAsObjectType(&actualValue)
+		require.NoError(t, err)
+	}
+
+	require.Len(t, actual.GetOks(), 2)
 }
