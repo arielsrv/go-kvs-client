@@ -35,7 +35,18 @@ func main() {
 	}
 
 	// bulk get and save items
-	err := kvsClient.BulkSave([]model.UserDTO{{ID: 101, Name: "Jane Doe"}, {ID: 102, Name: "Alice Doe"}, {ID: 103, Name: "Bob Doe"}}, func(userDTO model.UserDTO) string {
+	err := kvsClient.BulkSave([]model.UserDTO{
+		{
+			ID:   101,
+			Name: "Jane Doe",
+		}, {
+			ID:   102,
+			Name: "Alice Doe",
+		}, {
+			ID:   103,
+			Name: "Bob Doe",
+		},
+	}, func(userDTO model.UserDTO) string {
 		return strconv.Itoa(userDTO.ID)
 	})
 

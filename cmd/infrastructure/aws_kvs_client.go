@@ -3,7 +3,9 @@ package infrastructure
 import (
 	"context"
 
+
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
+	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
 )
 
 type AWSKVSClient[T any] struct {
@@ -60,6 +62,7 @@ func (r AWSKVSClient[T]) BulkGetWithContext(ctx context.Context, keys []string) 
 		value := new(T)
 		mErr := item.TryGetValueAsObjectType(&value)
 		if mErr != nil {
+			log.Errorf("[kvs]: error unmarshalling value for item %d: %v", i, item)
 			continue
 		}
 
@@ -73,6 +76,7 @@ func (r AWSKVSClient[T]) SaveWithContext(ctx context.Context, key string, value 
 	item := kvs.NewItem(key, value)
 	err := r.lowLevelClient.SaveWithContext(ctx, key, item)
 	if err != nil {
+		log.Errorf("[kvs]: error saving item %s: %v", key, err)
 		return err
 	}
 
@@ -95,6 +99,7 @@ func (r AWSKVSClient[T]) BulkSaveWithContext(ctx context.Context, items []T, key
 
 	err := r.lowLevelClient.BulkSaveWithContext(ctx, kvsItems)
 	if err != nil {
+		log.Errorf("[kvs]: error saving items: %v", err)
 		return err
 	}
 
