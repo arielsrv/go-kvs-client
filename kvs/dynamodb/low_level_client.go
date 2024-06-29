@@ -27,10 +27,10 @@ const (
 	TTLName   = "ttl"
 )
 
-func NewLowLevelClient(bridge AWSClient, containerName string, ttl ...int) *LowLevelClient {
+func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...int) *LowLevelClient {
 	lowLevelClient := &LowLevelClient{
 		containerName: containerName,
-		AWSClient:     bridge,
+		AWSClient:     awsClient,
 	}
 
 	log.Debugf("[kvs]: setting container name to %s", containerName)
@@ -45,16 +45,6 @@ func NewLowLevelClient(bridge AWSClient, containerName string, ttl ...int) *LowL
 
 func (r LowLevelClient) getTableName() *string {
 	return aws.String(fmt.Sprintf("__kvs-%s", r.containerName))
-}
-
-func (r LowLevelClient) createItem(key string, value []byte, ttl int) map[string]types.AttributeValue {
-	item := make(map[string]types.AttributeValue, 3)
-
-	item[KeyName] = &types.AttributeValueMemberS{Value: key}
-	item[ValueName] = &types.AttributeValueMemberS{Value: string(value)}
-	item[TTLName] = &types.AttributeValueMemberN{Value: strconv.Itoa(ttl)}
-
-	return item
 }
 
 func (r LowLevelClient) Get(key string) (*kvs.Item, error) {
@@ -118,7 +108,7 @@ func (r LowLevelClient) SaveWithContext(ctx context.Context, key string, item *k
 
 	putItemOutput, err := r.AWSClient.PutItem(ctx, &dynamodb.PutItemInput{
 		TableName: r.getTableName(),
-		Item:      r.createItem(key, bytes, item.TTL),
+		Item:      r.createItem(item, bytes),
 	})
 
 	if err != nil {
@@ -203,11 +193,7 @@ func (r LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.I
 
 		items = append(items, types.WriteRequest{
 			PutRequest: &types.PutRequest{
-				Item: map[string]types.AttributeValue{
-					KeyName:   &types.AttributeValueMemberS{Value: item.Key},
-					ValueName: &types.AttributeValueMemberS{Value: string(bytes)},
-					TTLName:   &types.AttributeValueMemberN{Value: strconv.Itoa(item.TTL)},
-				},
+				Item: r.createItem(item, bytes),
 			},
 		})
 	}
@@ -227,4 +213,18 @@ func (r LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.I
 	log.Debugf("[kvs]: batchWriteItemOutput: %+v", batchWriteItemOutput)
 
 	return nil
+}
+
+func (r LowLevelClient) createItem(item *kvs.Item, bytes []byte) map[string]types.AttributeValue {
+	return map[string]types.AttributeValue{
+		KeyName: &types.AttributeValueMemberS{
+			Value: item.Key,
+		},
+		ValueName: &types.AttributeValueMemberS{
+			Value: string(bytes),
+		},
+		TTLName: &types.AttributeValueMemberN{
+			Value: strconv.Itoa(item.TTL),
+		},
+	}
 }

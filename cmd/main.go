@@ -19,11 +19,10 @@ func main() {
 	// get and save a single item
 	for i := range 20 {
 		key := i + 1
-		err := kvsClient.Save(strconv.Itoa(key), &model.UserDTO{
+		if err := kvsClient.Save(strconv.Itoa(key), &model.UserDTO{
 			ID:   key,
 			Name: "John Doe",
-		})
-		if err != nil {
+		}); err != nil {
 			log.Error(err)
 		}
 
@@ -32,18 +31,15 @@ func main() {
 			log.Error(err)
 		}
 
-		log.Info(value)
+		log.Infof("Item %d: %+v", key, value)
 	}
 
 	// bulk get and save items
-	if err := kvsClient.BulkSave([]model.UserDTO{
-		{ID: 101, Name: "Jane Doe"},
-		{ID: 102, Name: "Alice Doe"},
-		{ID: 103, Name: "Bob Doe"},
-	},
-		func(userDTO model.UserDTO) string {
-			return strconv.Itoa(userDTO.ID)
-		}); err != nil {
+	err := kvsClient.BulkSave([]model.UserDTO{{ID: 101, Name: "Jane Doe"}, {ID: 102, Name: "Alice Doe"}, {ID: 103, Name: "Bob Doe"}}, func(userDTO model.UserDTO) string {
+		return strconv.Itoa(userDTO.ID)
+	})
+
+	if err != nil {
 		log.Error(err)
 	}
 
