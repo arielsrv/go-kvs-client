@@ -12,7 +12,7 @@ import (
 func main() {
 	kvsClient := infrastructure.NewAWSKVSClient[model.UserDTO](
 		dynamodb.NewBuilder(dynamodb.WithTTL(7*24*60*60), // 7 days (hh dd mm ss)
-			dynamodb.WithContainerName("users"),
+			dynamodb.WithContainerName("users-cache"),
 			dynamodb.WithEndpointResolver("http://localhost:4566")).
 			Build())
 

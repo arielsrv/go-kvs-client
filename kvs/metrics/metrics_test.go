@@ -36,7 +36,12 @@ type Routes struct {
 }
 
 func (r *Routes) Register() {
-	lowLevelClient := kvs.NewLowLevelClientProxy(dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test"))
+	lowLevelClient := kvs.NewLowLevelClientProxy(dynamodb.
+		NewLowLevelClient(dynamodb.
+			NewAWSFakeClient(),
+			"users-cache"),
+	)
+
 	ctx := context.Background()
 	err := lowLevelClient.SaveWithContext(ctx, "my-key", &kvs.Item{
 		Key:   "my-key",
@@ -96,7 +101,7 @@ func TestCollector_IncrementCounter(t *testing.T) {
 
 		got := response.String()
 
-		want := fmt.Sprintf(`kvs_counter{application="kvs-client",client_name="products-cache",environment="local",event_subtype="hit",event_type="stats",service_type="go-kvs-client"} %d`, 1)
+		want := fmt.Sprintf(`kvs_counter{application="kvs-client",client_name="users-cache",environment="local",event_subtype="hit",event_type="stats",service_type="go-kvs-client"} %d`, 1)
 
 		if !strings.Contains(got, want) {
 			t.Errorf("got %s; want %s", got, want)

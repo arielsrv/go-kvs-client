@@ -16,6 +16,7 @@ type LowLevelClient interface {
 	SaveWithContext(ctx context.Context, key string, item *Item) error
 	BulkGetWithContext(ctx context.Context, key []string) (*Items, error)
 	BulkSaveWithContext(ctx context.Context, items *Items) error
+	GetContainerName() string
 }
 
 type LowLevelClientProxy struct {
@@ -33,11 +34,11 @@ func NewLowLevelClientProxy(lowLevelClient LowLevelClient) LowLevelClientProxy {
 func (r LowLevelClientProxy) Get(key string) (*Item, error) {
 	item, err := r.lowLevelClient.Get(key)
 	if err != nil {
-		r.collector.IncrementCounter("products-cache", "stats", "miss")
+		r.collector.IncrementCounter(r.GetContainerName(), "stats", "miss")
 		return nil, err
 	}
 
-	r.collector.IncrementCounter("products-cache", "stats", "hit")
+	r.collector.IncrementCounter(r.GetContainerName(), "stats", "hit")
 
 	return item, nil
 }
@@ -68,4 +69,8 @@ func (r LowLevelClientProxy) BulkGetWithContext(ctx context.Context, key []strin
 
 func (r LowLevelClientProxy) BulkSaveWithContext(ctx context.Context, items *Items) error {
 	return r.lowLevelClient.BulkSaveWithContext(ctx, items)
+}
+
+func (r LowLevelClientProxy) GetContainerName() string {
+	return r.lowLevelClient.GetContainerName()
 }

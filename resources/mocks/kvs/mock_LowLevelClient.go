@@ -290,6 +290,51 @@ func (_c *MockLowLevelClient_Get_Call) RunAndReturn(run func(string) (*kvs.Item,
 	return _c
 }
 
+// GetContainerName provides a mock function with given fields:
+func (_m *MockLowLevelClient) GetContainerName() string {
+	ret := _m.Called()
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetContainerName")
+	}
+
+	var r0 string
+	if rf, ok := ret.Get(0).(func() string); ok {
+		r0 = rf()
+	} else {
+		r0 = ret.Get(0).(string)
+	}
+
+	return r0
+}
+
+// MockLowLevelClient_GetContainerName_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetContainerName'
+type MockLowLevelClient_GetContainerName_Call struct {
+	*mock.Call
+}
+
+// GetContainerName is a helper method to define mock.On call
+func (_e *MockLowLevelClient_Expecter) GetContainerName() *MockLowLevelClient_GetContainerName_Call {
+	return &MockLowLevelClient_GetContainerName_Call{Call: _e.mock.On("GetContainerName")}
+}
+
+func (_c *MockLowLevelClient_GetContainerName_Call) Run(run func()) *MockLowLevelClient_GetContainerName_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *MockLowLevelClient_GetContainerName_Call) Return(_a0 string) *MockLowLevelClient_GetContainerName_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *MockLowLevelClient_GetContainerName_Call) RunAndReturn(run func() string) *MockLowLevelClient_GetContainerName_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // GetWithContext provides a mock function with given fields: ctx, key
 func (_m *MockLowLevelClient) GetWithContext(ctx context.Context, key string) (*kvs.Item, error) {
 	ret := _m.Called(ctx, key)

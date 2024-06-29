@@ -27,6 +27,10 @@ const (
 	TTLName   = "ttl"
 )
 
+func (r LowLevelClient) GetContainerName() string {
+	return r.containerName
+}
+
 func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...int) *LowLevelClient {
 	lowLevelClient := &LowLevelClient{
 		containerName: containerName,
