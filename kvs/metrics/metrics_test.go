@@ -9,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2/core"
@@ -61,6 +62,12 @@ func (r *Routes) Register() {
 
 		log.Debugf("Got value: %s", value.Value)
 
+		_, kvsErr = lowLevelClient.Get("missing-key")
+		if kvsErr != nil && !errors.Is(kvsErr, kvs.ErrKeyNotFound) {
+			httpCtx.Status(http.StatusInternalServerError)
+			return httpCtx.SendString(kvsErr.Error())
+		}
+
 		return httpCtx.SendString("pong")
 	})
 }
@@ -102,6 +109,12 @@ func TestCollector_IncrementCounter(t *testing.T) {
 		got := response.String()
 
 		want := fmt.Sprintf(`kvs_counter{application="kvs-client",client_name="users-cache",environment="local",event_subtype="hit",event_type="stats",service_type="go-kvs-client"} %d`, 1)
+
+		if !strings.Contains(got, want) {
+			t.Errorf("got %s; want %s", got, want)
+		}
+
+		want = fmt.Sprintf(`kvs_counter{application="kvs-client",client_name="users-cache",environment="local",event_subtype="miss",event_type="stats",service_type="go-kvs-client"} %d`, 1)
 
 		if !strings.Contains(got, want) {
 			t.Errorf("got %s; want %s", got, want)

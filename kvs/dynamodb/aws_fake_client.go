@@ -71,14 +71,14 @@ func (r AWSFakeClient) GetItem(ctx context.Context, params *dynamodb.GetItemInpu
 }
 
 func (r AWSFakeClient) BatchGetItem(ctx context.Context, params *dynamodb.BatchGetItemInput, _ ...func(*dynamodb.Options)) (*dynamodb.BatchGetItemOutput, error) {
-	records, found := params.RequestItems["__kvs-test"]
+	records, found := params.RequestItems[r.getContainerName()]
 	if !found {
 		return nil, kvs.ErrNilItem
 	}
 
 	batchGetItemOutput := new(dynamodb.BatchGetItemOutput)
 	batchGetItemOutput.Responses = make(map[string][]map[string]types.AttributeValue, len(records.Keys))
-	batchGetItemOutput.Responses["__kvs-test"] = []map[string]types.AttributeValue{}
+	batchGetItemOutput.Responses[r.getContainerName()] = []map[string]types.AttributeValue{}
 
 	for i := range records.Keys {
 		key, exist := records.Keys[i][KeyName]
@@ -98,7 +98,7 @@ func (r AWSFakeClient) BatchGetItem(ctx context.Context, params *dynamodb.BatchG
 			return nil, err
 		}
 
-		batchGetItemOutput.Responses["__kvs-test"] = append(batchGetItemOutput.Responses["__kvs-test"], []map[string]types.AttributeValue{
+		batchGetItemOutput.Responses[r.getContainerName()] = append(batchGetItemOutput.Responses[r.getContainerName()], []map[string]types.AttributeValue{
 			{
 				KeyName: &types.AttributeValueMemberS{
 					Value: keyValueMember.Value,
@@ -112,8 +112,12 @@ func (r AWSFakeClient) BatchGetItem(ctx context.Context, params *dynamodb.BatchG
 	return batchGetItemOutput, nil
 }
 
+func (r AWSFakeClient) getContainerName() string {
+	return "__kvs-test"
+}
+
 func (r AWSFakeClient) BatchWriteItem(ctx context.Context, params *dynamodb.BatchWriteItemInput, _ ...func(*dynamodb.Options)) (*dynamodb.BatchWriteItemOutput, error) {
-	records, found := params.RequestItems["__kvs-test"]
+	records, found := params.RequestItems[r.getContainerName()]
 	if !found {
 		return nil, kvs.ErrInternal
 	}

@@ -110,3 +110,20 @@ func TestClient_BulkSave_And_BulkGet(t *testing.T) {
 
 	require.Len(t, actual.GetOks(), 2)
 }
+
+func TestEmptyKeyInGet(t *testing.T) {
+	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test", 60)
+
+	item, err := lowLevelClient.Get("")
+	require.Error(t, err)
+	require.Equal(t, kvs.ErrEmptyKey, err)
+	require.Nil(t, item)
+
+	err = lowLevelClient.Save("", kvs.NewItem("", Test{}))
+	require.Error(t, err)
+	require.Equal(t, kvs.ErrEmptyKey, err)
+
+	err = lowLevelClient.Save("1", nil)
+	require.Error(t, err)
+	require.Equal(t, kvs.ErrNilItem, err)
+}

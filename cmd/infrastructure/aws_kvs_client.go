@@ -3,7 +3,6 @@ package infrastructure
 import (
 	"context"
 
-
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
 )
