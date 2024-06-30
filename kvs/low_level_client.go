@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/pkg/errors"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/metrics"
 )
 
@@ -37,7 +38,11 @@ func (r LowLevelClientProxy) Get(key string) (*Item, error) {
 	item, err := r.lowLevelClient.Get(key)
 	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "get", time.Since(start))
 	if err != nil {
-		r.collector.IncrementCounter(r.GetContainerName(), "stats", "miss")
+		if errors.Is(err, ErrKeyNotFound) {
+			r.collector.IncrementCounter(r.GetContainerName(), "stats", "miss")
+		} else {
+			r.collector.IncrementCounter(r.GetContainerName(), "stats", "save_error")
+		}
 		return nil, err
 	}
 
