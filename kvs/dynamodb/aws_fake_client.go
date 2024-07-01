@@ -95,6 +95,7 @@ func (r AWSFakeClient) BatchGetItem(ctx context.Context, params *dynamodb.BatchG
 			if errors.Is(err, &store.NotFound{}) {
 				continue
 			}
+
 			return nil, err
 		}
 

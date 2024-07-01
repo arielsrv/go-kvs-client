@@ -27,7 +27,6 @@ func ProvideMetricCollector() *Collector {
 type ClientMetricCollector interface {
 	IncrementCounter(clientName string, eventType string, eventSubType string, value ...float64)
 	RecordExecutionTime(clientName, eventType string, eventSubType string, elapsedTime time.Duration)
-	RecordValue(clientName string, eventType string, eventSubType string, value float64)
 	Reset()
 }
 
@@ -87,21 +86,6 @@ func (r Collector) RecordExecutionTime(clientName, eventType string, eventSubTyp
 		})
 }
 
-func (r Collector) RecordValue(clientName string, eventType string, eventSubType string, value float64) {
-	r.collector.RecordValue(
-		ValueDto{
-			metricDto: metricDto{
-				serviceType:  r.serviceType,
-				environment:  r.config.Environment,
-				application:  r.config.Application,
-				clientName:   clientName,
-				eventType:    eventType,
-				eventSubType: eventSubType,
-			},
-			value: value,
-		})
-}
-
 func (r Collector) Reset() {
 	r.collector.Reset()
 }
@@ -109,7 +93,6 @@ func (r Collector) Reset() {
 type ServiceCollector interface {
 	IncrementCounter(metric CounterDto)
 	RecordExecutionTime(metric TimerDto)
-	RecordValue(metric ValueDto)
 	Reset()
 }
 

@@ -18,6 +18,7 @@ type LowLevelClient interface {
 	SaveWithContext(ctx context.Context, key string, item *Item) error
 	BulkGetWithContext(ctx context.Context, key []string) (*Items, error)
 	BulkSaveWithContext(ctx context.Context, items *Items) error
+
 	GetContainerName() string
 }
 
