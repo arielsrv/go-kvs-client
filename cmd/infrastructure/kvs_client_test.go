@@ -1,6 +1,7 @@
 package infrastructure_test
 
 import (
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -22,4 +23,29 @@ func TestKVSClient_SaveAndGet(t *testing.T) {
 	require.NotNil(t, userDTO)
 	require.Equal(t, 1, userDTO.ID)
 	require.Equal(t, "John Doe", userDTO.Name)
+}
+
+func TestKVSClient_BulkSaveAndBulkGet(t *testing.T) {
+	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
+	kvsClient := infrastructure.NewAWSKVSClient[model.UserDTO](lowLevelClient)
+
+	users := []model.UserDTO{
+		{ID: 1, Name: "John Doe"},
+		{ID: 2, Name: "Alice Doe"},
+	}
+
+	if err := kvsClient.BulkSave(users, func(item model.UserDTO) string {
+		return strconv.Itoa(item.ID)
+	}); err != nil {
+		require.NoError(t, err)
+	}
+
+	result, err := kvsClient.BulkGet([]string{"1", "2"})
+	require.NoError(t, err)
+	require.NotNil(t, result)
+	require.Len(t, result, 2)
+	require.Equal(t, 1, result[0].ID)
+	require.Equal(t, "John Doe", result[0].Name)
+	require.Equal(t, 2, result[1].ID)
+	require.Equal(t, "Alice Doe", result[1].Name)
 }

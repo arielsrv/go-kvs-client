@@ -83,10 +83,6 @@ func (r AWSKVSClient[T]) SaveWithContext(ctx context.Context, key string, value 
 }
 
 func (r AWSKVSClient[T]) BulkSaveWithContext(ctx context.Context, items []T, keyMapper func(item T) string) error {
-	if len(items) == 0 {
-		return nil
-	}
-
 	kvsItems := new(kvs.Items)
 	for i := range items {
 		item := items[i]
