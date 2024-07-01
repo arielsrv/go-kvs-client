@@ -36,7 +36,7 @@ provider "aws" {
 }
 
 resource "aws_dynamodb_table" "kvs-users-table" {
-	name         = "__kvs-users"
+	name         = "__kvs-users-cache"
 	billing_mode = "PAY_PER_REQUEST"
 	hash_key     = "key"
 
