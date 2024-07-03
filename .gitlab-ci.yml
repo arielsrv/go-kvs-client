@@ -1,3 +1,6 @@
+include:
+    -   template: Jobs/Secret-Detection.gitlab-ci.yml
+
 variables:
     GO_VERSION: '1.22.4'
     GONOSUMDB: gitlab.com
@@ -27,6 +30,10 @@ image: docker.io/golang:${GO_VERSION}
 
 stages:
     - build
+
+secret_detection:
+    stage: build
+    dependencies: [ ] # Don't download artifacts
 
 code_navigation:
     stage: build
