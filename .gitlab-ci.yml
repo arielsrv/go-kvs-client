@@ -12,19 +12,36 @@ default:
 
 image: docker.io/golang:${GO_VERSION}
 
-.go-cache:
+go-cache:
     variables:
         GOPATH: $CI_PROJECT_DIR/.go
+        GOLANGCI_LINT_CACHE: $CI_PROJECT_DIR/.golangci-lint
     before_script:
         - if [ -d "$HOME" ]; then echo "machine gitlab.com login master_token password $GITLAB_TOKEN" > "$HOME/.netrc"; fi
-        - export PATH="${PATH}:${GOPATH}/bin"
-        - mkdir -p .go
+        - mkdir -p .go .golangci-lint
     cache:
         paths:
             - .go/pkg/mod/
+            - .golangci-lint/
 
 stages:
     - build
+
+code_navigation:
+    stage: build
+    allow_failure: true
+    before_script:
+        - go install github.com/sourcegraph/scip-go/cmd/scip-go@latest
+        - scip-go
+    script:
+        - git clone https://github.com/sourcegraph/scip.git --depth=1
+        - cd scip
+        - go build ./cmd/scip
+        - chmod +x scip
+        - ./scip convert --from ../index.scip --to ../dump.lsif
+    artifacts:
+        reports:
+            lsif: dump.lsif
 
 compile:
     extends: .go-cache
@@ -36,7 +53,7 @@ compile:
     only:
         - branches
 
-unit:
+test-report:
     extends: .go-cache
     stage: build
     needs:
@@ -58,7 +75,7 @@ coverage:
     extends: .go-cache
     stage: build
     needs:
-        - unit
+        - test-report
     variables:
         output: coverage-report.out
         html: coverage-report.html
@@ -78,7 +95,7 @@ coverage-report:
     extends: .go-cache
     stage: build
     needs:
-        - unit
+        - test-report
     script:
         - GOEXPERIMENT=nocoverageredesign go test ./... -coverprofile=coverage.txt -covermode count
         - go get github.com/boumenot/gocover-cobertura
@@ -92,18 +109,18 @@ coverage-report:
     only:
         - branches
 
-race:
+race-condition:
     extends: .go-cache
     stage: build
     needs:
-        - unit
+        - test-report
     script:
         - go test -race ./...
     allow_failure: false
     only:
         - branches
 
-lint:
+linter:
     extends: .go-cache
     stage: build
     needs:
