@@ -44,7 +44,7 @@ func (r LowLevelClientProxy) Get(key string) (*Item, error) {
 		if errors.Is(err, ErrKeyNotFound) {
 			r.collector.IncrementCounter(r.GetContainerName(), "stats", "miss")
 		} else {
-			r.collector.IncrementCounter(r.GetContainerName(), "stats", "save_error")
+			r.collector.IncrementCounter(r.GetContainerName(), "stats", "get_error")
 		}
 		return nil, err
 	}
@@ -101,8 +101,13 @@ func (r LowLevelClientProxy) GetWithContext(ctx context.Context, key string) (*I
 
 	start := time.Now()
 	value, err := r.lowLevelClient.GetWithContext(ctx, key)
-	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "get_context", time.Since(start))
+	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "get", time.Since(start))
 	if err != nil {
+		if errors.Is(err, ErrKeyNotFound) {
+			r.collector.IncrementCounter(r.GetContainerName(), "stats", "miss")
+		} else {
+			r.collector.IncrementCounter(r.GetContainerName(), "stats", "get_error")
+		}
 		return nil, err
 	}
 
@@ -114,7 +119,7 @@ func (r LowLevelClientProxy) SaveWithContext(ctx context.Context, key string, it
 
 	start := time.Now()
 	err := r.lowLevelClient.SaveWithContext(ctx, key, item)
-	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "save_context", time.Since(start))
+	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "save", time.Since(start))
 	if err != nil {
 		return err
 	}
@@ -127,7 +132,7 @@ func (r LowLevelClientProxy) BulkGetWithContext(ctx context.Context, key []strin
 
 	start := time.Now()
 	values, err := r.lowLevelClient.BulkGetWithContext(ctx, key)
-	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "bulk_get_context", time.Since(start))
+	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "bulk_get", time.Since(start))
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +145,7 @@ func (r LowLevelClientProxy) BulkSaveWithContext(ctx context.Context, items *Ite
 
 	start := time.Now()
 	err := r.lowLevelClient.BulkSaveWithContext(ctx, items)
-	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "bulk_save_context", time.Since(start))
+	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "bulk_save", time.Since(start))
 	if err != nil {
 		return err
 	}
