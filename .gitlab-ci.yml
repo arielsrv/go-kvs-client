@@ -15,11 +15,21 @@ default:
 before_script:
     - if [ -d "$HOME" ]; then echo "machine gitlab.com login master_token password $GITLAB_TOKEN" > "$HOME/.netrc"; fi
 
+.go-cache:
+    variables:
+        GOPATH: $CI_PROJECT_DIR/.go
+    before_script:
+        - mkdir -p .go
+    cache:
+        paths:
+            - .go/pkg/mod/
+
 stages:
     - build
     - test
 
 compile:
+    extends: .go-cache
     stage: build
     script:
         - go mod tidy
@@ -29,6 +39,7 @@ compile:
         - branches
 
 unit:
+    extends: .go-cache
     stage: test
     needs:
         - compile
@@ -46,6 +57,7 @@ unit:
         - branches
 
 coverage:
+    extends: .go-cache
     stage: test
     variables:
         output: coverage-report.out
@@ -63,6 +75,7 @@ coverage:
         - branches
 
 coverage-report:
+    extends: .go-cache
     stage: test
     script:
         - GOEXPERIMENT=nocoverageredesign go test ./... -coverprofile=coverage.txt -covermode count
@@ -78,6 +91,7 @@ coverage-report:
         - branches
 
 race:
+    extends: .go-cache
     stage: test
     needs:
         - compile
@@ -88,6 +102,7 @@ race:
         - branches
 
 lint:
+    extends: .go-cache
     stage: test
     variables:
         output: gl-code-quality-report.json
