@@ -35,6 +35,8 @@ func NewLowLevelClientProxy(lowLevelClient LowLevelClient) LowLevelClientProxy {
 }
 
 func (r LowLevelClientProxy) Get(key string) (*Item, error) {
+	r.collector.IncrementCounter(r.GetContainerName(), "stats", "get")
+
 	start := time.Now()
 	item, err := r.lowLevelClient.Get(key)
 	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "get", time.Since(start))
@@ -53,6 +55,8 @@ func (r LowLevelClientProxy) Get(key string) (*Item, error) {
 }
 
 func (r LowLevelClientProxy) BulkGet(keys []string) (*Items, error) {
+	r.collector.IncrementCounter(r.GetContainerName(), "stats", "bulk_get")
+
 	start := time.Now()
 	values, err := r.lowLevelClient.BulkGet(keys)
 	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "bulk_get", time.Since(start))
@@ -65,6 +69,8 @@ func (r LowLevelClientProxy) BulkGet(keys []string) (*Items, error) {
 }
 
 func (r LowLevelClientProxy) Save(key string, item *Item) error {
+	r.collector.IncrementCounter(r.GetContainerName(), "stats", "save")
+
 	start := time.Now()
 	err := r.lowLevelClient.Save(key, item)
 	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "save", time.Since(start))
@@ -77,6 +83,8 @@ func (r LowLevelClientProxy) Save(key string, item *Item) error {
 }
 
 func (r LowLevelClientProxy) BulkSave(items *Items) error {
+	r.collector.IncrementCounter(r.GetContainerName(), "stats", "bulk_save")
+
 	start := time.Now()
 	err := r.lowLevelClient.BulkSave(items)
 	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "bulk_save", time.Since(start))
@@ -89,6 +97,8 @@ func (r LowLevelClientProxy) BulkSave(items *Items) error {
 }
 
 func (r LowLevelClientProxy) GetWithContext(ctx context.Context, key string) (*Item, error) {
+	r.collector.IncrementCounter(r.GetContainerName(), "stats", "get")
+
 	start := time.Now()
 	value, err := r.lowLevelClient.GetWithContext(ctx, key)
 	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "get_context", time.Since(start))
@@ -100,6 +110,8 @@ func (r LowLevelClientProxy) GetWithContext(ctx context.Context, key string) (*I
 }
 
 func (r LowLevelClientProxy) SaveWithContext(ctx context.Context, key string, item *Item) error {
+	r.collector.IncrementCounter(r.GetContainerName(), "stats", "save")
+
 	start := time.Now()
 	err := r.lowLevelClient.SaveWithContext(ctx, key, item)
 	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "save_context", time.Since(start))
@@ -111,6 +123,8 @@ func (r LowLevelClientProxy) SaveWithContext(ctx context.Context, key string, it
 }
 
 func (r LowLevelClientProxy) BulkGetWithContext(ctx context.Context, key []string) (*Items, error) {
+	r.collector.IncrementCounter(r.GetContainerName(), "stats", "get")
+
 	start := time.Now()
 	values, err := r.lowLevelClient.BulkGetWithContext(ctx, key)
 	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "bulk_get_context", time.Since(start))
@@ -122,6 +136,8 @@ func (r LowLevelClientProxy) BulkGetWithContext(ctx context.Context, key []strin
 }
 
 func (r LowLevelClientProxy) BulkSaveWithContext(ctx context.Context, items *Items) error {
+	r.collector.IncrementCounter(r.GetContainerName(), "stats", "save")
+
 	start := time.Now()
 	err := r.lowLevelClient.BulkSaveWithContext(ctx, items)
 	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "bulk_save_context", time.Since(start))

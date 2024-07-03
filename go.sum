@@ -88,6 +88,8 @@ github.com/gofiber/adaptor/v2 v2.2.1 h1:givE7iViQWlsTR4Jh7tB4iXzrlKBgiraB/yTdHs9
 github.com/gofiber/adaptor/v2 v2.2.1/go.mod h1:AhR16dEqs25W2FY/l8gSj1b51Azg5dtPDmm+pruNOrc=
 github.com/gofiber/fiber/v2 v2.52.4 h1:P+T+4iK7VaqUsq2PALYEfBBo6bJZ4q3FP8cZ84EggTM=
 github.com/gofiber/fiber/v2 v2.52.4/go.mod h1:KEOE+cXMhXG0zHc9d8+E38hoX+ZN7bhOtgeF2oT6jrQ=
+github.com/gofiber/fiber/v2 v2.52.5 h1:tWoP1MJQjGEe4GB5TUGOi7P2E0ZMMRx5ZTG4rT+yGMo=
+github.com/gofiber/fiber/v2 v2.52.5/go.mod h1:KEOE+cXMhXG0zHc9d8+E38hoX+ZN7bhOtgeF2oT6jrQ=
 github.com/gofiber/swagger v1.0.0 h1:BzUzDS9ZT6fDUa692kxmfOjc1DZiloLiPK/W5z1H1tc=
 github.com/gofiber/swagger v1.0.0/go.mod h1:QrYNF1Yrc7ggGK6ATsJ6yfH/8Zi5bu9lA7wB8TmCecg=
 github.com/gofiber/template v1.8.3 h1:hzHdvMwMo/T2kouz2pPCA0zGiLCeMnoGsQZBTSYgZxc=
@@ -210,6 +212,8 @@ github.com/valyala/tcplisten v1.0.0/go.mod h1:T0xQ8SeCZGxckz9qRXTfG43PvQ/mcWh7Fw
 github.com/yuin/goldmark v1.3.5/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.6.3 h1:t2DNB9IRg5Ll6AMav45U6GZ1yfP9ct8AWxBD3nFc0ok=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.6.3/go.mod h1:flYQ+kh3a7hUsImfGPkutGkNYL2v4bJHhWZFLe9ClWM=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.6.5 h1:lKFd9Zuucn2EG+0t42PlFA6XVqy0MbSM1wJUc+LlxNY=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.6.5/go.mod h1:StOq18s25lG/oqSll2vzwKttWQnXbrSE6vPAz0vgQGM=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.21 h1:fU4ccnl/Aj0i5xdl6Y38GbyeeB4OKG8sXYgBZWQlnhM=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.21/go.mod h1:HPejpkPVHSHNEBecrWuR9+4itbMySYRsBthyGn3sLUg=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.0.28 h1:YNwGss1gCO2p6GSN3dPF7LJ3aUUDBfAJ1AXb06+DlB0=
