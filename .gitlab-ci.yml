@@ -12,7 +12,7 @@ default:
 
 image: docker.io/golang:${GO_VERSION}
 
-go-cache:
+.go-cache:
     variables:
         GOPATH: $CI_PROJECT_DIR/.go
         GOLANGCI_LINT_CACHE: $CI_PROJECT_DIR/.golangci-lint
