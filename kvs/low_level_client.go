@@ -35,65 +35,19 @@ func NewLowLevelClientProxy(lowLevelClient LowLevelClient) LowLevelClientProxy {
 }
 
 func (r LowLevelClientProxy) Get(key string) (*Item, error) {
-	r.collector.IncrementCounter(r.GetContainerName(), "stats", "get")
-
-	start := time.Now()
-	item, err := r.lowLevelClient.Get(key)
-	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "get", time.Since(start))
-	if err != nil {
-		if errors.Is(err, ErrKeyNotFound) {
-			r.collector.IncrementCounter(r.GetContainerName(), "stats", "miss")
-		} else {
-			r.collector.IncrementCounter(r.GetContainerName(), "stats", "get_error")
-		}
-		return nil, err
-	}
-
-	r.collector.IncrementCounter(r.GetContainerName(), "stats", "hit")
-
-	return item, nil
+	return r.GetWithContext(context.Background(), key)
 }
 
 func (r LowLevelClientProxy) BulkGet(keys []string) (*Items, error) {
-	r.collector.IncrementCounter(r.GetContainerName(), "stats", "bulk_get")
-
-	start := time.Now()
-	values, err := r.lowLevelClient.BulkGet(keys)
-	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "bulk_get", time.Since(start))
-
-	if err != nil {
-		return nil, err
-	}
-
-	return values, nil
+	return r.BulkGetWithContext(context.Background(), keys)
 }
 
 func (r LowLevelClientProxy) Save(key string, item *Item) error {
-	r.collector.IncrementCounter(r.GetContainerName(), "stats", "save")
-
-	start := time.Now()
-	err := r.lowLevelClient.Save(key, item)
-	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "save", time.Since(start))
-	if err != nil {
-		r.collector.IncrementCounter(r.GetContainerName(), "stats", "save_error")
-		return err
-	}
-
-	return nil
+	return r.SaveWithContext(context.Background(), key, item)
 }
 
 func (r LowLevelClientProxy) BulkSave(items *Items) error {
-	r.collector.IncrementCounter(r.GetContainerName(), "stats", "bulk_save")
-
-	start := time.Now()
-	err := r.lowLevelClient.BulkSave(items)
-	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "bulk_save", time.Since(start))
-	if err != nil {
-		r.collector.IncrementCounter(r.GetContainerName(), "stats", "bulk_save_error")
-		return err
-	}
-
-	return nil
+	return r.BulkSaveWithContext(context.Background(), items)
 }
 
 func (r LowLevelClientProxy) GetWithContext(ctx context.Context, key string) (*Item, error) {
@@ -110,6 +64,8 @@ func (r LowLevelClientProxy) GetWithContext(ctx context.Context, key string) (*I
 		}
 		return nil, err
 	}
+
+	r.collector.IncrementCounter(r.GetContainerName(), "stats", "hit")
 
 	return value, nil
 }
