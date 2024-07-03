@@ -66,3 +66,19 @@ resource "aws_dynamodb_table" "kvs-recommendations-table" {
 		Environment = "localstack"
 	}
 }
+
+resource "aws_dynamodb_table" "kvs-recommendations-cache" {
+	name         = "__kvs-recommendations-cache"
+	billing_mode = "PAY_PER_REQUEST"
+	hash_key     = "key"
+
+	attribute {
+		name = "key"
+		type = "S"
+	}
+
+	tags = {
+		Name        = "kvs"
+		Environment = "localstack"
+	}
+}

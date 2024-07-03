@@ -19,6 +19,7 @@ before_script:
     variables:
         GOPATH: $CI_PROJECT_DIR/.go
     before_script:
+        - if [ -d "$HOME" ]; then echo "machine gitlab.com login master_token password $GITLAB_TOKEN" > "$HOME/.netrc"; fi
         - mkdir -p .go
     cache:
         paths:
