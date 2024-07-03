@@ -17,6 +17,7 @@ image: docker.io/golang:${GO_VERSION}
         GOPATH: $CI_PROJECT_DIR/.go
         GOLANGCI_LINT_CACHE: $CI_PROJECT_DIR/.golangci-lint
     before_script:
+        - export PATH="${PATH}:${GOPATH}/bin"
         - if [ -d "$HOME" ]; then echo "machine gitlab.com login master_token password $GITLAB_TOKEN" > "$HOME/.netrc"; fi
         - mkdir -p .go .golangci-lint
     cache:
@@ -34,6 +35,7 @@ code_navigation:
         - go install github.com/sourcegraph/scip-go/cmd/scip-go@latest
         - scip-go
     script:
+        - if [ -d "$HOME" ]; then echo "machine gitlab.com login master_token password $GITLAB_TOKEN" > "$HOME/.netrc"; fi
         - git clone https://github.com/sourcegraph/scip.git --depth=1
         - cd scip
         - go build ./cmd/scip
