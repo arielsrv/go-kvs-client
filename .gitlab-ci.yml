@@ -32,10 +32,10 @@ code_navigation:
     stage: build
     allow_failure: true
     before_script:
+        - if [ -d "$HOME" ]; then echo "machine gitlab.com login master_token password $GITLAB_TOKEN" > "$HOME/.netrc"; fi
         - go install github.com/sourcegraph/scip-go/cmd/scip-go@latest
         - scip-go
     script:
-        - if [ -d "$HOME" ]; then echo "machine gitlab.com login master_token password $GITLAB_TOKEN" > "$HOME/.netrc"; fi
         - git clone https://github.com/sourcegraph/scip.git --depth=1
         - cd scip
         - go build ./cmd/scip
