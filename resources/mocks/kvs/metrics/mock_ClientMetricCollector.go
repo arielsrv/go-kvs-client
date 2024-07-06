@@ -107,42 +107,6 @@ func (_c *MockClientMetricCollector_RecordExecutionTime_Call) RunAndReturn(run f
 	return _c
 }
 
-// RecordValue provides a mock function with given fields: clientName, eventType, eventSubType, value
-func (_m *MockClientMetricCollector) RecordValue(clientName string, eventType string, eventSubType string, value float64) {
-	_m.Called(clientName, eventType, eventSubType, value)
-}
-
-// MockClientMetricCollector_RecordValue_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'RecordValue'
-type MockClientMetricCollector_RecordValue_Call struct {
-	*mock.Call
-}
-
-// RecordValue is a helper method to define mock.On call
-//   - clientName string
-//   - eventType string
-//   - eventSubType string
-//   - value float64
-func (_e *MockClientMetricCollector_Expecter) RecordValue(clientName interface{}, eventType interface{}, eventSubType interface{}, value interface{}) *MockClientMetricCollector_RecordValue_Call {
-	return &MockClientMetricCollector_RecordValue_Call{Call: _e.mock.On("RecordValue", clientName, eventType, eventSubType, value)}
-}
-
-func (_c *MockClientMetricCollector_RecordValue_Call) Run(run func(clientName string, eventType string, eventSubType string, value float64)) *MockClientMetricCollector_RecordValue_Call {
-	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(string), args[2].(string), args[3].(float64))
-	})
-	return _c
-}
-
-func (_c *MockClientMetricCollector_RecordValue_Call) Return() *MockClientMetricCollector_RecordValue_Call {
-	_c.Call.Return()
-	return _c
-}
-
-func (_c *MockClientMetricCollector_RecordValue_Call) RunAndReturn(run func(string, string, string, float64)) *MockClientMetricCollector_RecordValue_Call {
-	_c.Call.Return(run)
-	return _c
-}
-
 // Reset provides a mock function with given fields:
 func (_m *MockClientMetricCollector) Reset() {
 	_m.Called()

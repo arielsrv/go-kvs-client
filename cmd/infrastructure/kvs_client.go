@@ -9,7 +9,6 @@ type KVSClient[T any] interface {
 	BulkGet(key []string) ([]T, error)
 	Save(key string, item *T) error
 	BulkSave(items []T, keyMapper func(item T) string) error
-
 	GetWithContext(ctx context.Context, key string) (*T, error)
 	BulkGetWithContext(ctx context.Context, keys []string) ([]T, error)
 	SaveWithContext(ctx context.Context, key string, item *T) error

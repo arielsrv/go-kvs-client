@@ -86,39 +86,6 @@ func (_c *MockServiceCollector_RecordExecutionTime_Call) RunAndReturn(run func(m
 	return _c
 }
 
-// RecordValue provides a mock function with given fields: metric
-func (_m *MockServiceCollector) RecordValue(metric metrics.ValueDto) {
-	_m.Called(metric)
-}
-
-// MockServiceCollector_RecordValue_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'RecordValue'
-type MockServiceCollector_RecordValue_Call struct {
-	*mock.Call
-}
-
-// RecordValue is a helper method to define mock.On call
-//   - metric metrics.ValueDto
-func (_e *MockServiceCollector_Expecter) RecordValue(metric interface{}) *MockServiceCollector_RecordValue_Call {
-	return &MockServiceCollector_RecordValue_Call{Call: _e.mock.On("RecordValue", metric)}
-}
-
-func (_c *MockServiceCollector_RecordValue_Call) Run(run func(metric metrics.ValueDto)) *MockServiceCollector_RecordValue_Call {
-	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(metrics.ValueDto))
-	})
-	return _c
-}
-
-func (_c *MockServiceCollector_RecordValue_Call) Return() *MockServiceCollector_RecordValue_Call {
-	_c.Call.Return()
-	return _c
-}
-
-func (_c *MockServiceCollector_RecordValue_Call) RunAndReturn(run func(metrics.ValueDto)) *MockServiceCollector_RecordValue_Call {
-	_c.Call.Return(run)
-	return _c
-}
-
 // Reset provides a mock function with given fields:
 func (_m *MockServiceCollector) Reset() {
 	_m.Called()
