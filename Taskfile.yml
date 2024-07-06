@@ -5,12 +5,17 @@ env:
     TF_FOLDER: resources/setup/terraform
 
 tasks:
+    tf:clean:
+        cmds:
+            - rm -rf {{.TF_FOLDER}}/.terraform
+            - rm -rf {{.TF_FOLDER}}/.terraform.lock.hcl
+            - rm -rf {{.TF_FOLDER}}/terraform.tfstate
     tf:init:
         cmds:
             - (cd {{.TF_FOLDER}} || exit ; tflocal init)
     tf:apply:
         cmds:
-            - (cd {{.TF_FOLDER}} || exit ; tflocal apply)
+            - (cd {{.TF_FOLDER}} || exit ; tflocal apply -auto-approve)
     lint:
         desc: Use golangci-lint (.golangci.yml).
         cmds:

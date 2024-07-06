@@ -5,7 +5,7 @@ provider "aws" {
 	s3_use_path_style           = false
 	skip_credentials_validation = true
 	skip_metadata_api_check     = true
-	skip_requesting_account_id  = true
+	skip_requesting_account_id  = false
 
 	endpoints {
 		config         = "http://localhost:4566"
@@ -35,24 +35,8 @@ provider "aws" {
 	}
 }
 
-resource "aws_dynamodb_table" "kvs-users-table" {
-	name         = "__kvs-users-cache"
-	billing_mode = "PAY_PER_REQUEST"
-	hash_key     = "key"
-
-	attribute {
-		name = "key"
-		type = "S"
-	}
-
-	tags = {
-		Name        = "kvs"
-		Environment = "localstack"
-	}
-}
-
-resource "aws_dynamodb_table" "kvs-recommendations-table" {
-	name         = "__kvs-recommendations-cache"
+resource "aws_dynamodb_table" "kvs" {
+	name         = "__kvs-users-store"
 	billing_mode = "PAY_PER_REQUEST"
 	hash_key     = "key"
 
