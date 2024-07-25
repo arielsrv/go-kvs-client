@@ -7,8 +7,8 @@ toolchain go1.22.5
 require (
 	github.com/aws/aws-sdk-go-v2 v1.30.3
 	github.com/aws/aws-sdk-go-v2/config v1.27.27
-	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.14.9
-	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.34.3
+	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.14.10
+	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.34.4
 	github.com/aws/smithy-go v1.20.3
 	github.com/coocood/freecache v1.2.4
 	github.com/eko/gocache/lib/v4 v4.1.6
