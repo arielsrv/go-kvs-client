@@ -16,7 +16,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.19.1
 	github.com/stretchr/testify v1.9.0
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.7.0
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.7.1
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.21
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.0.28
 )
