@@ -210,6 +210,8 @@ github.com/valyala/tcplisten v1.0.0/go.mod h1:T0xQ8SeCZGxckz9qRXTfG43PvQ/mcWh7Fw
 github.com/yuin/goldmark v1.3.5/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.7.1 h1:KNVPi39cDY9lnCzz0jr/xinntqbnKpuUA5eC4LQU/jM=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.7.1/go.mod h1:PAFbTS0lOCL1nP6ePxZmNv9xJE9AGT9eZRqtu/aRs0w=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.7.2 h1:d1jpIRF2f5SblaEZcYeOoGiVw4+phVSdImlpzXAWcac=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.7.2/go.mod h1:NyIjCY+7CmF6SqV0j0lYfEi2gTCdSf1d/T4bCz1dW90=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.21 h1:fU4ccnl/Aj0i5xdl6Y38GbyeeB4OKG8sXYgBZWQlnhM=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.21/go.mod h1:HPejpkPVHSHNEBecrWuR9+4itbMySYRsBthyGn3sLUg=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.0.28 h1:YNwGss1gCO2p6GSN3dPF7LJ3aUUDBfAJ1AXb06+DlB0=
