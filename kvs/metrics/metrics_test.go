@@ -29,7 +29,6 @@ type TestApp struct {
 func (r *TestApp) Init() {
 	r.UseMetrics()
 	r.RegisterRoutes(new(Routes))
-	r.Build()
 }
 
 type Routes struct {
