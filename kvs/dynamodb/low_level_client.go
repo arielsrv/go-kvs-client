@@ -12,7 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
-	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
 
 type LowLevelClient struct {

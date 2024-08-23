@@ -5,7 +5,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
 
 type Builder struct {

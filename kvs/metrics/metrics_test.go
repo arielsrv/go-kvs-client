@@ -18,7 +18,7 @@ import (
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/metrics"
-	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient/rest"
 )
 

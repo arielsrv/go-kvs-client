@@ -6,7 +6,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	smithyendpoints "github.com/aws/smithy-go/endpoints"
-	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
 
 type Resolver struct {

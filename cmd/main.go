@@ -6,7 +6,7 @@ import (
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/infrastructure"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/model"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
-	log "gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
 
 func main() {
