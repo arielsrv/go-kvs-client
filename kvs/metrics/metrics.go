@@ -121,9 +121,8 @@ func (m *metricDto) BuildLabels() []string {
 }
 
 type CounterDto struct {
-	values []float64
-
 	metricDto
+	values []float64
 }
 
 func (c *CounterDto) BuildLabels() []string {
@@ -131,9 +130,8 @@ func (c *CounterDto) BuildLabels() []string {
 }
 
 type TimerDto struct {
-	elapsedTime time.Duration
-
 	metricDto
+	elapsedTime time.Duration
 }
 
 func (t *TimerDto) BuildLabels() []string {
@@ -156,9 +154,8 @@ func getLabels() []string {
 }
 
 type ValueDto struct {
-	value float64
-
 	metricDto
+	value float64
 }
 
 func (t *ValueDto) BuildLabels() []string {

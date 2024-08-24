@@ -49,7 +49,6 @@ func main() {
 	}, func(userDTO model.UserDTO) string {
 		return strconv.Itoa(userDTO.ID)
 	})
-
 	if err != nil {
 		log.Error(err)
 	}

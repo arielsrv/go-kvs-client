@@ -114,7 +114,6 @@ func (r LowLevelClient) SaveWithContext(ctx context.Context, key string, item *k
 		TableName: r.getTableName(),
 		Item:      r.createItem(item, bytes),
 	})
-
 	if err != nil {
 		return err
 	}

@@ -3,8 +3,8 @@ package kvs
 import "encoding/json"
 
 type Item struct {
-	Key   string
 	Value any
+	Key   string
 	TTL   int
 }
 

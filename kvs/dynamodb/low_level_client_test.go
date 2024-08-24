@@ -9,8 +9,8 @@ import (
 )
 
 type Test struct {
-	ID   int
 	Name string
+	ID   int
 }
 
 func TestClient_SaveAndGet(t *testing.T) {

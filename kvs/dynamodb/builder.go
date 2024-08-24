@@ -9,9 +9,9 @@ import (
 )
 
 type Builder struct {
-	ttl           int
 	containerName string
 	rawURL        string
+	ttl           int
 }
 
 type BuilderOptions func(f *Builder)

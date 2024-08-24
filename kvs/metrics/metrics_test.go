@@ -47,7 +47,6 @@ func (r *Routes) Register() {
 		Key:   "my-key",
 		Value: "my-value",
 	})
-
 	if err != nil {
 		log.Fatal(err)
 	}
