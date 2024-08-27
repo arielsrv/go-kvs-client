@@ -5,6 +5,16 @@ import (
 	"slices"
 )
 
+type Iterable interface {
+	All() iter.Seq[*Item]
+}
+
+type List interface {
+	Add(item *Item)
+	Len() int
+	All() iter.Seq[*Item]
+}
+
 type Items struct {
 	items []*Item
 }
