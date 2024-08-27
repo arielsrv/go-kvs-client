@@ -56,12 +56,11 @@ func (r AWSKVSClient[T]) BulkGetWithContext(ctx context.Context, keys []string) 
 		return nil, err
 	}
 
-	for i := range items.GetOks() {
-		item := items.Items[i]
+	for item := range items.All() {
 		value := new(T)
 		mErr := item.TryGetValueAsObjectType(&value)
 		if mErr != nil {
-			log.Errorf("[kvs]: error unmarshalling value for item %d: %v", i, item)
+			log.Errorf("[kvs]: error unmarshalling value for item %v", item)
 			continue
 		}
 

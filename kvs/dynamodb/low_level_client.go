@@ -159,17 +159,17 @@ func (r LowLevelClient) BulkGetWithContext(ctx context.Context, keys []string) (
 	for key, value := range batchGetItemOutput.Responses {
 		log.Debugf("[kvs]: key: %v", key)
 
-		var found []Item
-		err = attributevalue.UnmarshalListOfMaps(value, &found)
+		var item []Item
+		err = attributevalue.UnmarshalListOfMaps(value, &item)
 		if err != nil {
 			log.Errorf("[kvs]: error unmarshalling value: %v", err)
 			return nil, err
 		}
 
-		for i := range found {
+		for i := range item {
 			items.Add(&kvs.Item{
-				Key:   found[i].Key,
-				Value: found[i].Value,
+				Key:   item[i].Key,
+				Value: item[i].Value,
 			})
 		}
 	}
@@ -186,8 +186,7 @@ func (r LowLevelClient) BulkSave(items *kvs.Items) error {
 func (r LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.Items) error {
 	items := make([]types.WriteRequest, 0, kvsItems.Len())
 
-	for i := range kvsItems.Items {
-		item := kvsItems.Items[i]
+	for item := range kvsItems.All() {
 		bytes, err := json.Marshal(item.Value)
 		if err != nil {
 			log.Errorf("[kvs]: error marshalling value: %v", err)

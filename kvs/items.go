@@ -1,17 +1,22 @@
 package kvs
 
+import (
+	"iter"
+	"slices"
+)
+
 type Items struct {
-	Items []*Item
+	items []*Item
 }
 
 func (r *Items) Add(item *Item) {
-	r.Items = append(r.Items, item)
+	r.items = append(r.items, item)
 }
 
 func (r *Items) Len() int {
-	return len(r.Items)
+	return len(r.items)
 }
 
-func (r *Items) GetOks() []*Item {
-	return r.Items
+func (r *Items) All() iter.Seq[*Item] {
+	return slices.Values(r.items)
 }

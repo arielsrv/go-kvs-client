@@ -1,6 +1,7 @@
 package kvs_test
 
 import (
+	"iter"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -16,6 +17,17 @@ func TestItems_Add(t *testing.T) {
 	items.Add(item2)
 
 	require.Equal(t, 2, items.Len())
-	require.Equal(t, item1, items.GetOks()[0])
-	require.Equal(t, item2, items.GetOks()[1])
+
+	current, stop := iter.Pull(items.All())
+	defer stop()
+
+	item, hasNext := current()
+	require.True(t, hasNext)
+	require.Equal(t, "key1", item.Key)
+	require.Equal(t, "value1", item.Value)
+
+	item, hasNext = current()
+	require.True(t, hasNext)
+	require.Equal(t, "key2", item.Key)
+	require.Equal(t, "value2", item.Value)
 }

@@ -1,6 +1,7 @@
 package dynamodb_test
 
 import (
+	"slices"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -101,14 +102,13 @@ func TestClient_BulkSave_And_BulkGet(t *testing.T) {
 	actual, err := lowLevelClient.BulkGet([]string{"1", "2"})
 	require.NoError(t, err)
 
-	for i := range actual.GetOks() {
-		current := actual.GetOks()[i]
+	for current := range actual.All() {
 		actualValue := new(Test)
 		err = current.TryGetValueAsObjectType(&actualValue)
 		require.NoError(t, err)
 	}
 
-	require.Len(t, actual.GetOks(), 2)
+	require.Len(t, slices.Collect(actual.All()), 2)
 }
 
 func TestEmptyKeyInGet(t *testing.T) {
