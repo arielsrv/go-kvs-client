@@ -37,19 +37,16 @@ func TestLowLevelClientProxy_BulkGet(t *testing.T) {
 
 	proxy := kvs.NewLowLevelClientProxy(lowLevelClient)
 
-	items := &kvs.Items{
-		Items: []*kvs.Item{
-			kvs.NewItem("key1", "value1"),
-			kvs.NewItem("key2", "value2"),
-		},
-	}
+	items := new(kvs.Items)
+	items.Add(kvs.NewItem("key1", "value1"))
+	items.Add(kvs.NewItem("key2", "value2"))
 
 	err := proxy.BulkSave(items)
 	require.NoError(t, err)
 
 	bulkItems, err := proxy.BulkGet([]string{"key1", "key2", "key3"})
 	require.NoError(t, err)
-	require.Len(t, bulkItems.Items, 2)
+	require.Equal(t, 2, bulkItems.Len())
 }
 
 func TestLowLevelClientProxy_BulkSave(t *testing.T) {
@@ -57,12 +54,9 @@ func TestLowLevelClientProxy_BulkSave(t *testing.T) {
 
 	proxy := kvs.NewLowLevelClientProxy(lowLevelClient)
 
-	items := &kvs.Items{
-		Items: []*kvs.Item{
-			kvs.NewItem("key1", "value1"),
-			kvs.NewItem("key2", "value2"),
-		},
-	}
+	items := new(kvs.Items)
+	items.Add(kvs.NewItem("key1", "value1"))
+	items.Add(kvs.NewItem("key2", "value2"))
 
 	err := proxy.BulkSave(items)
 	require.NoError(t, err)
