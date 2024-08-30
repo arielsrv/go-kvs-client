@@ -16,7 +16,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.20.2
 	github.com/stretchr/testify v1.9.0
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.9.2
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.9.4
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.22
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.0.29
 )
@@ -84,7 +84,7 @@ require (
 	github.com/rs/zerolog v1.33.0 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
-	github.com/samber/lo v1.38.1 // indirect
+	github.com/samber/lo v1.47.0 // indirect
 	github.com/samber/oops v1.13.1 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.11.0 // indirect
@@ -122,7 +122,7 @@ require (
 	golang.org/x/tools v0.24.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240822170219-fc7c04adadcd // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240822170219-fc7c04adadcd // indirect
-	google.golang.org/grpc v1.65.0 // indirect
+	google.golang.org/grpc v1.66.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
