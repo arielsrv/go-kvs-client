@@ -4,7 +4,7 @@ variables:
     GOEXPERIMENT: nocoverageredesign
 
     # golang parameters
-    GO_VERSION: '1.22.6'
+    GO_VERSION: '1.23.0'
     GOLANGCI_LINT_VERSION: latest
 
 default:
