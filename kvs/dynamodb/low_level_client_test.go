@@ -45,7 +45,7 @@ func TestClient_SaveAndGet(t *testing.T) {
 	require.Equal(t, input.Key, actual.Key)
 }
 
-func TestClient_Get_ErrKeyNotFound(t *testing.T) {
+func TestClient_Get_KeyNotFound(t *testing.T) {
 	kvsClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
 
 	item, err := kvsClient.Get("1")
@@ -54,7 +54,7 @@ func TestClient_Get_ErrKeyNotFound(t *testing.T) {
 	require.Nil(t, item)
 }
 
-func TestClient_Get_ErrEmptyKey(t *testing.T) {
+func TestClient_Get_EmptyKey(t *testing.T) {
 	kvsClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
 
 	item, err := kvsClient.Get("")

@@ -1,12 +1,16 @@
 package kvs
 
-import "errors"
-
-var (
-	ErrEmptyKey    = errors.New("[kvs]: key cannot be empty")
-	ErrKeyNotFound = errors.New("[kvs]: key not found")
-	ErrNilItem     = errors.New("[kvs]: item cannot be nil")
-	ErrConvert     = errors.New("[kvs]: failed to convert item")
-	ErrTooManyKeys = errors.New("[kvs]: too many keys")
-	ErrInternal    = errors.New("[kvs]: internal error")
+const (
+	ErrKeyNotFound = KeyValueError("[kvs]: key not found")
+	ErrEmptyKey    = KeyValueError("[kvs]: key cannot be empty")
+	ErrNilItem     = KeyValueError("[kvs]: item cannot be nil")
+	ErrMarshal     = KeyValueError("[kvs]: failed to convert item")
+	ErrTooManyKeys = KeyValueError("[kvs]: too many keys")
+	ErrInternal    = KeyValueError("[kvs]: internal error")
 )
+
+type KeyValueError string
+
+func (r KeyValueError) Error() string {
+	return string(r)
+}

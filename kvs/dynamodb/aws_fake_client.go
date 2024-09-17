@@ -29,12 +29,12 @@ func NewAWSFakeClient() *AWSFakeClient {
 func (r AWSFakeClient) PutItem(ctx context.Context, params *dynamodb.PutItemInput, _ ...func(*dynamodb.Options)) (*dynamodb.PutItemOutput, error) {
 	keyMember, convert := params.Item[KeyName].(*types.AttributeValueMemberS)
 	if !convert {
-		return nil, kvs.ErrConvert
+		return nil, kvs.ErrMarshal
 	}
 
 	valueMember, convert := params.Item[ValueName].(*types.AttributeValueMemberS)
 	if !convert {
-		return nil, kvs.ErrConvert
+		return nil, kvs.ErrMarshal
 	}
 
 	if err := r.cache.Set(ctx, keyMember.Value, []byte(valueMember.Value)); err != nil {
@@ -47,7 +47,7 @@ func (r AWSFakeClient) PutItem(ctx context.Context, params *dynamodb.PutItemInpu
 func (r AWSFakeClient) GetItem(ctx context.Context, params *dynamodb.GetItemInput, _ ...func(*dynamodb.Options)) (*dynamodb.GetItemOutput, error) {
 	keyMember, convert := params.Key[KeyName].(*types.AttributeValueMemberS)
 	if !convert {
-		return nil, kvs.ErrConvert
+		return nil, kvs.ErrMarshal
 	}
 
 	value, err := r.cache.Get(ctx, keyMember.Value)
