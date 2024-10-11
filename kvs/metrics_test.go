@@ -1,4 +1,4 @@
-package metrics_test
+package kvs_test
 
 import (
 	"context"
@@ -9,15 +9,15 @@ import (
 	"testing"
 	"time"
 
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
+
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2/core"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2/core/application"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2/core/routing"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/metrics"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient/rest"
 )
@@ -90,7 +90,6 @@ func TestCollector_IncrementCounter(t *testing.T) {
 
 	go func() {
 		time.Sleep(500 * time.Millisecond)
-		metrics.ProvideMetricCollector().Reset()
 
 		requestBuilder := rest.RequestBuilder{
 			BaseURL: fmt.Sprintf("http://0.0.0.0:%d", port),
@@ -106,14 +105,27 @@ func TestCollector_IncrementCounter(t *testing.T) {
 
 		got := response.String()
 
-		want := fmt.Sprintf(`kvs_counter{application="kvs-client",client_name="users-cache",environment="local",event_subtype="hit",event_type="stats",service_type="go-kvs-client"} %d`, 1)
-
+		want := fmt.Sprintf(`__kvs_stats{client_name="users-cache",stats="hit"} %d`, 1)
 		if !strings.Contains(got, want) {
 			t.Errorf("got %s; want %s", got, want)
 		}
 
-		want = fmt.Sprintf(`kvs_counter{application="kvs-client",client_name="users-cache",environment="local",event_subtype="miss",event_type="stats",service_type="go-kvs-client"} %d`, 1)
+		want = fmt.Sprintf(`__kvs_stats{client_name="users-cache",stats="miss"} %d`, 1)
+		if !strings.Contains(got, want) {
+			t.Errorf("got %s; want %s", got, want)
+		}
 
+		want = fmt.Sprintf(`__kvs_stats{client_name="users-cache",stats="save"} %d`, 1)
+		if !strings.Contains(got, want) {
+			t.Errorf("got %s; want %s", got, want)
+		}
+
+		want = fmt.Sprintf(`__kvs_stats{client_name="users-cache",stats="save"} %d`, 1)
+		if !strings.Contains(got, want) {
+			t.Errorf("got %s; want %s", got, want)
+		}
+
+		want = fmt.Sprintf(`__kvs_connection_count{client_name="users-cache",type="save"} %d`, 1)
 		if !strings.Contains(got, want) {
 			t.Errorf("got %s; want %s", got, want)
 		}

@@ -4,8 +4,9 @@ import (
 	"context"
 	"time"
 
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector/metrics"
+
 	"github.com/pkg/errors"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/metrics"
 )
 
 type LowLevelClient interface {
@@ -22,13 +23,11 @@ type LowLevelClient interface {
 
 type LowLevelClientProxy struct {
 	lowLevelClient LowLevelClient
-	collector      *metrics.Collector
 }
 
 func NewLowLevelClientProxy(lowLevelClient LowLevelClient) LowLevelClientProxy {
 	return LowLevelClientProxy{
 		lowLevelClient: lowLevelClient,
-		collector:      metrics.ProvideMetricCollector(),
 	}
 }
 
@@ -49,31 +48,54 @@ func (r LowLevelClientProxy) BulkSave(items *Items) error {
 }
 
 func (r LowLevelClientProxy) GetWithContext(ctx context.Context, key string) (*Item, error) {
-	r.collector.IncrementCounter(r.GetContainerName(), "stats", "get")
+	metrics.Collector.Prometheus().IncrementCounter("__kvs_operations", metrics.Tags{
+		"client_name": r.lowLevelClient.GetContainerName(),
+		"type":        "get",
+	})
 
 	start := time.Now()
 	value, err := r.lowLevelClient.GetWithContext(ctx, key)
-	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "get", time.Since(start))
+
+	metrics.Collector.Prometheus().RecordExecutionTime("__kvs_connection", time.Since(start), metrics.Tags{
+		"client_name": r.lowLevelClient.GetContainerName(),
+		"type":        "get",
+	})
+
 	if err != nil {
 		if errors.Is(err, ErrKeyNotFound) {
-			r.collector.IncrementCounter(r.GetContainerName(), "stats", "miss")
+			metrics.Collector.Prometheus().IncrementCounter("__kvs_stats", metrics.Tags{
+				"client_name": r.lowLevelClient.GetContainerName(),
+				"stats":       "miss",
+			})
 		} else {
-			r.collector.IncrementCounter(r.GetContainerName(), "stats", "get_error")
+			metrics.Collector.Prometheus().IncrementCounter("__kvs_stats", metrics.Tags{
+				"client_name": r.lowLevelClient.GetContainerName(),
+				"stats":       "error",
+			})
 		}
 		return nil, err
 	}
 
-	r.collector.IncrementCounter(r.GetContainerName(), "stats", "hit")
+	metrics.Collector.Prometheus().IncrementCounter("__kvs_stats", metrics.Tags{
+		"client_name": r.lowLevelClient.GetContainerName(),
+		"stats":       "hit",
+	})
 
 	return value, nil
 }
 
 func (r LowLevelClientProxy) SaveWithContext(ctx context.Context, key string, item *Item) error {
-	r.collector.IncrementCounter(r.GetContainerName(), "stats", "save")
+	metrics.Collector.Prometheus().IncrementCounter("__kvs_stats", metrics.Tags{
+		"client_name": r.lowLevelClient.GetContainerName(),
+		"stats":       "save",
+	})
 
 	start := time.Now()
 	err := r.lowLevelClient.SaveWithContext(ctx, key, item)
-	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "save", time.Since(start))
+	metrics.Collector.Prometheus().RecordExecutionTime("__kvs_connection", time.Since(start), metrics.Tags{
+		"client_name": r.lowLevelClient.GetContainerName(),
+		"type":        "save",
+	})
 	if err != nil {
 		return err
 	}
@@ -82,11 +104,17 @@ func (r LowLevelClientProxy) SaveWithContext(ctx context.Context, key string, it
 }
 
 func (r LowLevelClientProxy) BulkGetWithContext(ctx context.Context, key []string) (*Items, error) {
-	r.collector.IncrementCounter(r.GetContainerName(), "stats", "get")
+	metrics.Collector.Prometheus().IncrementCounter("__kvs_stats", metrics.Tags{
+		"client_name": r.lowLevelClient.GetContainerName(),
+		"stats":       "bulk_get",
+	})
 
 	start := time.Now()
 	values, err := r.lowLevelClient.BulkGetWithContext(ctx, key)
-	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "bulk_get", time.Since(start))
+	metrics.Collector.Prometheus().RecordExecutionTime("__kvs_connection", time.Since(start), metrics.Tags{
+		"client_name": r.lowLevelClient.GetContainerName(),
+		"type":        "bulk_get",
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -95,11 +123,17 @@ func (r LowLevelClientProxy) BulkGetWithContext(ctx context.Context, key []strin
 }
 
 func (r LowLevelClientProxy) BulkSaveWithContext(ctx context.Context, items *Items) error {
-	r.collector.IncrementCounter(r.GetContainerName(), "stats", "save")
+	metrics.Collector.Prometheus().IncrementCounter("__kvs_stats", metrics.Tags{
+		"client_name": r.lowLevelClient.GetContainerName(),
+		"stats":       "bulk_save",
+	})
 
 	start := time.Now()
 	err := r.lowLevelClient.BulkSaveWithContext(ctx, items)
-	r.collector.RecordExecutionTime(r.GetContainerName(), "connection_time", "bulk_save", time.Since(start))
+	metrics.Collector.Prometheus().RecordExecutionTime("__kvs_connection", time.Since(start), metrics.Tags{
+		"client_name": r.lowLevelClient.GetContainerName(),
+		"type":        "bulk_save",
+	})
 	if err != nil {
 		return err
 	}

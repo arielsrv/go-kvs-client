@@ -46,13 +46,13 @@ func WithEndpointResolver(rawURL string) BuilderOptions {
 }
 
 func (r Builder) Build() *LowLevelClient {
-	cfg, err := config.LoadDefaultConfig(context.Background())
+	defaultConfig, err := config.LoadDefaultConfig(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	return NewLowLevelClient(
-		dynamodb.NewFromConfig(cfg, func(opts *dynamodb.Options) {
+		dynamodb.NewFromConfig(defaultConfig, func(opts *dynamodb.Options) {
 			opts.EndpointResolverV2 = NewResolver(r.rawURL)
 		}),
 		r.containerName,
