@@ -17,8 +17,8 @@ import (
 
 type LowLevelClient struct {
 	AWSClient
-	containerName string
-	ttl           int
+	tableName string
+	ttl       int
 }
 
 const (
@@ -27,14 +27,10 @@ const (
 	TTLName   = "ttl"
 )
 
-func (r LowLevelClient) GetContainerName() string {
-	return r.containerName
-}
-
 func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...int) *LowLevelClient {
 	lowLevelClient := &LowLevelClient{
-		containerName: containerName,
-		AWSClient:     awsClient,
+		tableName: containerName,
+		AWSClient: awsClient,
 	}
 
 	log.Debugf("[kvs]: setting container name to %s", containerName)
@@ -48,7 +44,7 @@ func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...int) *L
 }
 
 func (r LowLevelClient) getTableName() *string {
-	return aws.String(fmt.Sprintf("__kvs-%s", r.containerName))
+	return aws.String(fmt.Sprintf("__kvs-%s", r.tableName))
 }
 
 func (r LowLevelClient) Get(key string) (*kvs.Item, error) {
@@ -215,6 +211,10 @@ func (r LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.I
 	log.Debugf("[kvs]: batchWriteItemOutput: %+v", batchWriteItemOutput)
 
 	return nil
+}
+
+func (r LowLevelClient) ContainerName() string {
+	return r.tableName
 }
 
 func (r LowLevelClient) createItem(item *kvs.Item, bytes []byte) map[string]types.AttributeValue {
