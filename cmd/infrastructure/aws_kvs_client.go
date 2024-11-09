@@ -11,7 +11,7 @@ type AWSKVSClient[T any] struct {
 	lowLevelClient kvs.LowLevelClientProxy
 }
 
-func NewAWSKVSClient[T any](lowLevelClient kvs.KVSClient) *AWSKVSClient[T] {
+func NewAWSKVSClient[T any](lowLevelClient kvs.Client) *AWSKVSClient[T] {
 	return &AWSKVSClient[T]{
 		lowLevelClient: kvs.NewLowLevelClientProxy(lowLevelClient),
 	}

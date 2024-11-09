@@ -2,6 +2,7 @@ package dynamodb
 
 import (
 	"context"
+	"sync"
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
@@ -9,9 +10,11 @@ import (
 )
 
 type Builder struct {
-	containerName string
-	rawURL        string
-	ttl           int
+	lowLevelClient *LowLevelClient
+	containerName  string
+	rawURL         string
+	ttl            int
+	once           sync.Once
 }
 
 type BuilderOptions func(f *Builder)
@@ -45,17 +48,21 @@ func WithEndpointResolver(rawURL string) BuilderOptions {
 	}
 }
 
-func (r Builder) Build() *LowLevelClient {
+func (r *Builder) Build() *LowLevelClient {
 	defaultConfig, err := config.LoadDefaultConfig(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return NewLowLevelClient(
-		dynamodb.NewFromConfig(defaultConfig, func(opts *dynamodb.Options) {
-			opts.EndpointResolverV2 = NewResolver(r.rawURL)
-		}),
-		r.containerName,
-		r.ttl,
-	)
+	r.once.Do(func() {
+		r.lowLevelClient = NewLowLevelClient(
+			dynamodb.NewFromConfig(defaultConfig, func(opts *dynamodb.Options) {
+				opts.EndpointResolverV2 = NewResolver(r.rawURL)
+			}),
+			r.containerName,
+			r.ttl,
+		)
+	})
+
+	return r.lowLevelClient
 }

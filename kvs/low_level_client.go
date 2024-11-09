@@ -9,7 +9,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-type KVSClient interface {
+type Client interface {
 	Get(key string) (*Item, error)
 	BulkGet(keys []string) (*Items, error)
 	Save(key string, item *Item) error
@@ -22,10 +22,10 @@ type KVSClient interface {
 }
 
 type LowLevelClientProxy struct {
-	lowLevelClient KVSClient
+	lowLevelClient Client
 }
 
-func NewLowLevelClientProxy(lowLevelClient KVSClient) LowLevelClientProxy {
+func NewLowLevelClientProxy(lowLevelClient Client) LowLevelClientProxy {
 	return LowLevelClientProxy{
 		lowLevelClient: lowLevelClient,
 	}
