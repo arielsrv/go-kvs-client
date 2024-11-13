@@ -218,8 +218,8 @@ gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.22 h1:2VGkC01H0ikWPA
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.22/go.mod h1:wSRcQDeJ7V5iZpna6gbAMMthW+iqTxbfcDeVEcL1nas=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.17 h1:/Ct6E89tjWEJFUH0xgLm7wV7TNItC8Am55oMIKMdD0o=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.17/go.mod h1:ZjUZKooo1lB7hn+AKfDnkEpYZW/4/E3lKni9y8/qhss=
-gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.0.31 h1:P0UbZzRATJnprghLXbt+a5C+AKy7M1Rvpu9JncfoYVM=
-gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.0.31/go.mod h1:N+OS7wE0gNhCUBzok2rnIja2HYJvgslmHTd8PVAYjIQ=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.0.32 h1:DLChXVjmCQjOE/Fz6X5tDj0j5KwYizChCNVTmkye0kk=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.0.32/go.mod h1:N+OS7wE0gNhCUBzok2rnIja2HYJvgslmHTd8PVAYjIQ=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-sdk-config v0.0.16 h1:FD1Rid6SVTsJumTvADOeBtVEHhfxSgTmiE5k0aDKu9U=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-sdk-config v0.0.16/go.mod h1:qUJJhYcPYFN3bfVcAVuBO55ZpgjbzUaLPHIZmA/owWg=
 go.opentelemetry.io/contrib v1.17.0 h1:lJJdtuNsP++XHD7tXDYEFSpsqIc7DzShuXMR5PwkmzA=

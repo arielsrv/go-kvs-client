@@ -2,16 +2,16 @@ package dynamodb
 
 import (
 	"context"
+
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
 
 type Builder struct {
-	lowLevelClient *LowLevelClient
-	containerName  string
-	rawURL         string
-	ttl            int
+	containerName string
+	rawURL        string
+	ttl           int
 }
 
 type BuilderOptions func(f *Builder)

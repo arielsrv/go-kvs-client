@@ -16,7 +16,7 @@ require (
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.10.16
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.22
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.17
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.0.31
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.0.32
 )
 
 require (

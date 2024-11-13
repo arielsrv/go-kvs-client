@@ -16,7 +16,12 @@ func NewItem(key string, value any) *Item {
 }
 
 func (r Item) TryGetValueAsObjectType(out any) error {
-	err := json.Unmarshal([]byte(r.Value.(string)), out)
+	value, ok := r.Value.(string)
+	if !ok {
+		return ErrMarshal
+	}
+
+	err := json.Unmarshal([]byte(value), out)
 	if err != nil {
 		return err
 	}
