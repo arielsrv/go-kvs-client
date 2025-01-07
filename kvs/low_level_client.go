@@ -4,9 +4,8 @@ import (
 	"context"
 	"time"
 
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector/metrics"
-
 	"github.com/pkg/errors"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector/metrics"
 )
 
 type Client interface {

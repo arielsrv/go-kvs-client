@@ -9,14 +9,13 @@ import (
 	"testing"
 	"time"
 
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
-
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2/core"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2/core/application"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2/core/routing"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient/rest"
@@ -26,7 +25,7 @@ type TestApp struct {
 	application.APIApplication
 }
 
-func (r *TestApp) Init() {
+func (r *TestApp) OnStart() {
 	r.UseMetrics()
 	r.RegisterRoutes(new(Routes))
 }
@@ -91,7 +90,7 @@ func TestCollector_IncrementCounter(t *testing.T) {
 	go func() {
 		time.Sleep(500 * time.Millisecond)
 
-		requestBuilder := rest.RequestBuilder{
+		requestBuilder := rest.Client{
 			BaseURL: fmt.Sprintf("http://0.0.0.0:%d", port),
 		}
 
