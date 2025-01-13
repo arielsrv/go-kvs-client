@@ -49,7 +49,7 @@ func (_c *MockBuilderOptions_Execute_Call) Return() *MockBuilderOptions_Execute_
 }
 
 func (_c *MockBuilderOptions_Execute_Call) RunAndReturn(run func(*dynamodb.Builder)) *MockBuilderOptions_Execute_Call {
-	_c.Call.Return(run)
+	_c.Run(run)
 	return _c
 }
 

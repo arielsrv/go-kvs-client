@@ -51,11 +51,11 @@ func (_c *MockList_Add_Call) Return() *MockList_Add_Call {
 }
 
 func (_c *MockList_Add_Call) RunAndReturn(run func(*kvs.Item)) *MockList_Add_Call {
-	_c.Call.Return(run)
+	_c.Run(run)
 	return _c
 }
 
-// All provides a mock function with given fields:
+// All provides a mock function with no fields
 func (_m *MockList) All() iter.Seq[*kvs.Item] {
 	ret := _m.Called()
 
@@ -102,7 +102,7 @@ func (_c *MockList_All_Call) RunAndReturn(run func() iter.Seq[*kvs.Item]) *MockL
 	return _c
 }
 
-// Len provides a mock function with given fields:
+// Len provides a mock function with no fields
 func (_m *MockList) Len() int {
 	ret := _m.Called()
 

@@ -232,7 +232,7 @@ func (_c *MockClient_BulkSaveWithContext_Call) RunAndReturn(run func(context.Con
 	return _c
 }
 
-// ContainerName provides a mock function with given fields:
+// ContainerName provides a mock function with no fields
 func (_m *MockClient) ContainerName() string {
 	ret := _m.Called()
 

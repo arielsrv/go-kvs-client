@@ -22,7 +22,7 @@ func (_m *MockIterable) EXPECT() *MockIterable_Expecter {
 	return &MockIterable_Expecter{mock: &_m.Mock}
 }
 
-// All provides a mock function with given fields:
+// All provides a mock function with no fields
 func (_m *MockIterable) All() iter.Seq[*kvs.Item] {
 	ret := _m.Called()
 
