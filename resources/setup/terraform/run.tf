@@ -39,6 +39,9 @@ resource "aws_dynamodb_table" "kvs" {
 	name         = "__kvs-users-store"
 	billing_mode = "PAY_PER_REQUEST"
 	hash_key     = "key"
+	point_in_time_recovery {
+		enabled = false
+	}
 
 	attribute {
 		name = "key"
@@ -47,7 +50,7 @@ resource "aws_dynamodb_table" "kvs" {
 
 	ttl {
 		attribute_name = "ttl"
-		enabled = true
+		enabled        = true
 	}
 
 	tags = {
