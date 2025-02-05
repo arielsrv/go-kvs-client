@@ -81,6 +81,7 @@ func (r LowLevelClient) GetWithContext(ctx context.Context, key string) (*kvs.It
 	return &kvs.Item{
 		Key:   item.Key,
 		Value: item.Value,
+		TTL:   item.TTL,
 	}, nil
 }
 

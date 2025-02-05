@@ -45,6 +45,11 @@ resource "aws_dynamodb_table" "kvs" {
 		type = "S"
 	}
 
+	ttl {
+		attribute_name = "ttl"
+		enabled = true
+	}
+
 	tags = {
 		Name        = "kvs"
 		Environment = "localstack"

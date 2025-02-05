@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/infrastructure"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/cmd/model"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/infrastructure"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/model"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 )
 

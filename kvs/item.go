@@ -8,11 +8,17 @@ type Item struct {
 	TTL   int
 }
 
-func NewItem(key string, value any) *Item {
-	return &Item{
+func NewItem(key string, value any, ttl ...int) *Item {
+	item := &Item{
 		Key:   key,
 		Value: value,
 	}
+
+	if len(ttl) > 0 {
+		item.TTL = ttl[0]
+	}
+
+	return item
 }
 
 func (r Item) TryGetValueAsObjectType(out any) error {
