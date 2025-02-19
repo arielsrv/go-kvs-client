@@ -1,22 +1,22 @@
 module gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client
 
-go 1.23.5
+go 1.24.0
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.36.0
-	github.com/aws/aws-sdk-go-v2/config v1.29.5
-	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.18.1
-	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.39.9
-	github.com/aws/smithy-go v1.22.2
+	github.com/aws/aws-sdk-go-v2 v1.36.2
+	github.com/aws/aws-sdk-go-v2/config v1.29.7
+	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.18.5
+	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.40.2
+	github.com/aws/smithy-go v1.22.3
 	github.com/coocood/freecache v1.2.4
 	github.com/eko/gocache/lib/v4 v4.2.0
 	github.com/eko/gocache/store/freecache/v4 v4.2.2
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.10.0
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.20.24
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.20.30
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.20
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.26
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.22
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.28
 )
 
 require (
@@ -24,18 +24,18 @@ require (
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/andybalholm/brotli v1.1.1 // indirect
-	github.com/aws/aws-sdk-go-v2/credentials v1.17.58 // indirect
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.16.27 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.31 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.6.31 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/ini v1.8.2 // indirect
-	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.24.19 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.12.2 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.10.12 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.12.12 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.24.14 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.28.13 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.33.13 // indirect
+	github.com/aws/aws-sdk-go-v2/credentials v1.17.60 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.16.29 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.33 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.6.33 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/ini v1.8.3 // indirect
+	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.24.21 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.12.3 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.10.14 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.12.14 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.24.16 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.28.15 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.33.15 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -53,7 +53,7 @@ require (
 	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.24.0 // indirect
+	github.com/go-playground/validator/v10 v10.25.0 // indirect
 	github.com/gofiber/adaptor/v2 v2.2.1 // indirect
 	github.com/gofiber/contrib/otelfiber v1.0.10 // indirect
 	github.com/gofiber/fiber/v2 v2.52.6 // indirect
@@ -78,9 +78,9 @@ require (
 	github.com/oklog/ulid/v2 v2.1.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
-	github.com/prometheus/client_golang v1.20.5 // indirect
+	github.com/prometheus/client_golang v1.21.0 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
-	github.com/prometheus/common v0.55.0 // indirect
+	github.com/prometheus/common v0.62.0 // indirect
 	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/rivo/uniseg v0.4.3 // indirect
 	github.com/rs/zerolog v1.33.0 // indirect
@@ -98,8 +98,7 @@ require (
 	github.com/swaggo/files/v2 v2.0.2 // indirect
 	github.com/swaggo/swag v1.16.4 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasthttp v1.58.0 // indirect
-	github.com/valyala/tcplisten v1.0.0 // indirect
+	github.com/valyala/fasthttp v1.59.0 // indirect
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-sdk-config v0.0.16 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/contrib v1.17.0 // indirect
@@ -118,13 +117,13 @@ require (
 	go.uber.org/dig v1.18.0 // indirect
 	go.uber.org/mock v0.4.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
-	golang.org/x/crypto v0.32.0 // indirect
+	golang.org/x/crypto v0.33.0 // indirect
 	golang.org/x/exp v0.0.0-20240416160154-fe59bbe5cc7f // indirect
-	golang.org/x/net v0.34.0 // indirect
-	golang.org/x/oauth2 v0.25.0 // indirect
-	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/sys v0.29.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/net v0.35.0 // indirect
+	golang.org/x/oauth2 v0.26.0 // indirect
+	golang.org/x/sync v0.11.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250115164207-1a7da9e5054f // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250115164207-1a7da9e5054f // indirect

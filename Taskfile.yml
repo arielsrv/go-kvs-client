@@ -22,6 +22,10 @@ tasks:
             - go run github.com/golangci/golangci-lint/cmd/golangci-lint@latest run --fix
             - go run mvdan.cc/gofumpt@latest -w -l .
             - go run github.com/dkorunic/betteralign/cmd/betteralign@latest -test_files -generated_files -apply ./...
+    test:race:
+        desc: Race condition test
+        cmds:
+            - CGO_ENABLED=0 go test -race -count 1 ./... -v
     test:mock:
         desc: Create mocks
         cmds:

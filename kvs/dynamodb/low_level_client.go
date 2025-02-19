@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 
+	"golang.org/x/sync/singleflight"
+
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
@@ -17,6 +19,7 @@ import (
 
 type LowLevelClient struct {
 	AWSClient
+	read      singleflight.Group
 	tableName string
 	ttl       int
 }
@@ -43,53 +46,65 @@ func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...int) *L
 	return lowLevelClient
 }
 
-func (r LowLevelClient) getTableName() *string {
+func (r *LowLevelClient) getTableName() *string {
 	return aws.String(fmt.Sprintf("__kvs-%s", r.tableName))
 }
 
-func (r LowLevelClient) Get(key string) (*kvs.Item, error) {
+func (r *LowLevelClient) Get(key string) (*kvs.Item, error) {
 	return r.GetWithContext(context.Background(), key)
 }
 
-func (r LowLevelClient) GetWithContext(ctx context.Context, key string) (*kvs.Item, error) {
+func (r *LowLevelClient) GetWithContext(ctx context.Context, key string) (*kvs.Item, error) {
 	if strings.TrimSpace(key) == "" {
 		return nil, kvs.ErrEmptyKey
 	}
 
-	input := &dynamodb.GetItemInput{
-		TableName: r.getTableName(),
-		Key: map[string]types.AttributeValue{
-			KeyName: &types.AttributeValueMemberS{
-				Value: key,
-			},
-		},
-	}
+	result, err, _ := r.read.Do(key, func() (interface{}, error) {
+		select {
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		default:
+			input := &dynamodb.GetItemInput{
+				TableName: r.getTableName(),
+				Key: map[string]types.AttributeValue{
+					KeyName: &types.AttributeValueMemberS{
+						Value: key,
+					},
+				},
+			}
 
-	getItemOutput, err := r.AWSClient.GetItem(ctx, input)
+			getItemOutput, err := r.AWSClient.GetItem(ctx, input)
+			if err != nil {
+				return nil, err
+			} else if getItemOutput.Item == nil {
+				return nil, kvs.ErrKeyNotFound
+			}
+
+			var item Item
+			err = attributevalue.UnmarshalMap(getItemOutput.Item, &item)
+			if err != nil {
+				return nil, err
+			}
+
+			return &kvs.Item{
+				Key:   item.Key,
+				Value: item.Value,
+				TTL:   item.TTL,
+			}, nil
+		}
+	})
 	if err != nil {
 		return nil, err
-	} else if getItemOutput.Item == nil {
-		return nil, kvs.ErrKeyNotFound
 	}
 
-	var item Item
-	err = attributevalue.UnmarshalMap(getItemOutput.Item, &item)
-	if err != nil {
-		return nil, err
-	}
-
-	return &kvs.Item{
-		Key:   item.Key,
-		Value: item.Value,
-		TTL:   item.TTL,
-	}, nil
+	return result.(*kvs.Item), nil
 }
 
-func (r LowLevelClient) Save(key string, kvsItem *kvs.Item) error {
+func (r *LowLevelClient) Save(key string, kvsItem *kvs.Item) error {
 	return r.SaveWithContext(context.Background(), key, kvsItem)
 }
 
-func (r LowLevelClient) SaveWithContext(ctx context.Context, key string, item *kvs.Item) error {
+func (r *LowLevelClient) SaveWithContext(ctx context.Context, key string, item *kvs.Item) error {
 	if strings.TrimSpace(key) == "" {
 		return kvs.ErrEmptyKey
 	}
@@ -120,11 +135,11 @@ func (r LowLevelClient) SaveWithContext(ctx context.Context, key string, item *k
 	return nil
 }
 
-func (r LowLevelClient) BulkGet(keys []string) (*kvs.Items, error) {
+func (r *LowLevelClient) BulkGet(keys []string) (*kvs.Items, error) {
 	return r.BulkGetWithContext(context.Background(), keys)
 }
 
-func (r LowLevelClient) BulkGetWithContext(ctx context.Context, keys []string) (*kvs.Items, error) {
+func (r *LowLevelClient) BulkGetWithContext(ctx context.Context, keys []string) (*kvs.Items, error) {
 	if len(keys) > 100 {
 		return nil, kvs.ErrTooManyKeys
 	}
@@ -176,11 +191,11 @@ func (r LowLevelClient) BulkGetWithContext(ctx context.Context, keys []string) (
 	return items, nil
 }
 
-func (r LowLevelClient) BulkSave(items *kvs.Items) error {
+func (r *LowLevelClient) BulkSave(items *kvs.Items) error {
 	return r.BulkSaveWithContext(context.Background(), items)
 }
 
-func (r LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.Items) error {
+func (r *LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.Items) error {
 	items := make([]types.WriteRequest, 0, kvsItems.Len())
 
 	for item := range kvsItems.All() {
@@ -214,11 +229,11 @@ func (r LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.I
 	return nil
 }
 
-func (r LowLevelClient) ContainerName() string {
+func (r *LowLevelClient) ContainerName() string {
 	return r.tableName
 }
 
-func (r LowLevelClient) createItem(item *kvs.Item, bytes []byte) map[string]types.AttributeValue {
+func (r *LowLevelClient) createItem(item *kvs.Item, bytes []byte) map[string]types.AttributeValue {
 	return map[string]types.AttributeValue{
 		KeyName: &types.AttributeValueMemberS{
 			Value: item.Key,
