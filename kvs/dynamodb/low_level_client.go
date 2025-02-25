@@ -144,13 +144,13 @@ func (r *LowLevelClient) BulkGetWithContext(ctx context.Context, keys []string) 
 		return nil, kvs.ErrTooManyKeys
 	}
 
-	inputKeys := make([]map[string]types.AttributeValue, 0)
+	inputKeys := make([]map[string]types.AttributeValue, len(keys))
 	for i := range keys {
-		inputKeys = append(inputKeys, map[string]types.AttributeValue{
+		inputKeys[i] = map[string]types.AttributeValue{
 			KeyName: &types.AttributeValueMemberS{
 				Value: keys[i],
 			},
-		})
+		}
 	}
 
 	input := &dynamodb.BatchGetItemInput{
@@ -182,6 +182,7 @@ func (r *LowLevelClient) BulkGetWithContext(ctx context.Context, keys []string) 
 			items.Add(&kvs.Item{
 				Key:   item[i].Key,
 				Value: item[i].Value,
+				TTL:   item[i].TTL,
 			})
 		}
 	}
