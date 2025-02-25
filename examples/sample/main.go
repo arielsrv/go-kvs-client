@@ -22,7 +22,7 @@ func main() {
 		if err := kvsClient.Save(strconv.Itoa(key), &model.UserDTO{
 			ID:        key,
 			FirstName: "John Doe",
-		}, 60); err != nil {
+		}, 10); err != nil {
 			log.Error(err)
 		}
 

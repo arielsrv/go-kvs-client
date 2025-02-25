@@ -114,7 +114,7 @@ func (r *LowLevelClient) SaveWithContext(ctx context.Context, key string, item *
 	}
 
 	if r.ttl > 0 && item.TTL == 0 {
-		item.TTL = int64(r.ttl)
+		item.TTL = r.ttl
 	}
 
 	bytes, err := json.Marshal(item.Value)
