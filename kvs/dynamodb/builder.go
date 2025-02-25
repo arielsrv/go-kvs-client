@@ -11,7 +11,7 @@ import (
 type Builder struct {
 	containerName string
 	rawURL        string
-	ttl           int
+	ttl           int64
 }
 
 type BuilderOptions func(f *Builder)
@@ -27,7 +27,7 @@ func NewBuilder(opts ...BuilderOptions) *Builder {
 	return builder
 }
 
-func WithTTL(ttl int) BuilderOptions {
+func WithTTL(ttl int64) BuilderOptions {
 	return func(f *Builder) {
 		f.ttl = ttl
 	}

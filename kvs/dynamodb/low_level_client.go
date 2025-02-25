@@ -21,7 +21,7 @@ type LowLevelClient struct {
 	AWSClient
 	read      singleflight.Group
 	tableName string
-	ttl       int
+	ttl       int64
 }
 
 const (
@@ -30,7 +30,7 @@ const (
 	TTLName   = "ttl"
 )
 
-func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...int) *LowLevelClient {
+func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...int64) *LowLevelClient {
 	lowLevelClient := &LowLevelClient{
 		tableName: containerName,
 		AWSClient: awsClient,

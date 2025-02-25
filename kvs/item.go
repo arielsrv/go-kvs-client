@@ -1,6 +1,9 @@
 package kvs
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"time"
+)
 
 type Item struct {
 	Value any
@@ -15,7 +18,7 @@ func NewItem(key string, value any, ttl ...int64) *Item {
 	}
 
 	if len(ttl) > 0 {
-		item.TTL = ttl[0]
+		item.TTL = time.Now().Unix() + ttl[0]
 	}
 
 	return item

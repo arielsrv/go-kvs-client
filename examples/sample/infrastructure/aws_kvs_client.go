@@ -25,12 +25,12 @@ func (r AWSKVSClient[T]) BulkGet(key []string) ([]T, error) {
 	return r.BulkGetWithContext(context.Background(), key)
 }
 
-func (r AWSKVSClient[T]) Save(key string, item *T) error {
-	return r.SaveWithContext(context.Background(), key, item)
+func (r AWSKVSClient[T]) Save(key string, item *T, ttl ...int64) error {
+	return r.SaveWithContext(context.Background(), key, item, ttl...)
 }
 
-func (r AWSKVSClient[T]) BulkSave(items []T, keyMapper func(item T) string) error {
-	return r.BulkSaveWithContext(context.Background(), items, keyMapper)
+func (r AWSKVSClient[T]) BulkSave(items []T, keyMapper KeyMapperFunc[T], ttl ...int64) error {
+	return r.BulkSaveWithContext(context.Background(), items, keyMapper, ttl...)
 }
 
 func (r AWSKVSClient[T]) GetWithContext(ctx context.Context, key string) (*T, error) {
@@ -70,8 +70,8 @@ func (r AWSKVSClient[T]) BulkGetWithContext(ctx context.Context, keys []string) 
 	return result, nil
 }
 
-func (r AWSKVSClient[T]) SaveWithContext(ctx context.Context, key string, value *T) error {
-	item := kvs.NewItem(key, value)
+func (r AWSKVSClient[T]) SaveWithContext(ctx context.Context, key string, value *T, ttl ...int64) error {
+	item := kvs.NewItem(key, value, ttl...)
 	err := r.lowLevelClient.SaveWithContext(ctx, key, item)
 	if err != nil {
 		log.Errorf("[kvs]: error saving item %s: %v", key, err)
@@ -81,14 +81,11 @@ func (r AWSKVSClient[T]) SaveWithContext(ctx context.Context, key string, value 
 	return nil
 }
 
-func (r AWSKVSClient[T]) BulkSaveWithContext(ctx context.Context, items []T, keyMapper func(item T) string) error {
+func (r AWSKVSClient[T]) BulkSaveWithContext(ctx context.Context, items []T, keyMapper KeyMapperFunc[T], ttl ...int64) error {
 	kvsItems := new(kvs.Items)
 	for i := range items {
 		item := items[i]
-		kvsItems.Add(&kvs.Item{
-			Key:   keyMapper(item),
-			Value: item,
-		})
+		kvsItems.Add(kvs.NewItem(keyMapper(item), &item, ttl...))
 	}
 
 	err := r.lowLevelClient.BulkSaveWithContext(ctx, kvsItems)
