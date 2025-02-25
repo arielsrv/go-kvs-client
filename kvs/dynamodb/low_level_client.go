@@ -113,8 +113,8 @@ func (r *LowLevelClient) SaveWithContext(ctx context.Context, key string, item *
 		return kvs.ErrNilItem
 	}
 
-	if r.ttl > 0 {
-		item.TTL = r.ttl
+	if r.ttl > 0 && item.TTL == 0 {
+		item.TTL = int64(r.ttl)
 	}
 
 	bytes, err := json.Marshal(item.Value)
@@ -124,7 +124,7 @@ func (r *LowLevelClient) SaveWithContext(ctx context.Context, key string, item *
 
 	putItemOutput, err := r.AWSClient.PutItem(ctx, &dynamodb.PutItemInput{
 		TableName: r.getTableName(),
-		Item:      r.createItem(item, bytes),
+		Item:      r.newItem(item, bytes),
 	})
 	if err != nil {
 		return err
@@ -207,7 +207,7 @@ func (r *LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.
 
 		items = append(items, types.WriteRequest{
 			PutRequest: &types.PutRequest{
-				Item: r.createItem(item, bytes),
+				Item: r.newItem(item, bytes),
 			},
 		})
 	}
@@ -233,7 +233,7 @@ func (r *LowLevelClient) ContainerName() string {
 	return r.tableName
 }
 
-func (r *LowLevelClient) createItem(item *kvs.Item, bytes []byte) map[string]types.AttributeValue {
+func (r *LowLevelClient) newItem(item *kvs.Item, bytes []byte) map[string]types.AttributeValue {
 	return map[string]types.AttributeValue{
 		KeyName: &types.AttributeValueMemberS{
 			Value: item.Key,
@@ -242,7 +242,7 @@ func (r *LowLevelClient) createItem(item *kvs.Item, bytes []byte) map[string]typ
 			Value: string(bytes),
 		},
 		TTLName: &types.AttributeValueMemberN{
-			Value: strconv.Itoa(item.TTL),
+			Value: strconv.FormatInt(item.TTL, 10),
 		},
 	}
 }

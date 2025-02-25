@@ -193,8 +193,8 @@ github.com/sagikazarmark/slog-shim v0.1.0 h1:diDBnUNK9N/354PgrxMywXnAwEr1QZcOr6g
 github.com/sagikazarmark/slog-shim v0.1.0/go.mod h1:SrcSrq8aKtyuqEI1uvTDTK1arOWRIczQRv+GVI1AkeQ=
 github.com/samber/lo v1.49.1 h1:4BIFyVfuQSEpluc7Fua+j1NolZHiEHEpaSEKdsH0tew=
 github.com/samber/lo v1.49.1/go.mod h1:dO6KHFzUKXgP8LDhU0oI8d2hekjXnGOu0DB8Jecxd6o=
-github.com/samber/oops v1.16.0 h1:ew1d/LoZcvSsUAWPs9tIEOKwNzu472R6mIT5tDGpC28=
-github.com/samber/oops v1.16.0/go.mod h1:amH03Ze3eyMXua+6hvOCML4ZHwnfUKY4o2KORUXQy9c=
+github.com/samber/oops v1.16.1 h1:XlKkXsWM5g8hE4C+sEV9n0X282fZn3XabVmAKU2RiHI=
+github.com/samber/oops v1.16.1/go.mod h1:8eXgMAJcDXRAijQsFRhfy/EHDOTiSvwkg6khFqFK078=
 github.com/sourcegraph/conc v0.3.0 h1:OQTbbt6P72L20UqAkXXuLOj79LfEanQ+YQFNpLA9ySo=
 github.com/sourcegraph/conc v0.3.0/go.mod h1:Sdozi7LEKbFPqYX2/J+iBAM6HpqSLTASQIKqDmF7Mt0=
 github.com/spf13/afero v1.11.0 h1:WJQKhtpdm3v2IzqG8VMqrr6Rf3UYpEF239Jy9wNepM8=
@@ -231,8 +231,8 @@ github.com/valyala/fasthttp v1.59.0/go.mod h1:GTxNb9Bc6r2a9D0TWNSPwDz78UxnTGBViY
 github.com/xyproto/randomstring v1.0.5 h1:YtlWPoRdgMu3NZtP45drfy1GKoojuR7hmRcnhZqKjWU=
 github.com/xyproto/randomstring v1.0.5/go.mod h1:rgmS5DeNXLivK7YprL0pY+lTuhNQW3iGxZ18UQApw/E=
 github.com/yuin/goldmark v1.3.5/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
-gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.20.30 h1:0u9wKVZr/Qt3u/YD4H2qAZHwWUWIxcOSzofAN2yJXeU=
-gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.20.30/go.mod h1:qE8DFIltuzZEtOn39d9dAvQCMxd35ceheKxosGrou8M=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.20.32 h1:8hPcoWl1H+KdyHz7G78U9GwngeLYGsSJzDPmioi7CUA=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.20.32/go.mod h1:O2tDFhlaBnIWLw/Xdw1sQld9Pq68VVi8OKEX382qpRA=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26 h1:siwhMwY7Gao8l/vxGScObNpqGvGd5bzY/n2rR8Yp9BI=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26/go.mod h1:S12LQ0basuoWOYZ0aHMuBQmp7/ufwhtLHEnnYeVai2w=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.22 h1:6SyJ7bfi51959Pw/LrSid9zL13I34GVNn5l3yL4iocc=

@@ -13,10 +13,11 @@ require (
 	github.com/eko/gocache/store/freecache/v4 v4.2.2
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.10.0
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.20.30
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2 v2.20.32
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.22
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.28
+	golang.org/x/sync v0.11.0
 )
 
 require (
@@ -87,7 +88,7 @@ require (
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/samber/lo v1.49.1 // indirect
-	github.com/samber/oops v1.16.0 // indirect
+	github.com/samber/oops v1.16.1 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
@@ -121,7 +122,6 @@ require (
 	golang.org/x/exp v0.0.0-20240416160154-fe59bbe5cc7f // indirect
 	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/oauth2 v0.26.0 // indirect
-	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
 	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect

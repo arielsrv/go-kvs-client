@@ -5,10 +5,10 @@ import "encoding/json"
 type Item struct {
 	Value any
 	Key   string
-	TTL   int
+	TTL   int64
 }
 
-func NewItem(key string, value any, ttl ...int) *Item {
+func NewItem(key string, value any, ttl ...int64) *Item {
 	item := &Item{
 		Key:   key,
 		Value: value,
