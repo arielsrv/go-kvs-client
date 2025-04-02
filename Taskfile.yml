@@ -16,10 +16,16 @@ tasks:
     tf:apply:
         cmds:
             - (cd {{.TF_FOLDER}} || exit ; tflocal apply -auto-approve)
+    aws:dynamodb:
+        vars:
+            TABLE_NAME: '__kvs-users-store'
+        cmds:
+            - 'awslocal dynamodb describe-table --table-name {{.TABLE_NAME}}'
+            - 'awslocal dynamodb describe-time-to-live --table-name {{.TABLE_NAME}}'
     lint:
         desc: Use golangci-lint (.golangci.yml).
         cmds:
-            - go run github.com/golangci/golangci-lint/cmd/golangci-lint@latest run --fix
+            - go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest run --fix
             - go run mvdan.cc/gofumpt@latest -w -l .
             - go run github.com/dkorunic/betteralign/cmd/betteralign@latest -test_files -generated_files -apply ./...
     test:race:
@@ -30,6 +36,12 @@ tasks:
         desc: Create mocks
         cmds:
             - mockery --config .mockery.yaml
+    test:
+        cmds:
+            - task: test:mock
+            - go test -v ./...
+            - task: test:race
+
     download:
         desc: Run go mod tidy.
         cmds:

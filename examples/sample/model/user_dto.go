@@ -3,10 +3,10 @@ package model
 import "fmt"
 
 type UserDTO struct {
+	ID        int    `json:"id"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 	FullName  string `json:"full_name"`
-	ID        int    `json:"id"`
 }
 
 func NewUserDTO(firstName string, lastName string) *UserDTO {

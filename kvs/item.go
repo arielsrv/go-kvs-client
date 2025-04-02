@@ -6,9 +6,9 @@ import (
 )
 
 type Item struct {
-	Value any
-	Key   string
-	TTL   int64
+	Key   string `dynamodbav:"key"`
+	Value any    `dynamodbav:"value"`
+	TTL   int64  `dynamodbav:"ttl"`
 }
 
 func NewItem(key string, value any, ttl ...int64) *Item {
