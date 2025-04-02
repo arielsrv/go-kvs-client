@@ -30,7 +30,7 @@ tasks:
             - go tool betteralign -test_files -generated_files -apply ./...
     test:race:
         cmds:
-            - go test -race -count 1 ./... -v
+            - go test -race -count 5 ./... -v
     test:mock:
         cmds:
             - go tool mockery --config .mockery.yaml

@@ -1,136 +1,146 @@
 package kvs_test
 
 import (
-	"context"
 	"fmt"
 	"net"
 	"net/http"
+	"strconv"
 	"strings"
+	"sync/atomic"
 	"testing"
 	"time"
 
+	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2/core"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2/core/application"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/backend-api-sdk/v2/core/routing"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient/rest"
 )
 
-type TestApp struct {
-	application.APIApplication
-}
+var times uint64
 
-func (r *TestApp) OnStart() {
-	r.UseMetrics()
-	r.RegisterRoutes(new(Routes))
-}
+func TestCollector_IncrementCounter(t *testing.T) {
+	t.Setenv("APP_NAME", "kvs-client")
+	t.Setenv("ENV", "local")
 
-type Routes struct {
-	routing.APIRoutes
-}
+	addr, err := rndAddr()
+	require.NoError(t, err)
 
-func (r *Routes) Register() {
+	atomic.AddUint64(&times, 1)
+
 	lowLevelClient := kvs.NewLowLevelClientProxy(dynamodb.
 		NewLowLevelClient(dynamodb.
 			NewAWSFakeClient(),
 			"users-cache"),
 	)
 
-	ctx := context.Background()
-	err := lowLevelClient.SaveWithContext(ctx, "my-key", &kvs.Item{
+	err = lowLevelClient.SaveWithContext(t.Context(), "my-key", &kvs.Item{
 		Key:   "my-key",
 		Value: "my-value",
 	})
-	if err != nil {
-		log.Fatal(err)
+
+	require.NoError(t, err)
+
+	router := mux.NewRouter()
+	router.Handle("/metrics", promhttp.Handler())
+	router.HandleFunc("/kvs/get", func(w http.ResponseWriter, r *http.Request) {
+		_, err = lowLevelClient.Get("my-key")
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		_, err = lowLevelClient.Get("missing-key")
+		if err != nil && !errors.Is(err, kvs.ErrKeyNotFound) {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+	})
+
+	client := rest.Client{
+		BaseURL: addr.HTTP,
 	}
 
-	r.AddRoute(http.MethodGet, "/kvs/get", func(httpCtx *routing.HTTPContext) error {
-		value, kvsErr := lowLevelClient.Get("my-key")
-		if kvsErr != nil {
-			httpCtx.Status(http.StatusInternalServerError)
-			return httpCtx.SendString(kvsErr.Error())
-		}
-
-		log.Debugf("Got value: %s", value.Value)
-
-		_, kvsErr = lowLevelClient.Get("missing-key")
-		if kvsErr != nil && !errors.Is(kvsErr, kvs.ErrKeyNotFound) {
-			httpCtx.Status(http.StatusInternalServerError)
-			return httpCtx.SendString(kvsErr.Error())
-		}
-
-		return httpCtx.SendString("pong")
-	})
-}
-
-func TestCollector_IncrementCounter(t *testing.T) {
-	t.Setenv("APP_NAME", "kvs-client")
-	t.Setenv("ENV", "local")
-
-	listener, receiveErr := net.Listen("tcp", ":0")
-	require.NoError(t, receiveErr)
-
-	addr, ok := listener.Addr().(*net.TCPAddr)
-	assert.True(t, ok)
-
-	port := addr.Port
-	receiveErr = listener.Close()
-	require.NoError(t, receiveErr)
-
-	server := core.NewServer(port)
-	server.On(new(TestApp))
-	server.Start()
+	server := &http.Server{
+		Addr:    addr.HTTP,
+		Handler: router,
+	}
 
 	go func() {
 		time.Sleep(500 * time.Millisecond)
 
-		requestBuilder := rest.Client{
-			BaseURL: fmt.Sprintf("http://0.0.0.0:%d", port),
-		}
-
-		response := requestBuilder.Get("/kvs/get")
+		response := client.GetWithContext(t.Context(), "/kvs/get")
 		assert.NoError(t, response.Err)
 		assert.Equal(t, http.StatusOK, response.StatusCode)
 
-		response = requestBuilder.Get("/metrics")
+		response = client.GetWithContext(t.Context(), "/metrics")
 		assert.NoError(t, response.Err)
 		assert.Equal(t, http.StatusOK, response.StatusCode)
 
 		got := response.String()
 
-		want := fmt.Sprintf(`__kvs_stats{client_name="users-cache",stats="hit"} %d`, 1)
+		want := fmt.Sprintf(`__kvs_stats{client_name="users-cache",stats="hit"} %d`, 1*times)
 		if !strings.Contains(got, want) {
 			t.Errorf("got %s; want %s", got, want)
 		}
 
-		want = fmt.Sprintf(`__kvs_stats{client_name="users-cache",stats="miss"} %d`, 1)
+		want = fmt.Sprintf(`__kvs_stats{client_name="users-cache",stats="miss"} %d`, 1*times)
 		if !strings.Contains(got, want) {
 			t.Errorf("got %s; want %s", got, want)
 		}
 
-		want = fmt.Sprintf(`__kvs_stats{client_name="users-cache",stats="save"} %d`, 1)
+		want = fmt.Sprintf(`__kvs_stats{client_name="users-cache",stats="save"} %d`, 1*times)
 		if !strings.Contains(got, want) {
 			t.Errorf("got %s; want %s", got, want)
 		}
 
-		want = fmt.Sprintf(`__kvs_stats{client_name="users-cache",stats="save"} %d`, 1)
+		want = fmt.Sprintf(`__kvs_stats{client_name="users-cache",stats="save"} %d`, 1*times)
 		if !strings.Contains(got, want) {
 			t.Errorf("got %s; want %s", got, want)
 		}
 
-		want = fmt.Sprintf(`__kvs_connection_count{client_name="users-cache",type="save"} %d`, 1)
+		want = fmt.Sprintf(`__kvs_connection_count{client_name="users-cache",type="save"} %d`, 1*times)
 		if !strings.Contains(got, want) {
 			t.Errorf("got %s; want %s", got, want)
 		}
 
-		assert.NoError(t, server.Shutdown())
+		assert.NoError(t, server.Shutdown(t.Context()))
 	}()
 
-	require.NoError(t, server.Join())
+	err = server.Serve(addr.Listener)
+	require.Error(t, err)
+	require.ErrorIs(t, err, http.ErrServerClosed)
+}
+
+type Addr struct {
+	Listener net.Listener
+	Host     string
+	HTTP     string
+	Port     int
+}
+
+func rndAddr() (*Addr, error) {
+	listener, err := net.Listen("tcp", ":0")
+	if err != nil {
+		return nil, err
+	}
+
+	addr, ok := listener.Addr().(*net.TCPAddr)
+	if !ok {
+		return nil, fmt.Errorf("invalid address type: %T", listener.Addr())
+	}
+
+	dfltHost := "0.0.0.0"
+
+	return &Addr{
+		Listener: listener,
+		Host:     dfltHost,
+		Port:     addr.Port,
+		HTTP:     fmt.Sprintf("http://%s", net.JoinHostPort(dfltHost, strconv.Itoa(addr.Port))),
+	}, nil
 }
