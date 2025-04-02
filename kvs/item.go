@@ -18,7 +18,8 @@ func NewItem(key string, value any, ttl ...int64) *Item {
 	}
 
 	if len(ttl) > 0 {
-		item.TTL = time.Now().Unix() + ttl[0]
+		now := time.Now().Unix() + ttl[0]
+		item.TTL = now
 	}
 
 	return item
