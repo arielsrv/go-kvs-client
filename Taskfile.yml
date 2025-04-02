@@ -3,6 +3,7 @@ version: '3'
 
 env:
     TF_FOLDER: resources/setup/terraform
+    CGO_ENABLED: '{{if eq OS "linux"}}1{{else}}0{{end}}'
 
 tasks:
     tf:clean:
@@ -23,30 +24,29 @@ tasks:
             - 'awslocal dynamodb describe-table --table-name {{.TABLE_NAME}}'
             - 'awslocal dynamodb describe-time-to-live --table-name {{.TABLE_NAME}}'
     lint:
-        desc: Use golangci-lint (.golangci.yml).
         cmds:
-            - go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest run --fix
-            - go run mvdan.cc/gofumpt@latest -w -l .
-            - go run github.com/dkorunic/betteralign/cmd/betteralign@latest -test_files -generated_files -apply ./...
+            - go tool golangci-lint run --fix
+            - go tool gofumpt -w -l .
+            - go tool betteralign -test_files -generated_files -apply ./...
     test:race:
-        desc: Race condition test
         cmds:
-            - CGO_ENABLED=0 go test -race -count 1 ./... -v
+            - go test -race -count 1 ./... -v
     test:mock:
-        desc: Create mocks
         cmds:
-            - mockery --config .mockery.yaml
+            - go tool mockery --config .mockery.yaml
     test:
         cmds:
             - task: test:mock
             - go test -v ./...
             - task: test:race
-
     download:
-        desc: Run go mod tidy.
         cmds:
             - go mod tidy
     upgrade:
-        desc: Check for latest direct dependencies.
         cmds:
-            - go-mod-upgrade
+            - go tool go-mod-upgrade
+    default:
+        cmds:
+            - task: download
+            - task: lint
+            - task: test

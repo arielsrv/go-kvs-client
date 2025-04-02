@@ -6,8 +6,8 @@ import (
 )
 
 type Item struct {
-	Key   string `dynamodbav:"key"`
 	Value any    `dynamodbav:"value"`
+	Key   string `dynamodbav:"key"`
 	TTL   int64  `dynamodbav:"ttl"`
 }
 
