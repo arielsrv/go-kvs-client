@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"examples/sample/infrastructure"
-	"examples/sample/model"
+	"examples/local/infrastructure"
+	"examples/local/model"
+
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )

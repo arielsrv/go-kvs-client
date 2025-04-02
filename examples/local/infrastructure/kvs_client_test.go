@@ -4,8 +4,9 @@ import (
 	"strconv"
 	"testing"
 
-	"examples/sample/infrastructure"
-	"examples/sample/model"
+	"examples/local/infrastructure"
+	"examples/local/model"
+
 	"github.com/stretchr/testify/require"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 )
