@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 
 	"examples/sample/infrastructure"
@@ -18,20 +19,21 @@ func main() {
 
 	// get and save a single item
 	for i := range 20 {
-		key := i + 1
-		if err := kvsClient.Save(strconv.Itoa(key), &model.UserDTO{
-			ID:        key,
+		userID := i + 1
+		cacheKey := buildCacheKey(userID)
+		if err := kvsClient.Save(cacheKey, &model.UserDTO{
+			ID:        userID,
 			FirstName: "John Doe",
 		}, 10); err != nil {
 			log.Error(err)
 		}
 
-		value, err := kvsClient.Get(strconv.Itoa(key))
+		value, err := kvsClient.Get(cacheKey)
 		if err != nil {
 			log.Error(err)
 		}
 
-		log.Infof("Item %d: %+v", key, value)
+		log.Infof("Item %s: %+v", cacheKey, value)
 	}
 
 	// bulk get and save items
@@ -61,4 +63,8 @@ func main() {
 	for i := range items {
 		log.Infof("Item %d: %+v", i+1, items[i])
 	}
+}
+
+func buildCacheKey(key int) string {
+	return fmt.Sprintf("USER:%d:v1", key)
 }
