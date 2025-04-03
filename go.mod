@@ -17,7 +17,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.24
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.36
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.38
 	golang.org/x/sync v0.12.0
 )
 

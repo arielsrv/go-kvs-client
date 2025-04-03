@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"strconv"
 
@@ -18,14 +19,13 @@ func main() {
 			dynamodb.WithEndpointResolver("http://localhost:4566")).
 			Build())
 
+	ctx := context.Background()
+
 	// get and save a single item
 	for i := range 20 {
 		userID := i + 1
 		cacheKey := buildCacheKey(userID)
-		if err := kvsClient.Save(cacheKey, &model.UserDTO{
-			ID:        userID,
-			FirstName: "John Doe",
-		}, 10); err != nil {
+		if err := kvsClient.SaveWithContext(ctx, cacheKey, &model.UserDTO{ID: userID, FirstName: "John Doe"}, 10); err != nil {
 			log.Error(err)
 		}
 
@@ -38,7 +38,7 @@ func main() {
 	}
 
 	// bulk get and save items
-	err := kvsClient.BulkSave([]model.UserDTO{
+	err := kvsClient.BulkSaveWithContext(ctx, []model.UserDTO{
 		{
 			ID:        101,
 			FirstName: "Jane Doe",
@@ -56,7 +56,7 @@ func main() {
 		log.Error(err)
 	}
 
-	items, err := kvsClient.BulkGet([]string{"101", "102", "103"})
+	items, err := kvsClient.BulkGetWithContext(ctx, []string{"101", "102", "103"})
 	if err != nil {
 		log.Error(err)
 	}

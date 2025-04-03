@@ -608,8 +608,8 @@ gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26 h1:siwhMwY7Gao8l/
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26/go.mod h1:S12LQ0basuoWOYZ0aHMuBQmp7/ufwhtLHEnnYeVai2w=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.24 h1:lRWutfwDu/DW18UYwXjwsg6ub7uG3z/2gwSwaSAW4RA=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.24/go.mod h1:YbNKnfv+jmrLNG8yLn1TIVvEmSazNeXQFjYOv6IzxJk=
-gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.36 h1:wjm4KfF2KbqF7DbRoTpio2gp/k2CURj0SNtUtBBR0C4=
-gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.36/go.mod h1:i9v3yKC2MMbo/bKwAbstbtY9sJOy/oJHz1ah4MXJ5lQ=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.38 h1:wt940vuxKkJtrQhHCk3eznBsajlIm3tgAVe7AcSOX78=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.38/go.mod h1:i9v3yKC2MMbo/bKwAbstbtY9sJOy/oJHz1ah4MXJ5lQ=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-sdk-config v0.0.20 h1:9O9qWfiH409bzEsZApHg6JN/pJkYp+DT+VwNzbIbyAw=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-sdk-config v0.0.20/go.mod h1:cax7bWttFVqunEjzQTRNvW7IIf3vVNE8nifw4fAlP5I=
 go-simpler.org/assert v0.9.0 h1:PfpmcSvL7yAnWyChSjOz6Sp6m9j5lyK8Ok9pEL31YkQ=
