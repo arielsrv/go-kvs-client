@@ -13,40 +13,67 @@ import (
 	"fmt"
 	"strconv"
 
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic/otel/tracing"
+	"go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws"
+
 	"examples/local/infrastructure"
 	"examples/local/model"
 
+	"github.com/aws/aws-sdk-go-v2/config"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
 
 func main() {
+	ctx := context.Background()
+	app, err := tracing.New(ctx,
+		tracing.WithAppName("example"),
+		tracing.WithProtocol(tracing.NewGRPCProtocol("localhost:4317")))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer func(app *tracing.App, ctx context.Context) {
+		shutdownErr := app.Shutdown(ctx)
+		if shutdownErr != nil {
+			log.Fatal(err)
+		}
+	}(app, ctx)
+
+	ctx, txn := tracing.NewTransaction(ctx, "MyService")
+	defer txn.End()
+
+	cfg, err := config.LoadDefaultConfig(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	otelaws.AppendMiddlewares(&cfg.APIOptions)
+
 	kvsClient := infrastructure.NewAWSKVSClient[model.UserDTO](
 		dynamodb.NewBuilder(dynamodb.WithTTL(7*24*60*60), // 7 days (hh dd mm ss)
 			dynamodb.WithContainerName("users-store"),
 			dynamodb.WithEndpointResolver("http://localhost:4566")).
-			Build())
-
-	ctx := context.Background()
+			Build(cfg))
 
 	// get and save a single item
 	for i := range 20 {
 		userID := i + 1
 		cacheKey := buildCacheKey(userID)
-		if err := kvsClient.SaveWithContext(ctx, cacheKey, &model.UserDTO{ID: userID, FirstName: "John Doe"}, 10); err != nil {
-			log.Error(err)
+		if kvsErr := kvsClient.SaveWithContext(ctx, cacheKey, &model.UserDTO{ID: userID, FirstName: "John Doe"}, 10); kvsErr != nil {
+			log.Error(kvsErr)
 		}
 
-		value, err := kvsClient.Get(cacheKey)
-		if err != nil {
-			log.Error(err)
+		value, kvsErr := kvsClient.Get(cacheKey)
+		if kvsErr != nil {
+			log.Error(kvsErr)
 		}
 
 		log.Infof("Item %s: %+v", cacheKey, value)
 	}
 
 	// bulk get and save items
-	err := kvsClient.BulkSaveWithContext(ctx, []model.UserDTO{
+	err = kvsClient.BulkSaveWithContext(ctx, []model.UserDTO{
 		{
 			ID:        101,
 			FirstName: "Jane Doe",
@@ -77,5 +104,6 @@ func main() {
 func buildCacheKey(key int) string {
 	return fmt.Sprintf("USER:%d:v1", key)
 }
+
 
 ```

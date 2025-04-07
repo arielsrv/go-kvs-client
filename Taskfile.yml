@@ -6,6 +6,11 @@ env:
     CGO_ENABLED: '{{if eq OS "linux"}}1{{else}}0{{end}}'
 
 tasks:
+    docker:compose:
+        vars:
+            CONFIG_FOLDER: resources/setup/docker
+        cmds:
+            - (cd "{{.CONFIG_FOLDER}}" ||exit ; docker-compose down ; docker-compose up --build)
     tf:clean:
         cmds:
             - rm -rf {{.TF_FOLDER}}/.terraform
