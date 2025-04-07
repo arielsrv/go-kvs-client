@@ -236,6 +236,8 @@ gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.4 h1:89KBjnOkKENDM7oF
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.4/go.mod h1:3/N6G98CD3DQPvueKuKYGQAzL0xaF2YL1hC+KC2odZQ=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.5 h1:fXN8DNCJjtHTD2vqAcUtNNQPVx64ydAUvz9CnX9VnQA=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.5/go.mod h1:3/N6G98CD3DQPvueKuKYGQAzL0xaF2YL1hC+KC2odZQ=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.10 h1:GHBQNhxFvfNI0JEmx3r7lw76ORpRJJvAYGfketgCFEw=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.10/go.mod h1:dqVo0SPr86a6wZPbIPxlG7AnNRBT0D3922RpAQQKJT0=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.26 h1:tvAN+Ss8x/z5eHjncKBJs+5Em1kw1tP9JdoLxwfuRLA=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.26/go.mod h1:/eHkirAvDzGM/PilnuxE/l5bP4K9KnBAX9huyoqoII4=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-sdk-config v0.0.16 h1:FD1Rid6SVTsJumTvADOeBtVEHhfxSgTmiE5k0aDKu9U=
