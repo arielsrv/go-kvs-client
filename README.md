@@ -27,6 +27,7 @@ import (
 func main() {
 	ctx := context.Background()
 
+	// Tracing Optional 
 	app, err := tracing.New(ctx,
 		tracing.WithAppName("example"),
 		tracing.WithProtocol(tracing.NewGRPCProtocol("localhost:4317")))
