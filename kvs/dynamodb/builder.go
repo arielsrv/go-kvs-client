@@ -1,11 +1,8 @@
 package dynamodb
 
 import (
-	"context"
-
-	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
 
 type Builder struct {
@@ -45,14 +42,9 @@ func WithEndpointResolver(rawURL string) BuilderOptions {
 	}
 }
 
-func (r *Builder) Build() *LowLevelClient {
-	defaultConfig, err := config.LoadDefaultConfig(context.Background())
-	if err != nil {
-		log.Fatal(err)
-	}
-
+func (r *Builder) Build(awsConfig aws.Config) *LowLevelClient {
 	return NewLowLevelClient(
-		dynamodb.NewFromConfig(defaultConfig, func(opts *dynamodb.Options) {
+		dynamodb.NewFromConfig(awsConfig, func(opts *dynamodb.Options) {
 			opts.EndpointResolverV2 = NewResolver(r.rawURL)
 		}),
 		r.containerName,
