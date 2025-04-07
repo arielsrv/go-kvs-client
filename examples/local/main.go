@@ -11,7 +11,7 @@ import (
 	"examples/local/infrastructure"
 	"examples/local/model"
 
-	awsConfig "github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/config"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
@@ -35,7 +35,7 @@ func main() {
 	ctx, txn := tracing.NewTransaction(ctx, "MyService")
 	defer txn.End()
 
-	cfg, err := awsConfig.LoadDefaultConfig(ctx)
+	cfg, err := config.LoadDefaultConfig(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
