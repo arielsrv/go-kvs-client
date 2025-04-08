@@ -34,6 +34,10 @@ release:
         - go install gotest.tools/gotestsum@latest
         - gotestsum --junitfile report.xml --format testname
 
+        # Test
+        - echo -e "\033[1;34m> Test\033[0m"
+        - GOEXPERIMENT=nocoverageredesign go test -v ./...
+
         # Coverage Badge
         - echo -e "\033[1;34m> Coverage Badge\033[0m"
         - GOEXPERIMENT=nocoverageredesign CGO_ENABLED=0 go test ./... -coverprofile=coverage-report.out
