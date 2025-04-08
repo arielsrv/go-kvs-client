@@ -92,3 +92,23 @@ func checkErr(err error) {
 }
 
 ```
+
+## Prometheus
+
+example 
+```text
+__kvs_operations{client_name="client_name", type="get"} 10 
+__kvs_operations{client_name="client_name", type="save"} 15 
+__kvs_operations{client_name="client_name", type="bulk_get"} 8 
+__kvs_operations{client_name="client_name", type="bulk_save"} 5
+__kvs_stats{client_name="client_name", stats="hit"} 1
+__kvs_stats{client_name="client_name", stats="miss"} 1
+__kvs_stats{client_name="client_name", stats="error"} 0
+__kvs_connection{client_name="client_name", type="get"} 0.005 
+__kvs_connection{client_name="client_name", type="save"} 0.002 
+__kvs_connection{client_name="client_name", type="bulk_get"} 0.010 
+__kvs_connection{client_name="client_name", type="bulk_save"} 0.012
+```
+
+## Tempo
+![img.png](img.png)
