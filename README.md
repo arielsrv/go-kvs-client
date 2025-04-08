@@ -27,15 +27,11 @@ import (
 func main() {
 	ctx := context.Background()
 
-	// Tracing Optional 
 	app, err := tracing.New(ctx,
-		tracing.WithAppName("example"),
+		tracing.WithAppName("users-api"),
 		tracing.WithProtocol(tracing.NewGRPCProtocol("localhost:4317")))
 	checkErr(err)
 	defer app.Shutdown(ctx)
-
-	ctx, txn := tracing.NewTransaction(ctx, "MyService")
-	defer txn.End()
 
 	cfg, err := config.LoadDefaultConfig(ctx)
 	checkErr(err)
@@ -51,9 +47,10 @@ func main() {
 
 	// Single item: Save + Get
 	for i := 1; i <= 20; i++ {
+		childCtx, transaction := tracing.NewTransaction(ctx, "Users.Client", tracing.SetTransactionType(tracing.Client))
 		key := fmt.Sprintf("USER:%d:v1", i)
 		user := &model.UserDTO{ID: i, FirstName: "John Doe"}
-		if kvsError := kvsClient.SaveWithContext(ctx, key, user, 10); kvsError != nil {
+		if kvsError := kvsClient.SaveWithContext(childCtx, key, user, 10); kvsError != nil {
 			log.Error(kvsError)
 			continue
 		}
@@ -63,6 +60,7 @@ func main() {
 			continue
 		}
 		log.Infof("Item %s: %+v", key, value)
+		transaction.End()
 	}
 
 	// Bulk save + get
