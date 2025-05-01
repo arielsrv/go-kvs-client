@@ -1,14 +1,13 @@
+# This is the configuration file for mockery, a tool for generating Go mocks.
+all: true
+dir: resources/mocks/{{.InterfaceDirRelative}}
+log-level: Warn
 filename: "mock_{{.InterfaceName}}.go"
-dir: "resources/mocks/{{.InterfaceDirRelative}}"
-mockname: "Mock{{.InterfaceName}}"
-outpkg: "{{.PackageName}}"
-all: True
-disable-version-string: True
-with-expecter: True
+template: testify
+template-data:
+    unroll-variadic: True
+force-file-write: True
 packages:
     gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs:
         config:
-            recursive: True
-log-level: Warn
-issue-845-fix: True
-resolve-type-alias: False
+            recursive: true
