@@ -35,6 +35,9 @@ provider "aws" {
 	}
 }
 
+// Create a DynamoDB table for KVS
+// Please don't add anything like streams, triggers, secondary indexes, or things we have to be magicians to figure out.
+// It's a key-value store, and even less things like streams where business logic is tied to a data repository.
 resource "aws_dynamodb_table" "kvs" {
 	name         = "__kvs-users-store"
 	billing_mode = "PAY_PER_REQUEST"

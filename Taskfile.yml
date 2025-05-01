@@ -41,9 +41,9 @@ tasks:
             - go tool mockery --config .mockery.yaml
     test:
         cmds:
-            - task: test:mock
+            -   task: test:mock
             - go test -v ./...
-            - task: test:race
+            -   task: test:race
     download:
         cmds:
             - go mod tidy
@@ -52,6 +52,6 @@ tasks:
             - go tool go-mod-upgrade
     default:
         cmds:
-            - task: download
-            - task: lint
-            - task: test
+            -   task: download
+            -   task: lint
+            -   task: test
