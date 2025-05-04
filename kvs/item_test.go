@@ -27,4 +27,6 @@ func TestNewItem_Err(t *testing.T) {
 	err := item.TryGetValueAsObjectType(&out)
 
 	require.Error(t, err)
+	var keyValueError kvs.KeyValueError
+	require.ErrorAs(t, err, &keyValueError)
 }
