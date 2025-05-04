@@ -3,6 +3,9 @@ package kvs_test
 import (
 	"testing"
 
+	"github.com/pkg/errors"
+	"github.com/stretchr/testify/require"
+
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 )
 
@@ -11,4 +14,7 @@ func TestNewKeyValueError(t *testing.T) {
 	if err.Error() != "test error, 123" {
 		t.Errorf("expected 'test error', got '%s'", err.Error())
 	}
+
+	var keyValueError kvs.KeyValueError
+	require.True(t, errors.As(err, &keyValueError))
 }
