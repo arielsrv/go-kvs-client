@@ -16,6 +16,9 @@ tasks:
             - rm -rf {{.TF_FOLDER}}/.terraform
             - rm -rf {{.TF_FOLDER}}/.terraform.lock.hcl
             - rm -rf {{.TF_FOLDER}}/terraform.tfstate
+    tf:lint:
+        cmds:
+            - (cd {{.TF_FOLDER}} || exit ; tflint)
     tf:init:
         cmds:
             - (cd {{.TF_FOLDER}} || exit ; tflocal init)
