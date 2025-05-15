@@ -7,7 +7,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.22
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.26
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.28
 	go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws v0.60.0
 )
 
@@ -82,7 +82,7 @@ require (
 	golang.org/x/text v0.24.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250218202821-56aae31c358a // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250313205543-e70fdf4c4cb4 // indirect
-	google.golang.org/grpc v1.72.0 // indirect
+	google.golang.org/grpc v1.72.1 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
