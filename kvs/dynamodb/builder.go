@@ -32,6 +32,18 @@ func NewBuilder(opts ...BuilderOptions) *Builder {
 	return builder
 }
 
+func (r *Builder) WithEndpointResolver(rawURL string) BuilderOptions {
+	return WithEndpointResolver(rawURL)
+}
+
+func (r *Builder) WithContainerName(containerName string) BuilderOptions {
+	return WithContainerName(containerName)
+}
+
+func (r *Builder) WithTTL(ttl int64) BuilderOptions {
+	return WithTTL(ttl)
+}
+
 // WithTTL returns a BuilderOptions that sets the default TTL for items.
 // The TTL is specified in seconds.
 func WithTTL(ttl int64) BuilderOptions {
