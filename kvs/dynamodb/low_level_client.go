@@ -1,3 +1,4 @@
+// Package dynamodb provides AWS DynamoDB specific implementation of the KVS client.
 package dynamodb
 
 import (
@@ -16,19 +17,27 @@ import (
 	"golang.org/x/sync/singleflight"
 )
 
+// LowLevelClient is a client for interacting with AWS DynamoDB.
+// It implements the kvs.Client interface, providing methods for getting and saving items.
+// The client uses a singleflight.Group to deduplicate concurrent reads for the same key.
 type LowLevelClient struct {
-	AWSClient
-	read      singleflight.Group
-	tableName string
-	ttl       int64
+	AWSClient                    // Embedded AWS DynamoDB client
+	read      singleflight.Group // Group for deduplicating concurrent reads
+	tableName string             // Name of the DynamoDB table
+	ttl       int64              // Default Time To Live for items in seconds
 }
 
+// Constants for DynamoDB attribute names.
 const (
-	KeyName   = "key"
-	ValueName = "value"
-	TTLName   = "ttl"
+	KeyName   = "key"   // Attribute name for the item's key
+	ValueName = "value" // Attribute name for the item's value
+	TTLName   = "ttl"   // Attribute name for the item's TTL
 )
 
+// NewLowLevelClient creates a new LowLevelClient with the provided AWS client and container name.
+// The container name is used as the base for the DynamoDB table name.
+// Optional TTL (Time To Live) in seconds can be provided to set a default TTL for items.
+// Returns a pointer to the new LowLevelClient.
 func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...int64) *LowLevelClient {
 	lowLevelClient := &LowLevelClient{
 		tableName: containerName,
@@ -45,14 +54,23 @@ func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...int64) 
 	return lowLevelClient
 }
 
+// getTableName returns the full name of the DynamoDB table.
+// The table name is prefixed with "__kvs-" followed by the container name.
 func (r *LowLevelClient) getTableName() *string {
 	return aws.String(fmt.Sprintf("__kvs-%s", r.tableName))
 }
 
+// Get retrieves an item by its key.
+// It uses a background context and delegates to GetWithContext.
+// Returns the item if found, or an error if not found or if retrieval fails.
 func (r *LowLevelClient) Get(key string) (*kvs.Item, error) {
 	return r.GetWithContext(context.Background(), key)
 }
 
+// GetWithContext retrieves an item by its key using the provided context.
+// The context can be used for cancellation and timeouts.
+// This method uses a singleflight to deduplicate concurrent reads for the same key.
+// Returns the item if found, or an error if not found or if retrieval fails.
 func (r *LowLevelClient) GetWithContext(ctx context.Context, key string) (*kvs.Item, error) {
 	if strings.TrimSpace(key) == "" {
 		return nil, kvs.ErrEmptyKey
@@ -99,10 +117,18 @@ func (r *LowLevelClient) GetWithContext(ctx context.Context, key string) (*kvs.I
 	return result.(*kvs.Item), nil
 }
 
+// Save stores an item with the specified key.
+// It uses a background context and delegates to SaveWithContext.
+// Returns an error if the save operation fails.
 func (r *LowLevelClient) Save(key string, kvsItem *kvs.Item) error {
 	return r.SaveWithContext(context.Background(), key, kvsItem)
 }
 
+// SaveWithContext stores an item with the specified key using the provided context.
+// The context can be used for cancellation and timeouts.
+// If the item has no TTL and the client has a default TTL, the default TTL is applied.
+// The item is marshaled to JSON and stored in DynamoDB.
+// Returns an error if the key is empty, the item is nil, marshaling fails, or the save operation fails.
 func (r *LowLevelClient) SaveWithContext(ctx context.Context, key string, item *kvs.Item) error {
 	if strings.TrimSpace(key) == "" {
 		return kvs.ErrEmptyKey
@@ -134,10 +160,18 @@ func (r *LowLevelClient) SaveWithContext(ctx context.Context, key string, item *
 	return nil
 }
 
+// BulkGet retrieves multiple items by their keys.
+// It uses a background context and delegates to BulkGetWithContext.
+// Returns a collection of items that were found, or an error if retrieval fails.
 func (r *LowLevelClient) BulkGet(keys []string) (*kvs.Items, error) {
 	return r.BulkGetWithContext(context.Background(), keys)
 }
 
+// BulkGetWithContext retrieves multiple items by their keys using the provided context.
+// The context can be used for cancellation and timeouts.
+// This method has a limit of 100 keys per request.
+// Returns a collection of items that were found, or an error if retrieval fails.
+// If more than 100 keys are provided, ErrTooManyKeys is returned.
 func (r *LowLevelClient) BulkGetWithContext(ctx context.Context, keys []string) (*kvs.Items, error) {
 	if len(keys) > 100 {
 		return nil, kvs.ErrTooManyKeys
@@ -191,10 +225,18 @@ func (r *LowLevelClient) BulkGetWithContext(ctx context.Context, keys []string) 
 	return items, nil
 }
 
+// BulkSave stores multiple items.
+// It uses a background context and delegates to BulkSaveWithContext.
+// Returns an error if the save operation fails.
 func (r *LowLevelClient) BulkSave(items *kvs.Items) error {
 	return r.BulkSaveWithContext(context.Background(), items)
 }
 
+// BulkSaveWithContext stores multiple items using the provided context.
+// The context can be used for cancellation and timeouts.
+// Each item is marshalled to JSON and stored in DynamoDB.
+// If marshalling of an individual item fails, it is skipped and an error is logged.
+// Returns an error if the batch write operation fails.
 func (r *LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.Items) error {
 	items := make([]types.WriteRequest, 0, kvsItems.Len())
 
@@ -229,10 +271,15 @@ func (r *LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.
 	return nil
 }
 
+// ContainerName returns the name of the container or service that this client interacts with.
+// Used for metrics and logging.
 func (r *LowLevelClient) ContainerName() string {
 	return r.tableName
 }
 
+// newItem creates a new DynamoDB item from a KVS item and its marshalled value.
+// The item is represented as a map of attribute names to attribute values.
+// The key, value, and TTL are stored as attributes.
 func (r *LowLevelClient) newItem(item *kvs.Item, bytes []byte) map[string]types.AttributeValue {
 	return map[string]types.AttributeValue{
 		KeyName: &types.AttributeValueMemberS{
