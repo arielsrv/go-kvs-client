@@ -112,7 +112,7 @@ func TestClient_BulkSave_And_BulkGet(t *testing.T) {
 }
 
 func TestEmptyKeyInGet(t *testing.T) {
-	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test", 60)
+	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
 
 	item, err := lowLevelClient.Get("")
 	require.Error(t, err)
