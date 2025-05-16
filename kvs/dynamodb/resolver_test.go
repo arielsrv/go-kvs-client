@@ -10,11 +10,11 @@ import (
 )
 
 func TestNewResolver(t *testing.T) {
-	resolver := dynamodb.NewResolver("http://localhost:4566")
+	resolver := dynamodb.NewResolver("http://0.0.0.0:4566")
 
 	endpoint, err := resolver.ResolveEndpoint(t.Context(), aws.EndpointParameters{})
 	require.NoError(t, err)
-	require.Equal(t, "http://localhost:4566", endpoint.URI.String())
+	require.Equal(t, "http://0.0.0.0:4566", endpoint.URI.String())
 }
 
 func TestNewResolver_Err(t *testing.T) {
