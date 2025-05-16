@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"strconv"
 
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
+
 	"github.com/aws/aws-sdk-go-v2/config"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws"
 
-	"examples/local/infrastructure"
 	"examples/local/model"
 
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
@@ -34,7 +35,7 @@ func main() {
 	checkErr(err)
 	otelaws.AppendMiddlewares(&cfg.APIOptions)
 
-	kvsClient := infrastructure.NewAWSKVSClient[model.UserDTO](
+	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](
 		dynamodb.NewBuilder(
 			dynamodb.WithTTL(7*24*60*60),
 			dynamodb.WithContainerName("users-store"),

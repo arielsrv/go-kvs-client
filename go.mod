@@ -1,6 +1,6 @@
 module gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client
 
-go 1.24.2
+go 1.24.3
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.36.3

@@ -22,7 +22,7 @@ import (
 
 var times uint64
 
-var kvsClient = kvs.NewLowLevelClientProxy(dynamodb.
+var kvsClientProxy = kvs.NewLowLevelClientProxy(dynamodb.
 	NewLowLevelClient(dynamodb.
 		NewAWSFakeClient(),
 		"users-cache"),
@@ -34,7 +34,7 @@ func TestCollector_IncrementCounter(t *testing.T) {
 
 	atomic.AddUint64(&times, 1)
 
-	err = kvsClient.SaveWithContext(t.Context(), "my-key", &kvs.Item{
+	err = kvsClientProxy.SaveWithContext(t.Context(), "my-key", &kvs.Item{
 		Key:   "my-key",
 		Value: "my-value",
 	})
@@ -44,13 +44,13 @@ func TestCollector_IncrementCounter(t *testing.T) {
 	router := mux.NewRouter()
 	router.Handle("/metrics", promhttp.Handler())
 	router.HandleFunc("/kvs/get", func(w http.ResponseWriter, r *http.Request) {
-		_, err = kvsClient.Get("my-key")
+		_, err = kvsClientProxy.Get("my-key")
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
-		_, err = kvsClient.Get("missing-key")
+		_, err = kvsClientProxy.Get("missing-key")
 		if err != nil && !errors.Is(err, kvs.ErrKeyNotFound) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return

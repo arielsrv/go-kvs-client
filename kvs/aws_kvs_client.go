@@ -1,19 +1,18 @@
-package infrastructure
+package kvs
 
 import (
 	"context"
 
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
 
 type AWSKVSClient[T any] struct {
-	lowLevelClient kvs.LowLevelClientProxy
+	lowLevelClient LowLevelClientProxy
 }
 
-func NewAWSKVSClient[T any](lowLevelClient kvs.Client) *AWSKVSClient[T] {
+func NewAWSKVSClient[T any](lowLevelClient Client) *AWSKVSClient[T] {
 	return &AWSKVSClient[T]{
-		lowLevelClient: kvs.NewLowLevelClientProxy(lowLevelClient),
+		lowLevelClient: NewLowLevelClientProxy(lowLevelClient),
 	}
 }
 
@@ -71,7 +70,7 @@ func (r AWSKVSClient[T]) BulkGetWithContext(ctx context.Context, keys []string) 
 }
 
 func (r AWSKVSClient[T]) SaveWithContext(ctx context.Context, key string, value *T, ttl ...int64) error {
-	item := kvs.NewItem(key, value, ttl...)
+	item := NewItem(key, value, ttl...)
 	err := r.lowLevelClient.SaveWithContext(ctx, key, item)
 	if err != nil {
 		log.Errorf("[kvs]: error saving item %s: %v", key, err)
@@ -81,11 +80,16 @@ func (r AWSKVSClient[T]) SaveWithContext(ctx context.Context, key string, value 
 	return nil
 }
 
-func (r AWSKVSClient[T]) BulkSaveWithContext(ctx context.Context, items []T, keyMapper KeyMapperFunc[T], ttl ...int64) error {
-	kvsItems := new(kvs.Items)
+func (r AWSKVSClient[T]) BulkSaveWithContext(
+	ctx context.Context,
+	items []T,
+	keyMapper KeyMapperFunc[T],
+	ttl ...int64,
+) error {
+	kvsItems := new(Items)
 	for i := range items {
 		item := items[i]
-		kvsItems.Add(kvs.NewItem(keyMapper(item), &item, ttl...))
+		kvsItems.Add(NewItem(keyMapper(item), &item, ttl...))
 	}
 
 	err := r.lowLevelClient.BulkSaveWithContext(ctx, kvsItems)
