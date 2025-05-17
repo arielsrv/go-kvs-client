@@ -5,13 +5,11 @@ import (
 	"fmt"
 	"strconv"
 
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/trace/model"
+
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 
 	"github.com/aws/aws-sdk-go-v2/config"
-	"go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws"
-
-	"examples/local/model"
-
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic/otel/tracing"
@@ -19,21 +17,8 @@ import (
 
 func main() {
 	ctx := context.Background()
-
-	app, err := tracing.New(ctx,
-		tracing.WithAppName("users-api"),
-		tracing.WithProtocol(tracing.NewStdOutProtocol()))
-	checkErr(err)
-	defer func(app *tracing.App, ctx context.Context) {
-		shutdownErr := app.Shutdown(ctx)
-		if shutdownErr != nil {
-			log.Error(shutdownErr)
-		}
-	}(app, ctx)
-
 	cfg, err := config.LoadDefaultConfig(ctx)
 	checkErr(err)
-	otelaws.AppendMiddlewares(&cfg.APIOptions)
 
 	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](
 		dynamodb.NewBuilder(
