@@ -32,16 +32,28 @@ func NewBuilder(opts ...BuilderOptions) *Builder {
 	return builder
 }
 
-func (r *Builder) WithEndpointResolver(rawURL string) BuilderOptions {
-	return WithEndpointResolver(rawURL)
+// WithEndpointResolver sets the DynamoDB endpoint URL.
+// This is useful for local development or testing with a custom endpoint.
+// Returns a pointer to the Builder.
+func (r *Builder) WithEndpointResolver(rawURL string) *Builder {
+	r.rawURL = rawURL
+	return r
 }
 
-func (r *Builder) WithContainerName(containerName string) BuilderOptions {
-	return WithContainerName(containerName)
+// WithContainerName sets the container name.
+// The container name is used for metrics and logging.
+// Returns a pointer to the Builder.
+func (r *Builder) WithContainerName(containerName string) *Builder {
+	r.containerName = containerName
+	return r
 }
 
-func (r *Builder) WithTTL(ttl int64) BuilderOptions {
-	return WithTTL(ttl)
+// WithTTL sets the default TTL for items.
+// The TTL is specified in seconds.
+// Returns a pointer to the Builder.
+func (r *Builder) WithTTL(ttl int64) *Builder {
+	r.ttl = ttl
+	return r
 }
 
 // WithTTL returns a BuilderOptions that sets the default TTL for items.
