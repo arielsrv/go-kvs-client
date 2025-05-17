@@ -12,11 +12,11 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic/otel/tracing"
 )
 
 func main() {
 	ctx := context.Background()
+
 	cfg, err := config.LoadDefaultConfig(ctx)
 	checkErr(err)
 
@@ -30,10 +30,9 @@ func main() {
 
 	// Single item: Save + Get
 	for i := 1; i <= 20; i++ {
-		newCtx, transaction := tracing.StartTransaction(ctx, "Users.Client", tracing.SetTransactionType(tracing.Client))
 		key := fmt.Sprintf("USER:%d:v1", i)
 		user := &model.UserDTO{ID: i, FirstName: "John Doe"}
-		if kvsError := kvsClient.SaveWithContext(newCtx, key, user, 10); kvsError != nil {
+		if kvsError := kvsClient.SaveWithContext(ctx, key, user, 10); kvsError != nil {
 			log.Error(kvsError)
 			continue
 		}
@@ -43,7 +42,6 @@ func main() {
 			continue
 		}
 		log.Infof("Item %s: %+v", key, value)
-		transaction.End()
 	}
 
 	// Bulk save + get
