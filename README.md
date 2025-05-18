@@ -54,10 +54,10 @@ func main() {
 		).Build(cfg),
 	)
 
-	// Single item: Save + Get
+	// Single item: Save and Get
 	for i := 1; i <= 20; i++ {
 		key := fmt.Sprintf("USER:%d:v1", i)
-		user := &model.UserDTO{ID: i, FirstName: "John Doe"}
+		user := &model.UserDTO{ID: i, FirstName: "John", LastName: "Doe", FullName: fmt.Sprintf("%s %s", "John", "Doe")}
 		if kvsError := kvsClient.SaveWithContext(ctx, key, user, time.Duration(10)*time.Second); kvsError != nil {
 			log.Error(kvsError)
 			continue
@@ -71,17 +71,16 @@ func main() {
 	}
 
 	// Bulk save + get
-	users := []model.UserDTO{
+	if err = kvsClient.BulkSaveWithContext(ctx, []model.UserDTO{
 		{ID: 101, FirstName: "Jane", LastName: "Doe", FullName: fmt.Sprintf("%s %s", "Jane", "Doe")},
 		{ID: 102, FirstName: "Bob", LastName: "Doe", FullName: fmt.Sprintf("%s %s", "Bob", "Doe")},
 		{ID: 103, FirstName: "Alice", LastName: "Doe", FullName: fmt.Sprintf("%s %s", "Alice", "Doe")},
-	}
-	err = kvsClient.BulkSaveWithContext(ctx, users, func(userDTO model.UserDTO) string {
+	}, func(userDTO model.UserDTO) string {
 		return strconv.Itoa(userDTO.ID)
-	})
-	if err != nil {
+	}); err != nil {
 		log.Fatal(err)
 	}
+
 	keys := []string{"101", "102", "103"}
 	items, err := kvsClient.BulkGetWithContext(ctx, keys)
 	if err != nil {
