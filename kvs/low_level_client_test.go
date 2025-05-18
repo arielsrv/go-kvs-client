@@ -33,7 +33,7 @@ func TestLowLevelClientProxy_Save(t *testing.T) {
 }
 
 func TestLowLevelClientProxy_BulkGet(t *testing.T) {
-	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
+	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "__kvs-test")
 
 	proxy := kvs.NewLowLevelClientProxy(lowLevelClient)
 
@@ -50,7 +50,7 @@ func TestLowLevelClientProxy_BulkGet(t *testing.T) {
 }
 
 func TestLowLevelClientProxy_BulkSave(t *testing.T) {
-	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
+	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "__kvs-test")
 
 	proxy := kvs.NewLowLevelClientProxy(lowLevelClient)
 

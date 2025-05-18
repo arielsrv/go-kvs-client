@@ -39,7 +39,7 @@ func main() {
 	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](
 		dynamodb.NewBuilder(
 			dynamodb.WithTTL(time.Hour),
-			dynamodb.WithContainerName("users-store"),
+			dynamodb.WithContainerName("__kvs-users-store"),
 			dynamodb.WithEndpointResolver("http://localhost:4566"),
 		).Build(cfg),
 	)

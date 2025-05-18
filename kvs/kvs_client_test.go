@@ -12,7 +12,7 @@ import (
 )
 
 func TestKVSClient_SaveAndGet(t *testing.T) {
-	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "kvs-client")
+	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "__kvs_test")
 	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](lowLevelClient)
 
 	userDTO := model.NewUserDTO("John", "Doe")
@@ -32,7 +32,7 @@ func TestKVSClient_SaveAndGet(t *testing.T) {
 }
 
 func TestKVSClient_BulkSaveAndBulkGet(t *testing.T) {
-	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
+	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "__kvs-test")
 	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](lowLevelClient)
 
 	users := []model.UserDTO{

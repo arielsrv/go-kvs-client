@@ -55,7 +55,7 @@ func TestClient_Get_KeyNotFound(t *testing.T) {
 }
 
 func TestClient_Get_EmptyKey(t *testing.T) {
-	kvsClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
+	kvsClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "__kvs-test")
 
 	item, err := kvsClient.Get("")
 	require.Error(t, err)
@@ -64,7 +64,7 @@ func TestClient_Get_EmptyKey(t *testing.T) {
 }
 
 func TestClient_BulkSave_And_BulkGet(t *testing.T) {
-	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test")
+	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "__kvs-test")
 
 	input1 := struct {
 		Key   string

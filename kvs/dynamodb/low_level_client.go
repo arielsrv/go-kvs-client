@@ -58,7 +58,7 @@ func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...time.Du
 // getTableName returns the full name of the DynamoDB table.
 // The table name is prefixed with "__kvs-" followed by the container name.
 func (r *LowLevelClient) getTableName() *string {
-	return aws.String(fmt.Sprintf("__kvs-%s", r.tableName))
+	return aws.String(r.tableName)
 }
 
 // Get retrieves an item by its key.
