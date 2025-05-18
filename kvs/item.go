@@ -28,9 +28,9 @@ func NewItem(key string, value any, ttl ...time.Duration) *Item {
 		Value: value,
 	}
 
-	if len(ttl) > 0 {
-		now := time.Now().Add(ttl[0]).Unix()
-		item.TTL = now
+	if len(ttl) > 0 && ttl[0] > 0 {
+		expiresAt := time.Now().Add(ttl[0]).Unix()
+		item.TTL = expiresAt
 	}
 
 	return item
