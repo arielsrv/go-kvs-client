@@ -14,6 +14,10 @@ task awslocal:start tf:init tf:apply
 go run gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/simple@latest
 ```
 
+```shell
+open https://app.localstack.cloud/inst/default/resources/dynamodb/tables/__kvs-users-store/items
+```
+
 example
 
 ```go
