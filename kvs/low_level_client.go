@@ -2,9 +2,9 @@ package kvs
 
 import (
 	"context"
+	"errors"
 	"time"
 
-	"github.com/pkg/errors"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector/metrics"
 )
 
