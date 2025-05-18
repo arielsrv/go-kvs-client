@@ -47,9 +47,9 @@ func main() {
 
 	// Bulk save + get
 	users := []model.UserDTO{
-		{ID: 101, FirstName: "Jane Doe"},
-		{ID: 102, FirstName: "Alice Doe"},
-		{ID: 103, FirstName: "Bob Doe"},
+		{ID: 101, FirstName: "Jane", LastName: "Doe", FullName: fmt.Sprintf("%s %s", "Jane", "Doe")},
+		{ID: 102, FirstName: "Bob", LastName: "Doe", FullName: fmt.Sprintf("%s %s", "Bob", "Doe")},
+		{ID: 103, FirstName: "Alice", LastName: "Doe", FullName: fmt.Sprintf("%s %s", "Alice", "Doe")},
 	}
 	err = kvsClient.BulkSaveWithContext(ctx, users, func(userDTO model.UserDTO) string {
 		return strconv.Itoa(userDTO.ID)
