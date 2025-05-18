@@ -11,9 +11,9 @@ import (
 // Builder is a struct that helps configure and create a LowLevelClient for DynamoDB.
 // It uses the builder pattern with functional options to allow for flexible configuration.
 type Builder struct {
-	containerName string // Name of the container or service, used for metrics and logging
-	rawURL        string // URL for the DynamoDB endpoint, useful for local development
-	ttl           int64  // Default Time To Live for items in seconds
+	containerName string        // Name of the container or service, used for metrics and logging
+	rawURL        string        // URL for the DynamoDB endpoint, useful for local development
+	ttl           time.Duration // Default Time To Live for items in seconds
 }
 
 // BuilderOptions is a function type that configures a Builder.
@@ -53,7 +53,7 @@ func (r *Builder) WithContainerName(containerName string) *Builder {
 // WithTTL sets the default TTL for items.
 // The TTL is specified in seconds.
 // Returns a pointer to the Builder.
-func (r *Builder) WithTTL(ttl int64) *Builder {
+func (r *Builder) WithTTL(ttl time.Duration) *Builder {
 	r.ttl = ttl
 	return r
 }
@@ -62,7 +62,7 @@ func (r *Builder) WithTTL(ttl int64) *Builder {
 // The TTL is specified in seconds.
 func WithTTL(ttl time.Duration) BuilderOptions {
 	return func(f *Builder) {
-		f.ttl = int64(ttl)
+		f.ttl = ttl
 	}
 }
 

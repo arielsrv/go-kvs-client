@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
@@ -24,7 +25,7 @@ type LowLevelClient struct {
 	AWSClient                    // Embedded AWS DynamoDB client
 	read      singleflight.Group // Group for deduplicating concurrent reads
 	tableName string             // Name of the DynamoDB table
-	ttl       int64              // Default Time To Live for items in seconds
+	ttl       time.Duration      // Default Time To Live for items in seconds
 }
 
 // Constants for DynamoDB attribute names.
@@ -38,7 +39,7 @@ const (
 // The container name is used as the base for the DynamoDB table name.
 // Optional TTL (Time To Live) in seconds can be provided to set a default TTL for items.
 // Returns a pointer to the new LowLevelClient.
-func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...int64) *LowLevelClient {
+func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...time.Duration) *LowLevelClient {
 	lowLevelClient := &LowLevelClient{
 		tableName: containerName,
 		AWSClient: awsClient,
@@ -139,7 +140,7 @@ func (r *LowLevelClient) SaveWithContext(ctx context.Context, key string, item *
 	}
 
 	if r.ttl > 0 && item.TTL == 0 {
-		item.TTL = r.ttl
+		item.TTL = time.Now().Add(r.ttl).Unix()
 	}
 
 	bytes, err := json.Marshal(item.Value)
