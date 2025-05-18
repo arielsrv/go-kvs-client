@@ -4,7 +4,7 @@ go 1.24.3
 
 require (
 	github.com/aws/aws-sdk-go-v2/config v1.29.14
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.30
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.46
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.28
 	go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws v0.60.0

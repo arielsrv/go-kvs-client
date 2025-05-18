@@ -4,7 +4,18 @@
 
 > This package provides a high-level abstract for KVS (Key Value Store) distributed client (beta)
 
+### Live example
+
+```shell
+task awslocal:start tf:init tf:apply
+````
+
+```shell
+go run gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/simple@latest
+```
+
 example
+
 ```go
 package main
 
@@ -93,7 +104,8 @@ func checkErr(err error) {
 
 ## Prometheus
 
-example 
+example
+
 ```text
 __kvs_operations{client_name="client_name", type="get"} 10 
 __kvs_operations{client_name="client_name", type="save"} 15 
@@ -109,4 +121,5 @@ __kvs_connection{client_name="client_name", type="bulk_save"} 0.012
 ```
 
 ## Tempo
+
 ![img.png](img.png)

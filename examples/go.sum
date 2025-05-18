@@ -137,6 +137,8 @@ gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.24 h1:8HtIFftGZs
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.24/go.mod h1:EwMxdpV1S4TkhkYQBf5W0A/jf8qtwU2ydmSC0MjouBs=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.30 h1:+0FMC8SfD8c+s2lqeMuiNQHpXizadqinwFeA+YC7uXY=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.30/go.mod h1:/De/Q/FKRuDZQQw51LANDM1AZHGJOZveVVJX9IMoI/8=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.46 h1:tsX5hX1R2SkE+he4H1XtP77p8QB5S+ncFn/EiC23Kik=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.46/go.mod h1:EhaLTmr8Dr07fcegCqF10fD/TvbbaCVoxXENDdaXubE=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26 h1:siwhMwY7Gao8l/vxGScObNpqGvGd5bzY/n2rR8Yp9BI=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26/go.mod h1:S12LQ0basuoWOYZ0aHMuBQmp7/ufwhtLHEnnYeVai2w=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.26 h1:rzTOBc3A8UrYdto/OFDjkzItvT447Y1epOXT+cT0hJ0=
