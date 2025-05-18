@@ -2,6 +2,8 @@
 package dynamodb
 
 import (
+	"time"
+
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 )
@@ -58,9 +60,9 @@ func (r *Builder) WithTTL(ttl int64) *Builder {
 
 // WithTTL returns a BuilderOptions that sets the default TTL for items.
 // The TTL is specified in seconds.
-func WithTTL(ttl int64) BuilderOptions {
+func WithTTL(ttl time.Duration) BuilderOptions {
 	return func(f *Builder) {
-		f.ttl = ttl
+		f.ttl = int64(ttl)
 	}
 }
 

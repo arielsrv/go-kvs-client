@@ -2,6 +2,7 @@ package kvs
 
 import (
 	"context"
+	"time"
 
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
@@ -40,7 +41,7 @@ func (r AWSKVSClient[T]) BulkGet(key []string) ([]T, error) {
 // It uses a background context and delegates to SaveWithContext.
 // Optional TTL (Time To Live) in seconds can be provided to automatically expire the item.
 // Returns an error if the save operation fails.
-func (r AWSKVSClient[T]) Save(key string, item *T, ttl ...int64) error {
+func (r AWSKVSClient[T]) Save(key string, item *T, ttl ...time.Duration) error {
 	return r.SaveWithContext(context.Background(), key, item, ttl...)
 }
 
@@ -49,7 +50,7 @@ func (r AWSKVSClient[T]) Save(key string, item *T, ttl ...int64) error {
 // The keyMapper function is used to extract the key from each item.
 // Optional TTL (Time To Live) in seconds can be provided to automatically expire the items.
 // Returns an error if the save operation fails.
-func (r AWSKVSClient[T]) BulkSave(items []T, keyMapper KeyMapperFunc[T], ttl ...int64) error {
+func (r AWSKVSClient[T]) BulkSave(items []T, keyMapper KeyMapperFunc[T], ttl ...time.Duration) error {
 	return r.BulkSaveWithContext(context.Background(), items, keyMapper, ttl...)
 }
 
@@ -101,7 +102,7 @@ func (r AWSKVSClient[T]) BulkGetWithContext(ctx context.Context, keys []string) 
 // The context can be used for cancellation and timeouts.
 // Optional TTL (Time To Live) in seconds can be provided to automatically expire the item.
 // Returns an error if the save operation fails.
-func (r AWSKVSClient[T]) SaveWithContext(ctx context.Context, key string, value *T, ttl ...int64) error {
+func (r AWSKVSClient[T]) SaveWithContext(ctx context.Context, key string, value *T, ttl ...time.Duration) error {
 	item := NewItem(key, value, ttl...)
 	err := r.lowLevelClient.SaveWithContext(ctx, key, item)
 	if err != nil {
@@ -121,7 +122,7 @@ func (r AWSKVSClient[T]) BulkSaveWithContext(
 	ctx context.Context,
 	items []T,
 	keyMapper KeyMapperFunc[T],
-	ttl ...int64,
+	ttl ...time.Duration,
 ) error {
 	kvsItems := new(Items)
 	for i := range items {

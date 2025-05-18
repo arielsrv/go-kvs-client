@@ -281,15 +281,11 @@ func (r *LowLevelClient) ContainerName() string {
 // The item is represented as a map of attribute names to attribute values.
 // The key, value, and TTL are stored as attributes.
 func (r *LowLevelClient) newItem(item *kvs.Item, bytes []byte) map[string]types.AttributeValue {
-	return map[string]types.AttributeValue{
-		KeyName: &types.AttributeValueMemberS{
-			Value: item.Key,
-		},
-		ValueName: &types.AttributeValueMemberS{
-			Value: string(bytes),
-		},
-		TTLName: &types.AttributeValueMemberN{
-			Value: strconv.FormatInt(item.TTL, 10),
-		},
+	attributes := map[string]types.AttributeValue{}
+	attributes[KeyName] = &types.AttributeValueMemberS{Value: item.Key}
+	attributes[ValueName] = &types.AttributeValueMemberS{Value: string(bytes)}
+	if item.TTL > 0 {
+		attributes[TTLName] = &types.AttributeValueMemberN{Value: strconv.FormatInt(item.TTL, 10)}
 	}
+	return attributes
 }

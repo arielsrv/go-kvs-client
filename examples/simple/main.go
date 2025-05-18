@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"time"
 
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/trace/model"
 
@@ -22,7 +23,7 @@ func main() {
 
 	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](
 		dynamodb.NewBuilder(
-			dynamodb.WithTTL(7*24*60*60),
+			dynamodb.WithTTL(time.Duration(24)*time.Hour),
 			dynamodb.WithContainerName("users-store"),
 			dynamodb.WithEndpointResolver("http://localhost:4566"),
 		).Build(cfg),
@@ -32,7 +33,7 @@ func main() {
 	for i := 1; i <= 20; i++ {
 		key := fmt.Sprintf("USER:%d:v1", i)
 		user := &model.UserDTO{ID: i, FirstName: "John Doe"}
-		if kvsError := kvsClient.SaveWithContext(ctx, key, user, 10); kvsError != nil {
+		if kvsError := kvsClient.SaveWithContext(ctx, key, user, time.Duration(10)*time.Second); kvsError != nil {
 			log.Error(kvsError)
 			continue
 		}

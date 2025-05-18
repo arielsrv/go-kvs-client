@@ -11,6 +11,21 @@ tasks:
             CONFIG_FOLDER: resources/setup/docker
         cmds:
             - (cd "{{.CONFIG_FOLDER}}" ||exit ; docker-compose down ; docker-compose up --build)
+    awslocal:update:
+        silent: true
+        cmds:
+            - pip install --upgrade pip
+            - localstack update all
+    awslocal:start:
+        silent: true
+        env:
+            LOCALSTACK_DYNAMODB_REMOVE_EXPIRED_ITEMS: 1
+        cmds:
+            - localstack start -d
+    awslocal:stop:
+        silent: true
+        cmds:
+            - localstack stop
     tf:clean:
         cmds:
             - rm -rf {{.TF_FOLDER}}/.terraform
@@ -28,9 +43,11 @@ tasks:
     aws:dynamodb:
         vars:
             TABLE_NAME: '__kvs-users-store'
+            REGION: eu-west-1
         cmds:
-            - 'awslocal dynamodb describe-table --table-name {{.TABLE_NAME}}'
-            - 'awslocal dynamodb describe-time-to-live --table-name {{.TABLE_NAME}}'
+            - 'awslocal dynamodb describe-table --table-name {{.TABLE_NAME}} --region {{.REGION}}'
+            - 'awslocal dynamodb describe-time-to-live --table-name {{.TABLE_NAME}} --region {{.REGION}}'
+            - 'curl -X DELETE localhost:4566/_aws/dynamodb/expired'
     lint:
         cmds:
             - go tool golangci-lint run --fix

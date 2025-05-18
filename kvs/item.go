@@ -22,14 +22,14 @@ type Item struct {
 // Optional TTL (Time To Live) in seconds can be provided to automatically expire the item.
 // The TTL is converted to a Unix timestamp by adding it to the current time.
 // Returns a pointer to the new Item.
-func NewItem(key string, value any, ttl ...int64) *Item {
+func NewItem(key string, value any, ttl ...time.Duration) *Item {
 	item := &Item{
 		Key:   key,
 		Value: value,
 	}
 
 	if len(ttl) > 0 {
-		now := time.Now().Unix() + ttl[0]
+		now := time.Now().Add(ttl[0]).Unix()
 		item.TTL = now
 	}
 
