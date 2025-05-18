@@ -2,6 +2,7 @@
 package dynamodb
 
 import (
+	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -88,7 +89,9 @@ func WithEndpointResolver(rawURL string) BuilderOptions {
 func (r *Builder) Build(awsConfig aws.Config) *LowLevelClient {
 	return NewLowLevelClient(
 		dynamodb.NewFromConfig(awsConfig, func(opts *dynamodb.Options) {
-			opts.EndpointResolverV2 = NewResolver(r.rawURL)
+			if strings.TrimSpace(r.rawURL) != "" {
+				opts.EndpointResolverV2 = NewResolver(r.rawURL)
+			}
 		}),
 		r.containerName,
 		r.ttl,
