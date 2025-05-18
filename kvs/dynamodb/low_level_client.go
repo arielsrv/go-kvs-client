@@ -28,13 +28,6 @@ type LowLevelClient struct {
 	ttl       time.Duration      // Default Time To Live for items in seconds
 }
 
-// Constants for DynamoDB attribute names.
-const (
-	KeyName   = "key"   // Attribute name for the item's key
-	ValueName = "value" // Attribute name for the item's value
-	TTLName   = "ttl"   // Attribute name for the item's TTL
-)
-
 // NewLowLevelClient creates a new LowLevelClient with the provided AWS client and container name.
 // The container name is used as the base for the DynamoDB table name.
 // Optional TTL (Time To Live) in seconds can be provided to set a default TTL for items.
@@ -54,6 +47,21 @@ func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...time.Du
 
 	return lowLevelClient
 }
+
+func (r *LowLevelClient) TableName() string {
+	return r.tableName
+}
+
+func (r *LowLevelClient) TTL() time.Duration {
+	return r.ttl
+}
+
+// Constants for DynamoDB attribute names.
+const (
+	KeyName   = "key"   // Attribute name for the item's key
+	ValueName = "value" // Attribute name for the item's value
+	TTLName   = "ttl"   // Attribute name for the item's TTL
+)
 
 // getTableName returns the full name of the DynamoDB table.
 // The table name is prefixed with "__kvs-" followed by the container name.
