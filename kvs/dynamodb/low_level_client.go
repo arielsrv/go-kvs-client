@@ -19,7 +19,7 @@ import (
 )
 
 // LowLevelClient is a client for interacting with AWS DynamoDB.
-// It implements the kvs.Client interface, providing methods for getting and saving items.
+// It implements the kvs.LowLevelClient interface, providing methods for getting and saving items.
 // The client uses a singleflight.Group to deduplicate concurrent reads for the same key.
 type LowLevelClient struct {
 	AWSClient                    // Embedded AWS DynamoDB client

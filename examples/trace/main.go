@@ -46,7 +46,7 @@ func main() {
 
 	// Single item: Save + Get
 	for i := 1; i <= 20; i++ {
-		newCtx, transaction := tracing.StartTransaction(ctx, "Users.Client", tracing.SetTransactionType(tracing.Client))
+		newCtx, transaction := tracing.StartTransaction(ctx, "Users.LowLevelClient", tracing.SetTransactionType(tracing.Client))
 		key := fmt.Sprintf("USER:%d:v1", i)
 		user := &model.UserDTO{ID: i, FirstName: "John Doe"}
 		if kvsError := kvsClient.SaveWithContext(newCtx, key, user, time.Second); kvsError != nil {

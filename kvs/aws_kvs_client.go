@@ -7,7 +7,7 @@ import (
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
 
-// AWSKVSClient is an implementation of the KVSClient interface for AWS services.
+// AWSKVSClient is an implementation of the Client interface for AWS services.
 // It uses a LowLevelClientProxy to interact with the underlying storage.
 // The struct is generic over type T, allowing it to work with any data type.
 type AWSKVSClient[T any] struct {
@@ -17,7 +17,7 @@ type AWSKVSClient[T any] struct {
 // NewAWSKVSClient creates a new AWSKVSClient with the provided low-level client.
 // The low-level client is wrapped in a LowLevelClientProxy to add metrics and other functionality.
 // Returns a pointer to the new AWSKVSClient.
-func NewAWSKVSClient[T any](lowLevelClient Client) *AWSKVSClient[T] {
+func NewAWSKVSClient[T any](lowLevelClient LowLevelClient) *AWSKVSClient[T] {
 	return &AWSKVSClient[T]{
 		lowLevelClient: NewLowLevelClientProxy(lowLevelClient),
 	}

@@ -11,10 +11,10 @@ import (
 // It is used in bulk operations to determine the key for each item.
 type KeyMapperFunc[T any] func(item T) string
 
-// KVSClient is the main interface for interacting with a key-value store.
+// Client is the main interface for interacting with a key-value store.
 // It provides methods for getting and saving individual items or collections of items.
 // The interface is generic over type T, allowing it to work with any data type.
-type KVSClient[T any] interface {
+type Client[T any] interface {
 	// Get retrieves an item by its key.
 	// Returns a pointer to the item if found, or an error if not found or if retrieval fails.
 	Get(key string) (*T, error)

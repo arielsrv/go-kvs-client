@@ -8,10 +8,10 @@ import (
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector/metrics"
 )
 
-// Client is the interface for low-level key-value store operations.
+// LowLevelClient is the interface for low-level key-value store operations.
 // It provides methods for getting and saving individual items or collections of items,
 // with or without context support.
-type Client interface {
+type LowLevelClient interface {
 	// Get retrieves an item by its key.
 	Get(key string) (*Item, error)
 
@@ -41,15 +41,15 @@ type Client interface {
 	ContainerName() string
 }
 
-// LowLevelClientProxy is a wrapper around a Client that adds metrics collection.
+// LowLevelClientProxy is a wrapper around a LowLevelClient that adds metrics collection.
 // It implements the same interface as the wrapped client, but adds metrics for each operation.
 type LowLevelClientProxy struct {
-	lowLevelClient Client
+	lowLevelClient LowLevelClient
 }
 
 // NewLowLevelClientProxy creates a new LowLevelClientProxy with the provided client.
 // Returns a LowLevelClientProxy that wraps the client.
-func NewLowLevelClientProxy(lowLevelClient Client) LowLevelClientProxy {
+func NewLowLevelClientProxy(lowLevelClient LowLevelClient) LowLevelClientProxy {
 	return LowLevelClientProxy{
 		lowLevelClient: lowLevelClient,
 	}
