@@ -4,6 +4,7 @@ package kvs
 
 import (
 	"context"
+	"time"
 )
 
 // KeyMapperFunc is a function type that extracts a key from an item of type T.
@@ -25,13 +26,13 @@ type KVSClient[T any] interface {
 	// Save stores an item with the specified key.
 	// Optional TTL (Time To Live) in seconds can be provided to automatically expire the item.
 	// Returns an error if the save operation fails.
-	Save(key string, item *T, ttl ...int64) error
+	Save(key string, item *T, ttl ...time.Duration) error
 
 	// BulkSave stores multiple items.
 	// The keyMapper function is used to extract the key from each item.
 	// Optional TTL (Time To Live) in seconds can be provided to automatically expire the items.
 	// Returns an error if the save operation fails.
-	BulkSave(items []T, keyMapper KeyMapperFunc[T], ttl ...int64) error
+	BulkSave(items []T, keyMapper KeyMapperFunc[T], ttl ...time.Duration) error
 
 	// GetWithContext is like Get but with context support for cancellation and timeouts.
 	GetWithContext(ctx context.Context, key string) (*T, error)
@@ -40,8 +41,8 @@ type KVSClient[T any] interface {
 	BulkGetWithContext(ctx context.Context, keys []string) ([]T, error)
 
 	// SaveWithContext is like Save but with context support for cancellation and timeouts.
-	SaveWithContext(ctx context.Context, key string, item *T, ttl ...int64) error
+	SaveWithContext(ctx context.Context, key string, item *T, ttl ...time.Duration) error
 
 	// BulkSaveWithContext is like BulkSave but with context support for cancellation and timeouts.
-	BulkSaveWithContext(ctx context.Context, items []T, keyMapper KeyMapperFunc[T], ttl ...int64) error
+	BulkSaveWithContext(ctx context.Context, items []T, keyMapper KeyMapperFunc[T], ttl ...time.Duration) error
 }

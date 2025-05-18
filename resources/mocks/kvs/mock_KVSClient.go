@@ -6,6 +6,7 @@ package kvs
 
 import (
 	"context"
+	"time"
 
 	mock "github.com/stretchr/testify/mock"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
@@ -152,8 +153,8 @@ func (_c *MockKVSClient_BulkGetWithContext_Call[T]) RunAndReturn(run func(ctx co
 }
 
 // BulkSave provides a mock function for the type MockKVSClient
-func (_mock *MockKVSClient[T]) BulkSave(items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...int64) error {
-	// int64
+func (_mock *MockKVSClient[T]) BulkSave(items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...time.Duration) error {
+	// time.Duration
 	_va := make([]interface{}, len(ttl))
 	for _i := range ttl {
 		_va[_i] = ttl[_i]
@@ -168,7 +169,7 @@ func (_mock *MockKVSClient[T]) BulkSave(items []T, keyMapper kvs.KeyMapperFunc[T
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func([]T, kvs.KeyMapperFunc[T], ...int64) error); ok {
+	if returnFunc, ok := ret.Get(0).(func([]T, kvs.KeyMapperFunc[T], ...time.Duration) error); ok {
 		r0 = returnFunc(items, keyMapper, ttl...)
 	} else {
 		r0 = ret.Error(0)
@@ -190,12 +191,12 @@ func (_e *MockKVSClient_Expecter[T]) BulkSave(items interface{}, keyMapper inter
 		append([]interface{}{items, keyMapper}, ttl...)...)}
 }
 
-func (_c *MockKVSClient_BulkSave_Call[T]) Run(run func(items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...int64)) *MockKVSClient_BulkSave_Call[T] {
+func (_c *MockKVSClient_BulkSave_Call[T]) Run(run func(items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...time.Duration)) *MockKVSClient_BulkSave_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]int64, len(args)-2)
+		variadicArgs := make([]time.Duration, len(args)-2)
 		for i, a := range args[2:] {
 			if a != nil {
-				variadicArgs[i] = a.(int64)
+				variadicArgs[i] = a.(time.Duration)
 			}
 		}
 		run(args[0].([]T), args[1].(kvs.KeyMapperFunc[T]), variadicArgs...)
@@ -208,14 +209,14 @@ func (_c *MockKVSClient_BulkSave_Call[T]) Return(err error) *MockKVSClient_BulkS
 	return _c
 }
 
-func (_c *MockKVSClient_BulkSave_Call[T]) RunAndReturn(run func(items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...int64) error) *MockKVSClient_BulkSave_Call[T] {
+func (_c *MockKVSClient_BulkSave_Call[T]) RunAndReturn(run func(items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...time.Duration) error) *MockKVSClient_BulkSave_Call[T] {
 	_c.Call.Return(run)
 	return _c
 }
 
 // BulkSaveWithContext provides a mock function for the type MockKVSClient
-func (_mock *MockKVSClient[T]) BulkSaveWithContext(ctx context.Context, items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...int64) error {
-	// int64
+func (_mock *MockKVSClient[T]) BulkSaveWithContext(ctx context.Context, items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...time.Duration) error {
+	// time.Duration
 	_va := make([]interface{}, len(ttl))
 	for _i := range ttl {
 		_va[_i] = ttl[_i]
@@ -230,7 +231,7 @@ func (_mock *MockKVSClient[T]) BulkSaveWithContext(ctx context.Context, items []
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(context.Context, []T, kvs.KeyMapperFunc[T], ...int64) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(context.Context, []T, kvs.KeyMapperFunc[T], ...time.Duration) error); ok {
 		r0 = returnFunc(ctx, items, keyMapper, ttl...)
 	} else {
 		r0 = ret.Error(0)
@@ -253,12 +254,12 @@ func (_e *MockKVSClient_Expecter[T]) BulkSaveWithContext(ctx interface{}, items 
 		append([]interface{}{ctx, items, keyMapper}, ttl...)...)}
 }
 
-func (_c *MockKVSClient_BulkSaveWithContext_Call[T]) Run(run func(ctx context.Context, items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...int64)) *MockKVSClient_BulkSaveWithContext_Call[T] {
+func (_c *MockKVSClient_BulkSaveWithContext_Call[T]) Run(run func(ctx context.Context, items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...time.Duration)) *MockKVSClient_BulkSaveWithContext_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]int64, len(args)-3)
+		variadicArgs := make([]time.Duration, len(args)-3)
 		for i, a := range args[3:] {
 			if a != nil {
-				variadicArgs[i] = a.(int64)
+				variadicArgs[i] = a.(time.Duration)
 			}
 		}
 		run(args[0].(context.Context), args[1].([]T), args[2].(kvs.KeyMapperFunc[T]), variadicArgs...)
@@ -271,7 +272,7 @@ func (_c *MockKVSClient_BulkSaveWithContext_Call[T]) Return(err error) *MockKVSC
 	return _c
 }
 
-func (_c *MockKVSClient_BulkSaveWithContext_Call[T]) RunAndReturn(run func(ctx context.Context, items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...int64) error) *MockKVSClient_BulkSaveWithContext_Call[T] {
+func (_c *MockKVSClient_BulkSaveWithContext_Call[T]) RunAndReturn(run func(ctx context.Context, items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...time.Duration) error) *MockKVSClient_BulkSaveWithContext_Call[T] {
 	_c.Call.Return(run)
 	return _c
 }
@@ -390,8 +391,8 @@ func (_c *MockKVSClient_GetWithContext_Call[T]) RunAndReturn(run func(ctx contex
 }
 
 // Save provides a mock function for the type MockKVSClient
-func (_mock *MockKVSClient[T]) Save(key string, item *T, ttl ...int64) error {
-	// int64
+func (_mock *MockKVSClient[T]) Save(key string, item *T, ttl ...time.Duration) error {
+	// time.Duration
 	_va := make([]interface{}, len(ttl))
 	for _i := range ttl {
 		_va[_i] = ttl[_i]
@@ -406,7 +407,7 @@ func (_mock *MockKVSClient[T]) Save(key string, item *T, ttl ...int64) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(string, *T, ...int64) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(string, *T, ...time.Duration) error); ok {
 		r0 = returnFunc(key, item, ttl...)
 	} else {
 		r0 = ret.Error(0)
@@ -428,12 +429,12 @@ func (_e *MockKVSClient_Expecter[T]) Save(key interface{}, item interface{}, ttl
 		append([]interface{}{key, item}, ttl...)...)}
 }
 
-func (_c *MockKVSClient_Save_Call[T]) Run(run func(key string, item *T, ttl ...int64)) *MockKVSClient_Save_Call[T] {
+func (_c *MockKVSClient_Save_Call[T]) Run(run func(key string, item *T, ttl ...time.Duration)) *MockKVSClient_Save_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]int64, len(args)-2)
+		variadicArgs := make([]time.Duration, len(args)-2)
 		for i, a := range args[2:] {
 			if a != nil {
-				variadicArgs[i] = a.(int64)
+				variadicArgs[i] = a.(time.Duration)
 			}
 		}
 		run(args[0].(string), args[1].(*T), variadicArgs...)
@@ -446,14 +447,14 @@ func (_c *MockKVSClient_Save_Call[T]) Return(err error) *MockKVSClient_Save_Call
 	return _c
 }
 
-func (_c *MockKVSClient_Save_Call[T]) RunAndReturn(run func(key string, item *T, ttl ...int64) error) *MockKVSClient_Save_Call[T] {
+func (_c *MockKVSClient_Save_Call[T]) RunAndReturn(run func(key string, item *T, ttl ...time.Duration) error) *MockKVSClient_Save_Call[T] {
 	_c.Call.Return(run)
 	return _c
 }
 
 // SaveWithContext provides a mock function for the type MockKVSClient
-func (_mock *MockKVSClient[T]) SaveWithContext(ctx context.Context, key string, item *T, ttl ...int64) error {
-	// int64
+func (_mock *MockKVSClient[T]) SaveWithContext(ctx context.Context, key string, item *T, ttl ...time.Duration) error {
+	// time.Duration
 	_va := make([]interface{}, len(ttl))
 	for _i := range ttl {
 		_va[_i] = ttl[_i]
@@ -468,7 +469,7 @@ func (_mock *MockKVSClient[T]) SaveWithContext(ctx context.Context, key string, 
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(context.Context, string, *T, ...int64) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string, *T, ...time.Duration) error); ok {
 		r0 = returnFunc(ctx, key, item, ttl...)
 	} else {
 		r0 = ret.Error(0)
@@ -491,12 +492,12 @@ func (_e *MockKVSClient_Expecter[T]) SaveWithContext(ctx interface{}, key interf
 		append([]interface{}{ctx, key, item}, ttl...)...)}
 }
 
-func (_c *MockKVSClient_SaveWithContext_Call[T]) Run(run func(ctx context.Context, key string, item *T, ttl ...int64)) *MockKVSClient_SaveWithContext_Call[T] {
+func (_c *MockKVSClient_SaveWithContext_Call[T]) Run(run func(ctx context.Context, key string, item *T, ttl ...time.Duration)) *MockKVSClient_SaveWithContext_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]int64, len(args)-3)
+		variadicArgs := make([]time.Duration, len(args)-3)
 		for i, a := range args[3:] {
 			if a != nil {
-				variadicArgs[i] = a.(int64)
+				variadicArgs[i] = a.(time.Duration)
 			}
 		}
 		run(args[0].(context.Context), args[1].(string), args[2].(*T), variadicArgs...)
@@ -509,7 +510,7 @@ func (_c *MockKVSClient_SaveWithContext_Call[T]) Return(err error) *MockKVSClien
 	return _c
 }
 
-func (_c *MockKVSClient_SaveWithContext_Call[T]) RunAndReturn(run func(ctx context.Context, key string, item *T, ttl ...int64) error) *MockKVSClient_SaveWithContext_Call[T] {
+func (_c *MockKVSClient_SaveWithContext_Call[T]) RunAndReturn(run func(ctx context.Context, key string, item *T, ttl ...time.Duration) error) *MockKVSClient_SaveWithContext_Call[T] {
 	_c.Call.Return(run)
 	return _c
 }
