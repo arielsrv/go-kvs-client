@@ -26,46 +26,39 @@ package main
 import (
 	"context"
 	"fmt"
+	"slices"
 	"strconv"
+	"time"
+
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/trace/model"
+
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 
 	"github.com/aws/aws-sdk-go-v2/config"
-	"go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws"
-
-	"examples/local/infrastructure"
-	"examples/local/model"
-
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic/otel/tracing"
 )
 
 func main() {
 	ctx := context.Background()
-
-	app, err := tracing.New(ctx,
-		tracing.WithAppName("users-api"),
-		tracing.WithProtocol(tracing.NewGRPCProtocol("localhost:4317")))
-	checkErr(err)
-	defer app.Shutdown(ctx)
-
 	cfg, err := config.LoadDefaultConfig(ctx)
-	checkErr(err)
-	otelaws.AppendMiddlewares(&cfg.APIOptions)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	kvsClient := infrastructure.NewAWSKVSClient[model.UserDTO](
+	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](
 		dynamodb.NewBuilder(
-			dynamodb.WithTTL(7*24*60*60),
-			dynamodb.WithContainerName("users-store"),
+			dynamodb.WithTTL(time.Duration(24)*time.Hour),
+			dynamodb.WithContainerName("__kvs-users-store"),
 			dynamodb.WithEndpointResolver("http://localhost:4566"),
 		).Build(cfg),
 	)
 
 	// Single item: Save + Get
 	for i := 1; i <= 20; i++ {
-		childCtx, transaction := tracing.NewTransaction(ctx, "Users.Client", tracing.SetTransactionType(tracing.Client))
 		key := fmt.Sprintf("USER:%d:v1", i)
 		user := &model.UserDTO{ID: i, FirstName: "John Doe"}
-		if kvsError := kvsClient.SaveWithContext(childCtx, key, user, 10); kvsError != nil {
+		if kvsError := kvsClient.SaveWithContext(ctx, key, user, time.Duration(10)*time.Second); kvsError != nil {
 			log.Error(kvsError)
 			continue
 		}
@@ -75,32 +68,28 @@ func main() {
 			continue
 		}
 		log.Infof("Item %s: %+v", key, value)
-		transaction.End()
 	}
 
 	// Bulk save + get
 	users := []model.UserDTO{
-		{ID: 101, FirstName: "Jane Doe"},
-		{ID: 102, FirstName: "Alice Doe"},
-		{ID: 103, FirstName: "Bob Doe"},
+		{ID: 101, FirstName: "Jane", LastName: "Doe", FullName: fmt.Sprintf("%s %s", "Jane", "Doe")},
+		{ID: 102, FirstName: "Bob", LastName: "Doe", FullName: fmt.Sprintf("%s %s", "Bob", "Doe")},
+		{ID: 103, FirstName: "Alice", LastName: "Doe", FullName: fmt.Sprintf("%s %s", "Alice", "Doe")},
 	}
 	err = kvsClient.BulkSaveWithContext(ctx, users, func(userDTO model.UserDTO) string {
 		return strconv.Itoa(userDTO.ID)
 	})
-	checkErr(err)
-
-	keys := []string{"101", "102", "103"}
-	items, err := kvsClient.BulkGetWithContext(ctx, keys)
-	checkErr(err)
-
-	for i, item := range items {
-		log.Infof("Item %d: %+v", i+1, item)
-	}
-}
-
-func checkErr(err error) {
 	if err != nil {
 		log.Fatal(err)
+	}
+	keys := []string{"101", "102", "103"}
+	items, err := kvsClient.BulkGetWithContext(ctx, keys)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for item := range slices.Values(items) {
+		log.Infof("Item: %+v", item)
 	}
 }
 

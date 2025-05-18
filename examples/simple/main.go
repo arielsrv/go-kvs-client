@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"slices"
 	"strconv"
 	"time"
 
@@ -17,9 +18,10 @@ import (
 
 func main() {
 	ctx := context.Background()
-
 	cfg, err := config.LoadDefaultConfig(ctx)
-	checkErr(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](
 		dynamodb.NewBuilder(
@@ -54,19 +56,16 @@ func main() {
 	err = kvsClient.BulkSaveWithContext(ctx, users, func(userDTO model.UserDTO) string {
 		return strconv.Itoa(userDTO.ID)
 	})
-	checkErr(err)
-
-	keys := []string{"101", "102", "103"}
-	items, err := kvsClient.BulkGetWithContext(ctx, keys)
-	checkErr(err)
-
-	for i, item := range items {
-		log.Infof("Item %d: %+v", i+1, item)
-	}
-}
-
-func checkErr(err error) {
 	if err != nil {
 		log.Fatal(err)
+	}
+	keys := []string{"101", "102", "103"}
+	items, err := kvsClient.BulkGetWithContext(ctx, keys)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for item := range slices.Values(items) {
+		log.Infof("Item: %+v", item)
 	}
 }
