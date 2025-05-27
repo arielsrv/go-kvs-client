@@ -443,3 +443,9 @@ linters:
                   - gosec
                   - noctx
                   - wrapcheck
+output:
+    formats:
+        code-climate:
+            path: 'gl-code-quality-report.json'
+        text:
+            path: stdout
