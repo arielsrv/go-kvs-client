@@ -72,14 +72,20 @@ type MockLowLevelClient_BulkGet_Call struct {
 }
 
 // BulkGet is a helper method to define mock.On call
-//   - keys
+//   - keys []string
 func (_e *MockLowLevelClient_Expecter) BulkGet(keys interface{}) *MockLowLevelClient_BulkGet_Call {
 	return &MockLowLevelClient_BulkGet_Call{Call: _e.mock.On("BulkGet", keys)}
 }
 
 func (_c *MockLowLevelClient_BulkGet_Call) Run(run func(keys []string)) *MockLowLevelClient_BulkGet_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].([]string))
+		var arg0 []string
+		if args[0] != nil {
+			arg0 = args[0].([]string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -128,15 +134,26 @@ type MockLowLevelClient_BulkGetWithContext_Call struct {
 }
 
 // BulkGetWithContext is a helper method to define mock.On call
-//   - ctx
-//   - key
+//   - ctx context.Context
+//   - key []string
 func (_e *MockLowLevelClient_Expecter) BulkGetWithContext(ctx interface{}, key interface{}) *MockLowLevelClient_BulkGetWithContext_Call {
 	return &MockLowLevelClient_BulkGetWithContext_Call{Call: _e.mock.On("BulkGetWithContext", ctx, key)}
 }
 
 func (_c *MockLowLevelClient_BulkGetWithContext_Call) Run(run func(ctx context.Context, key []string)) *MockLowLevelClient_BulkGetWithContext_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].([]string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 []string
+		if args[1] != nil {
+			arg1 = args[1].([]string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -174,14 +191,20 @@ type MockLowLevelClient_BulkSave_Call struct {
 }
 
 // BulkSave is a helper method to define mock.On call
-//   - items
+//   - items *kvs.Items
 func (_e *MockLowLevelClient_Expecter) BulkSave(items interface{}) *MockLowLevelClient_BulkSave_Call {
 	return &MockLowLevelClient_BulkSave_Call{Call: _e.mock.On("BulkSave", items)}
 }
 
 func (_c *MockLowLevelClient_BulkSave_Call) Run(run func(items *kvs.Items)) *MockLowLevelClient_BulkSave_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(*kvs.Items))
+		var arg0 *kvs.Items
+		if args[0] != nil {
+			arg0 = args[0].(*kvs.Items)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -219,15 +242,26 @@ type MockLowLevelClient_BulkSaveWithContext_Call struct {
 }
 
 // BulkSaveWithContext is a helper method to define mock.On call
-//   - ctx
-//   - items
+//   - ctx context.Context
+//   - items *kvs.Items
 func (_e *MockLowLevelClient_Expecter) BulkSaveWithContext(ctx interface{}, items interface{}) *MockLowLevelClient_BulkSaveWithContext_Call {
 	return &MockLowLevelClient_BulkSaveWithContext_Call{Call: _e.mock.On("BulkSaveWithContext", ctx, items)}
 }
 
 func (_c *MockLowLevelClient_BulkSaveWithContext_Call) Run(run func(ctx context.Context, items *kvs.Items)) *MockLowLevelClient_BulkSaveWithContext_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*kvs.Items))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *kvs.Items
+		if args[1] != nil {
+			arg1 = args[1].(*kvs.Items)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -320,14 +354,20 @@ type MockLowLevelClient_Get_Call struct {
 }
 
 // Get is a helper method to define mock.On call
-//   - key
+//   - key string
 func (_e *MockLowLevelClient_Expecter) Get(key interface{}) *MockLowLevelClient_Get_Call {
 	return &MockLowLevelClient_Get_Call{Call: _e.mock.On("Get", key)}
 }
 
 func (_c *MockLowLevelClient_Get_Call) Run(run func(key string)) *MockLowLevelClient_Get_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -376,15 +416,26 @@ type MockLowLevelClient_GetWithContext_Call struct {
 }
 
 // GetWithContext is a helper method to define mock.On call
-//   - ctx
-//   - key
+//   - ctx context.Context
+//   - key string
 func (_e *MockLowLevelClient_Expecter) GetWithContext(ctx interface{}, key interface{}) *MockLowLevelClient_GetWithContext_Call {
 	return &MockLowLevelClient_GetWithContext_Call{Call: _e.mock.On("GetWithContext", ctx, key)}
 }
 
 func (_c *MockLowLevelClient_GetWithContext_Call) Run(run func(ctx context.Context, key string)) *MockLowLevelClient_GetWithContext_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -422,15 +473,26 @@ type MockLowLevelClient_Save_Call struct {
 }
 
 // Save is a helper method to define mock.On call
-//   - key
-//   - item
+//   - key string
+//   - item *kvs.Item
 func (_e *MockLowLevelClient_Expecter) Save(key interface{}, item interface{}) *MockLowLevelClient_Save_Call {
 	return &MockLowLevelClient_Save_Call{Call: _e.mock.On("Save", key, item)}
 }
 
 func (_c *MockLowLevelClient_Save_Call) Run(run func(key string, item *kvs.Item)) *MockLowLevelClient_Save_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(*kvs.Item))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 *kvs.Item
+		if args[1] != nil {
+			arg1 = args[1].(*kvs.Item)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -468,16 +530,32 @@ type MockLowLevelClient_SaveWithContext_Call struct {
 }
 
 // SaveWithContext is a helper method to define mock.On call
-//   - ctx
-//   - key
-//   - item
+//   - ctx context.Context
+//   - key string
+//   - item *kvs.Item
 func (_e *MockLowLevelClient_Expecter) SaveWithContext(ctx interface{}, key interface{}, item interface{}) *MockLowLevelClient_SaveWithContext_Call {
 	return &MockLowLevelClient_SaveWithContext_Call{Call: _e.mock.On("SaveWithContext", ctx, key, item)}
 }
 
 func (_c *MockLowLevelClient_SaveWithContext_Call) Run(run func(ctx context.Context, key string, item *kvs.Item)) *MockLowLevelClient_SaveWithContext_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].(*kvs.Item))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 *kvs.Item
+		if args[2] != nil {
+			arg2 = args[2].(*kvs.Item)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }

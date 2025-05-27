@@ -73,14 +73,20 @@ type MockClient_BulkGet_Call[T any] struct {
 }
 
 // BulkGet is a helper method to define mock.On call
-//   - key
+//   - key []string
 func (_e *MockClient_Expecter[T]) BulkGet(key interface{}) *MockClient_BulkGet_Call[T] {
 	return &MockClient_BulkGet_Call[T]{Call: _e.mock.On("BulkGet", key)}
 }
 
 func (_c *MockClient_BulkGet_Call[T]) Run(run func(key []string)) *MockClient_BulkGet_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].([]string))
+		var arg0 []string
+		if args[0] != nil {
+			arg0 = args[0].([]string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -129,15 +135,26 @@ type MockClient_BulkGetWithContext_Call[T any] struct {
 }
 
 // BulkGetWithContext is a helper method to define mock.On call
-//   - ctx
-//   - keys
+//   - ctx context.Context
+//   - keys []string
 func (_e *MockClient_Expecter[T]) BulkGetWithContext(ctx interface{}, keys interface{}) *MockClient_BulkGetWithContext_Call[T] {
 	return &MockClient_BulkGetWithContext_Call[T]{Call: _e.mock.On("BulkGetWithContext", ctx, keys)}
 }
 
 func (_c *MockClient_BulkGetWithContext_Call[T]) Run(run func(ctx context.Context, keys []string)) *MockClient_BulkGetWithContext_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].([]string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 []string
+		if args[1] != nil {
+			arg1 = args[1].([]string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -183,9 +200,9 @@ type MockClient_BulkSave_Call[T any] struct {
 }
 
 // BulkSave is a helper method to define mock.On call
-//   - items
-//   - keyMapper
-//   - ttl
+//   - items []T
+//   - keyMapper kvs.KeyMapperFunc[T]
+//   - ttl ...time.Duration
 func (_e *MockClient_Expecter[T]) BulkSave(items interface{}, keyMapper interface{}, ttl ...interface{}) *MockClient_BulkSave_Call[T] {
 	return &MockClient_BulkSave_Call[T]{Call: _e.mock.On("BulkSave",
 		append([]interface{}{items, keyMapper}, ttl...)...)}
@@ -193,13 +210,27 @@ func (_e *MockClient_Expecter[T]) BulkSave(items interface{}, keyMapper interfac
 
 func (_c *MockClient_BulkSave_Call[T]) Run(run func(items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...time.Duration)) *MockClient_BulkSave_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 []T
+		if args[0] != nil {
+			arg0 = args[0].([]T)
+		}
+		var arg1 kvs.KeyMapperFunc[T]
+		if args[1] != nil {
+			arg1 = args[1].(kvs.KeyMapperFunc[T])
+		}
+		var arg2 []time.Duration
 		variadicArgs := make([]time.Duration, len(args)-2)
 		for i, a := range args[2:] {
 			if a != nil {
 				variadicArgs[i] = a.(time.Duration)
 			}
 		}
-		run(args[0].([]T), args[1].(kvs.KeyMapperFunc[T]), variadicArgs...)
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -245,10 +276,10 @@ type MockClient_BulkSaveWithContext_Call[T any] struct {
 }
 
 // BulkSaveWithContext is a helper method to define mock.On call
-//   - ctx
-//   - items
-//   - keyMapper
-//   - ttl
+//   - ctx context.Context
+//   - items []T
+//   - keyMapper kvs.KeyMapperFunc[T]
+//   - ttl ...time.Duration
 func (_e *MockClient_Expecter[T]) BulkSaveWithContext(ctx interface{}, items interface{}, keyMapper interface{}, ttl ...interface{}) *MockClient_BulkSaveWithContext_Call[T] {
 	return &MockClient_BulkSaveWithContext_Call[T]{Call: _e.mock.On("BulkSaveWithContext",
 		append([]interface{}{ctx, items, keyMapper}, ttl...)...)}
@@ -256,13 +287,32 @@ func (_e *MockClient_Expecter[T]) BulkSaveWithContext(ctx interface{}, items int
 
 func (_c *MockClient_BulkSaveWithContext_Call[T]) Run(run func(ctx context.Context, items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...time.Duration)) *MockClient_BulkSaveWithContext_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 []T
+		if args[1] != nil {
+			arg1 = args[1].([]T)
+		}
+		var arg2 kvs.KeyMapperFunc[T]
+		if args[2] != nil {
+			arg2 = args[2].(kvs.KeyMapperFunc[T])
+		}
+		var arg3 []time.Duration
 		variadicArgs := make([]time.Duration, len(args)-3)
 		for i, a := range args[3:] {
 			if a != nil {
 				variadicArgs[i] = a.(time.Duration)
 			}
 		}
-		run(args[0].(context.Context), args[1].([]T), args[2].(kvs.KeyMapperFunc[T]), variadicArgs...)
+		arg3 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2,
+			arg3...,
+		)
 	})
 	return _c
 }
@@ -311,14 +361,20 @@ type MockClient_Get_Call[T any] struct {
 }
 
 // Get is a helper method to define mock.On call
-//   - key
+//   - key string
 func (_e *MockClient_Expecter[T]) Get(key interface{}) *MockClient_Get_Call[T] {
 	return &MockClient_Get_Call[T]{Call: _e.mock.On("Get", key)}
 }
 
 func (_c *MockClient_Get_Call[T]) Run(run func(key string)) *MockClient_Get_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -367,15 +423,26 @@ type MockClient_GetWithContext_Call[T any] struct {
 }
 
 // GetWithContext is a helper method to define mock.On call
-//   - ctx
-//   - key
+//   - ctx context.Context
+//   - key string
 func (_e *MockClient_Expecter[T]) GetWithContext(ctx interface{}, key interface{}) *MockClient_GetWithContext_Call[T] {
 	return &MockClient_GetWithContext_Call[T]{Call: _e.mock.On("GetWithContext", ctx, key)}
 }
 
 func (_c *MockClient_GetWithContext_Call[T]) Run(run func(ctx context.Context, key string)) *MockClient_GetWithContext_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -421,9 +488,9 @@ type MockClient_Save_Call[T any] struct {
 }
 
 // Save is a helper method to define mock.On call
-//   - key
-//   - item
-//   - ttl
+//   - key string
+//   - item *T
+//   - ttl ...time.Duration
 func (_e *MockClient_Expecter[T]) Save(key interface{}, item interface{}, ttl ...interface{}) *MockClient_Save_Call[T] {
 	return &MockClient_Save_Call[T]{Call: _e.mock.On("Save",
 		append([]interface{}{key, item}, ttl...)...)}
@@ -431,13 +498,27 @@ func (_e *MockClient_Expecter[T]) Save(key interface{}, item interface{}, ttl ..
 
 func (_c *MockClient_Save_Call[T]) Run(run func(key string, item *T, ttl ...time.Duration)) *MockClient_Save_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 *T
+		if args[1] != nil {
+			arg1 = args[1].(*T)
+		}
+		var arg2 []time.Duration
 		variadicArgs := make([]time.Duration, len(args)-2)
 		for i, a := range args[2:] {
 			if a != nil {
 				variadicArgs[i] = a.(time.Duration)
 			}
 		}
-		run(args[0].(string), args[1].(*T), variadicArgs...)
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -483,10 +564,10 @@ type MockClient_SaveWithContext_Call[T any] struct {
 }
 
 // SaveWithContext is a helper method to define mock.On call
-//   - ctx
-//   - key
-//   - item
-//   - ttl
+//   - ctx context.Context
+//   - key string
+//   - item *T
+//   - ttl ...time.Duration
 func (_e *MockClient_Expecter[T]) SaveWithContext(ctx interface{}, key interface{}, item interface{}, ttl ...interface{}) *MockClient_SaveWithContext_Call[T] {
 	return &MockClient_SaveWithContext_Call[T]{Call: _e.mock.On("SaveWithContext",
 		append([]interface{}{ctx, key, item}, ttl...)...)}
@@ -494,13 +575,32 @@ func (_e *MockClient_Expecter[T]) SaveWithContext(ctx interface{}, key interface
 
 func (_c *MockClient_SaveWithContext_Call[T]) Run(run func(ctx context.Context, key string, item *T, ttl ...time.Duration)) *MockClient_SaveWithContext_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 *T
+		if args[2] != nil {
+			arg2 = args[2].(*T)
+		}
+		var arg3 []time.Duration
 		variadicArgs := make([]time.Duration, len(args)-3)
 		for i, a := range args[3:] {
 			if a != nil {
 				variadicArgs[i] = a.(time.Duration)
 			}
 		}
-		run(args[0].(context.Context), args[1].(string), args[2].(*T), variadicArgs...)
+		arg3 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2,
+			arg3...,
+		)
 	})
 	return _c
 }

@@ -50,14 +50,20 @@ type MockList_Add_Call struct {
 }
 
 // Add is a helper method to define mock.On call
-//   - item
+//   - item *kvs.Item
 func (_e *MockList_Expecter) Add(item interface{}) *MockList_Add_Call {
 	return &MockList_Add_Call{Call: _e.mock.On("Add", item)}
 }
 
 func (_c *MockList_Add_Call) Run(run func(item *kvs.Item)) *MockList_Add_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(*kvs.Item))
+		var arg0 *kvs.Item
+		if args[0] != nil {
+			arg0 = args[0].(*kvs.Item)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }

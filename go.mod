@@ -15,7 +15,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.26
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.56
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.58
 	golang.org/x/sync v0.14.0
 )
 
@@ -231,7 +231,7 @@ require (
 	github.com/urfave/cli/v2 v2.3.0 // indirect
 	github.com/uudashr/gocognit v1.2.0 // indirect
 	github.com/uudashr/iface v1.3.1 // indirect
-	github.com/vektra/mockery/v3 v3.2.5 // indirect
+	github.com/vektra/mockery/v3 v3.3.0 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	github.com/xeipuuv/gojsonschema v1.2.0 // indirect
@@ -264,7 +264,7 @@ require (
 	golang.org/x/telemetry v0.0.0-20240522233618-39ace7a40ae7 // indirect
 	golang.org/x/term v0.29.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
-	golang.org/x/tools v0.32.0 // indirect
+	golang.org/x/tools v0.33.0 // indirect
 	golang.org/x/vuln v1.1.4 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

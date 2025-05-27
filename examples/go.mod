@@ -4,9 +4,9 @@ go 1.24.3
 
 require (
 	github.com/aws/aws-sdk-go-v2/config v1.29.14
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.50
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.52
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.26
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.36
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.38
 	go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws v0.61.0
 )
 
@@ -79,7 +79,7 @@ require (
 	golang.org/x/text v0.25.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250519155744-55703ea1f237 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250519155744-55703ea1f237 // indirect
-	google.golang.org/grpc v1.72.1 // indirect
+	google.golang.org/grpc v1.72.2 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
