@@ -99,7 +99,7 @@ func (r *LowLevelClient) GetWithContext(ctx context.Context, key string) (*kvs.I
 				},
 			}
 
-			getItemOutput, err := r.GetItem(ctx, input)
+			getItemOutput, err := r.AWSClient.GetItem(ctx, input)
 			if err != nil {
 				return nil, err
 			} else if getItemOutput.Item == nil {
@@ -156,7 +156,7 @@ func (r *LowLevelClient) SaveWithContext(ctx context.Context, key string, item *
 		return err
 	}
 
-	putItemOutput, err := r.PutItem(ctx, &dynamodb.PutItemInput{
+	putItemOutput, err := r.AWSClient.PutItem(ctx, &dynamodb.PutItemInput{
 		TableName: r.getTableName(),
 		Item:      r.newItem(item, bytes),
 	})
@@ -203,7 +203,7 @@ func (r *LowLevelClient) BulkGetWithContext(ctx context.Context, keys []string) 
 		},
 	}
 
-	batchGetItemOutput, err := r.BatchGetItem(ctx, input)
+	batchGetItemOutput, err := r.AWSClient.BatchGetItem(ctx, input)
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +269,7 @@ func (r *LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.
 		},
 	}
 
-	batchWriteItemOutput, err := r.BatchWriteItem(ctx, batchInput)
+	batchWriteItemOutput, err := r.AWSClient.BatchWriteItem(ctx, batchInput)
 	if err != nil {
 		log.Errorf("[kvs]: error writing kvsItems to DynamoDB: %v", err)
 		return err
