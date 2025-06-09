@@ -97,3 +97,14 @@ func (r *Builder) Build(awsConfig aws.Config) *LowLevelClient {
 		r.ttl,
 	)
 }
+
+// FakeBuild creates a new LowLevelClient using the configured options and the provided AWS config.
+// It sets up the DynamoDB client with the specified endpoint resolver and other options.
+// Returns a pointer to the new LowLevelClient.
+func (r *Builder) FakeBuild() *LowLevelClient {
+	return NewLowLevelClient(
+		NewAWSFakeClient(),
+		r.containerName,
+		r.ttl,
+	)
+}
