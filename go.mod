@@ -3,10 +3,10 @@ module gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client
 go 1.24.3
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.36.3
-	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.19.1
-	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.43.2
-	github.com/aws/smithy-go v1.22.3
+	github.com/aws/aws-sdk-go-v2 v1.36.5
+	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.19.3
+	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.43.4
+	github.com/aws/smithy-go v1.22.4
 	github.com/coocood/freecache v1.2.4
 	github.com/eko/gocache/lib/v4 v4.2.0
 	github.com/eko/gocache/store/freecache/v4 v4.2.2
@@ -14,8 +14,8 @@ require (
 	github.com/prometheus/client_golang v1.22.0
 	github.com/stretchr/testify v1.10.0
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.32
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.26
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.60
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.30
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.62
 	golang.org/x/sync v0.15.0
 )
 
@@ -43,11 +43,11 @@ require (
 	github.com/apex/log v1.9.0 // indirect
 	github.com/ashanbrown/forbidigo v1.6.0 // indirect
 	github.com/ashanbrown/makezero v1.2.0 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.34 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.6.34 // indirect
-	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.25.4 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.12.3 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.10.15 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.36 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.6.36 // indirect
+	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.25.6 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.12.4 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.10.17 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bitfield/gotestdox v0.2.2 // indirect
@@ -139,13 +139,13 @@ require (
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/kisielk/errcheck v1.9.0 // indirect
 	github.com/kkHAIKE/contextcheck v1.1.6 // indirect
-	github.com/knadh/koanf/maps v0.1.1 // indirect
+	github.com/knadh/koanf/maps v0.1.2 // indirect
 	github.com/knadh/koanf/parsers/yaml v0.1.0 // indirect
 	github.com/knadh/koanf/providers/env v1.0.0 // indirect
 	github.com/knadh/koanf/providers/file v1.1.2 // indirect
 	github.com/knadh/koanf/providers/posflag v0.1.0 // indirect
 	github.com/knadh/koanf/providers/structs v0.1.0 // indirect
-	github.com/knadh/koanf/v2 v2.1.2 // indirect
+	github.com/knadh/koanf/v2 v2.2.1 // indirect
 	github.com/kulti/thelper v0.6.3 // indirect
 	github.com/kunwardeep/paralleltest v1.0.14 // indirect
 	github.com/lasiar/canonicalheader v1.1.2 // indirect
@@ -230,7 +230,7 @@ require (
 	github.com/urfave/cli/v2 v2.3.0 // indirect
 	github.com/uudashr/gocognit v1.2.0 // indirect
 	github.com/uudashr/iface v1.3.1 // indirect
-	github.com/vektra/mockery/v3 v3.3.3 // indirect
+	github.com/vektra/mockery/v3 v3.4.0 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	github.com/xeipuuv/gojsonschema v1.2.0 // indirect
@@ -261,14 +261,14 @@ require (
 	golang.org/x/oauth2 v0.30.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/telemetry v0.0.0-20240522233618-39ace7a40ae7 // indirect
-	golang.org/x/term v0.29.0 // indirect
+	golang.org/x/term v0.32.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
 	golang.org/x/tools v0.34.0 // indirect
 	golang.org/x/vuln v1.1.4 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gotest.tools/gotestsum v1.12.2 // indirect
+	gotest.tools/gotestsum v1.12.3 // indirect
 	honnef.co/go/tools v0.6.1 // indirect
 	mvdan.cc/gofumpt v0.8.0 // indirect
 	mvdan.cc/unparam v0.0.0-20250301125049-0df0534333a4 // indirect
