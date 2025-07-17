@@ -33,3 +33,4 @@ build
 terraform.tfstate
 terraform.tfstate.backup
 resources/setup/docker/tempo-data
+.scannerwork
