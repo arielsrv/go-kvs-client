@@ -3,7 +3,7 @@ module gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples
 go 1.24.4
 
 require (
-	github.com/aws/aws-sdk-go-v2/config v1.29.18
+	github.com/aws/aws-sdk-go-v2/config v1.30.1
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.60
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.32
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.50
@@ -11,24 +11,24 @@ require (
 )
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.36.6 // indirect
-	github.com/aws/aws-sdk-go-v2/credentials v1.17.71 // indirect
+	github.com/aws/aws-sdk-go-v2 v1.37.0 // indirect
+	github.com/aws/aws-sdk-go-v2/credentials v1.18.1 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.19.3 // indirect
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.16.33 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.37 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.6.37 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.0 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.0 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.0 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.8.3 // indirect
 	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.43.4 // indirect
 	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.25.6 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.12.4 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.10.17 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.12.18 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sns v1.34.7 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sqs v1.38.8 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.25.6 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.30.4 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.34.1 // indirect
-	github.com/aws/smithy-go v1.22.4 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.26.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.31.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.35.0 // indirect
+	github.com/aws/smithy-go v1.22.5 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
