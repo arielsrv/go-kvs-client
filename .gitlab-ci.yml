@@ -1,4 +1,4 @@
-image: docker.io/golang:1.24.4
+image: docker.io/golang:1.25.1
 
 default:
     tags:
@@ -35,13 +35,13 @@ release:
 
         # Coverage Badge
         - echo -e "\033[1;34m> Coverage Badge\033[0m"
-        - GOEXPERIMENT=nocoverageredesign CGO_ENABLED=0 go test ./... -coverprofile=coverage-report.out
+        - CGO_ENABLED=0 go test ./... -coverpkg=./kvs/... -coverprofile=coverage-report.out
         - go tool cover -html=coverage-report.out -o coverage-report.html
         - go tool cover -func=coverage-report.out
 
         # Coverage Report [artifacts:reports:coverage_reports]
         - echo -e "\033[1;34m> Coverage Report\033[0m"
-        - GOEXPERIMENT=nocoverageredesign go test ./... -coverprofile=coverage.txt -covermode count
+        - go test ./... -coverpkg=./kvs/... -coverprofile=coverage.txt -covermode count
         - go tool gocover-cobertura <coverage.txt >coverage.xml
 
         # Linter [artifacts:reports:codequality]
