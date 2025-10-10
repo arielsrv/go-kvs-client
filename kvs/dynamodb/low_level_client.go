@@ -22,7 +22,8 @@ import (
 // It implements the kvs.LowLevelClient interface, providing methods for getting and saving items.
 // The client uses a singleflight.Group to deduplicate concurrent reads for the same key.
 type LowLevelClient struct {
-	AWSClient                    // Embedded AWS DynamoDB client
+	AWSClient // Embedded AWS DynamoDB client
+
 	read      singleflight.Group // Group for deduplicating concurrent reads
 	tableName string             // Name of the DynamoDB table
 	ttl       time.Duration      // Default Time To Live for items in seconds

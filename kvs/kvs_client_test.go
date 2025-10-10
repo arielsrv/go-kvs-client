@@ -5,11 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/model"
-
 	"github.com/stretchr/testify/require"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/model"
 )
 
 func TestKVSClient_SaveAndGet(t *testing.T) {
