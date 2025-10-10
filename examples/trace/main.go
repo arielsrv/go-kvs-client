@@ -6,16 +6,13 @@ import (
 	"strconv"
 	"time"
 
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/trace/model"
-
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
-
 	"github.com/aws/aws-sdk-go-v2/config"
-	"go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws"
-
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/trace/model"
+	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic/otel/tracing"
+	"go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws"
 )
 
 func main() {
@@ -46,7 +43,11 @@ func main() {
 
 	// Single item: Save + Get
 	for i := 1; i <= 20; i++ {
-		newCtx, transaction := tracing.StartTransaction(ctx, "Users.LowLevelClient", tracing.SetTransactionType(tracing.Client))
+		newCtx, transaction := tracing.StartTransaction(
+			ctx,
+			"Users.LowLevelClient",
+			tracing.SetTransactionType(tracing.Client),
+		)
 		key := fmt.Sprintf("USER:%d:v1", i)
 		user := &model.UserDTO{ID: i, FirstName: "John Doe"}
 		if kvsError := kvsClient.SaveWithContext(newCtx, key, user, time.Second); kvsError != nil {
