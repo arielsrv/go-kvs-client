@@ -135,8 +135,8 @@ github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD
 github.com/subosito/gotenv v1.6.0 h1:9NlTDc1FTs4qu0DDq7AEtTPNw6SVm7uBMsUCUjABIf8=
 github.com/subosito/gotenv v1.6.0/go.mod h1:Dk4QP5c2W3ibzajGcXpNraDfq2IrhjMIvMSWPKKo0FU=
 github.com/yuin/goldmark v1.3.5/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
-gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.72 h1:ChBn5f/X6tksQA6pfAXTwz430rkP6Z7EVY6+WpeI/wk=
-gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.72/go.mod h1:93uO9jXSDoS8cc+PFN1Jyp5VcJyRkh6pvdpC5lDfyH0=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.74 h1:z4HXptseAOTHtXQY53mS1bn/d6HS1sdPAAVkX0+l7r0=
+gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.74/go.mod h1:/bIJfoPaD3jAXRjgUYGA+HJ+kubh3bkT5gF5GVgEIug=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.32 h1:/TWHpL3X51oRJnXqICi94kVJiY1bhe/CVVFLBBrkQUk=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.32/go.mod h1:jY4vD+Q/gfel7wXmQLPDtu337WMRfIqqBEAZXCi7P4w=
 gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.30 h1:SJw18doB+jCXjxYEZrBcmDIgc2mSZ4K1tnYV8NxiPv0=

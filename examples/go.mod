@@ -4,7 +4,7 @@ go 1.25.2
 
 require (
 	github.com/aws/aws-sdk-go-v2/config v1.31.12
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.72
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.74
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.32
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.64
 	go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws v0.63.0
@@ -60,7 +60,6 @@ require (
 	github.com/spf13/viper v1.21.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.30 // indirect
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.94 // indirect
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-sdk-config v0.0.24 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/otel v1.38.0 // indirect
