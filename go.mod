@@ -3,13 +3,13 @@ module gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client
 go 1.25.2
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.39.2
-	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.14
-	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.51.0
-	github.com/aws/smithy-go v1.23.0
+	github.com/aws/aws-sdk-go-v2 v1.39.3
+	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.15
+	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.51.1
+	github.com/aws/smithy-go v1.23.1
 	github.com/coocood/freecache v1.2.4
 	github.com/eko/gocache/lib/v4 v4.2.2
-	github.com/eko/gocache/store/freecache/v4 v4.2.2
+	github.com/eko/gocache/store/freecache/v4 v4.2.3
 	github.com/gorilla/mux v1.8.1
 	github.com/prometheus/client_golang v1.23.2
 	github.com/stretchr/testify v1.11.1
@@ -49,11 +49,11 @@ require (
 	github.com/apex/log v1.9.0 // indirect
 	github.com/ashanbrown/forbidigo/v2 v2.1.0 // indirect
 	github.com/ashanbrown/makezero/v2 v2.0.1 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.9 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.9 // indirect
-	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.31.0 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.1 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.11.9 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.10 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.10 // indirect
+	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.31.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.2 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.11.10 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bitfield/gotestdox v0.2.2 // indirect
@@ -113,7 +113,6 @@ require (
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/godoc-lint/godoc-lint v0.10.0 // indirect
 	github.com/gofrs/flock v0.12.1 // indirect
-	github.com/golang/mock v1.6.0 // indirect
 	github.com/golangci/asciicheck v0.5.0 // indirect
 	github.com/golangci/dupl v0.0.0-20250308024227-f665c8d69b32 // indirect
 	github.com/golangci/go-printf-func-name v0.1.1 // indirect

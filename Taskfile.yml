@@ -68,6 +68,7 @@ tasks:
         cmds:
             - go work sync
             - (cd examples || exit ; go mod tidy)
+            - (cd examples || exit ; go build ./...)
             - go mod tidy
     upgrade:
         cmds:
