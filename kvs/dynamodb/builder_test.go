@@ -26,7 +26,7 @@ func TestBuilder_WithOptions(t *testing.T) {
 
 	builder := dynamodb.NewBuilder(
 		dynamodb.WithContainerName("my-service"),
-		dynamodb.WithEndpointResolver(fmt.Sprintf("http://0.0.0.0:%d", port)),
+		dynamodb.WithEndpointResolver(fmt.Sprintf("http://127.0.0.1:%d", port)),
 		dynamodb.WithTTL(5*time.Minute),
 	)
 
@@ -49,7 +49,7 @@ func TestBuilder_WithFunc(t *testing.T) {
 
 	builder := dynamodb.NewBuilder()
 	builder.WithContainerName("my-service")
-	builder.WithEndpointResolver(fmt.Sprintf("http://0.0.0.0:%d", port))
+	builder.WithEndpointResolver(fmt.Sprintf("http://127.0.0.1:%d", port))
 	builder.WithTTL(5 * time.Minute)
 
 	actual := builder.Build(aws.Config{})
