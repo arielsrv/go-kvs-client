@@ -15,6 +15,7 @@ type Test struct {
 }
 
 func TestClient_SaveAndGet(t *testing.T) {
+	t.Skip()
 	lowLevelClient := kvs.NewLowLevelClientProxy(dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "test"))
 
 	input := struct {

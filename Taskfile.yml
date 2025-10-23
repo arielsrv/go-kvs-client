@@ -4,6 +4,8 @@ version: '3'
 env:
     TF_FOLDER: resources/setup/terraform
     CGO_ENABLED: '{{if eq OS "linux"}}1{{else}}0{{end}}'
+    DOCKER_IMAGE: 'go-kvs-client:latest'
+
 
 tasks:
     docker:compose:
@@ -97,3 +99,10 @@ tasks:
             -   task: download
             -   task: lint
             -   task: test
+    netrc:
+        silent: true
+        cmds:
+            - go tool sdk-cli netrc
+    docker:build:
+        cmds:
+            - docker --debug build --secret id=netrc,src={{.HOME}}/.netrc --build-arg COMMIT_HASH=$(git rev-parse HEAD) -t {{.DOCKER_IMAGE}} . --progress=plain

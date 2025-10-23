@@ -54,8 +54,7 @@ build:
 
         # 🧪 Conditional tests and reports for speed
         - echo "🧪 Running comprehensive tests (with -race and full coverage)...";
-        - go test -v ./...
-        - go test -race -v -timeout=10m -coverpkg=./kvs/... -coverprofile=coverage.out -covermode=atomic ./...;
+        - go test -p 1 -race -v -timeout=10m -coverpkg=./kvs/... -coverprofile=coverage.out -covermode=atomic ./...;
         - echo "📊 Generating full coverage reports...";
         - go tool cover -func=coverage.out | tee coverage-func.txt;
         - go tool cover -html=coverage.out -o coverage-report.html || true;
