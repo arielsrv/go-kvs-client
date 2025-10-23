@@ -1,19 +1,32 @@
 package dynamodb_test
 
 import (
+	"fmt"
+	"net"
 	"testing"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 )
 
 func TestBuilder_WithOptions(t *testing.T) {
+	listener, err := net.Listen("tcp", ":0")
+	require.NoError(t, err)
+
+	addr, ok := listener.Addr().(*net.TCPAddr)
+	assert.True(t, ok)
+
+	port := addr.Port
+	err = listener.Close()
+	require.NoError(t, err)
+
 	builder := dynamodb.NewBuilder(
 		dynamodb.WithContainerName("my-service"),
-		dynamodb.WithEndpointResolver("http://localhost:8000"),
+		dynamodb.WithEndpointResolver(fmt.Sprintf("http://0.0.0.0:%d", port)),
 		dynamodb.WithTTL(5*time.Minute),
 	)
 
@@ -24,9 +37,19 @@ func TestBuilder_WithOptions(t *testing.T) {
 }
 
 func TestBuilder_WithFunc(t *testing.T) {
+	listener, err := net.Listen("tcp", ":0")
+	require.NoError(t, err)
+
+	addr, ok := listener.Addr().(*net.TCPAddr)
+	assert.True(t, ok)
+
+	port := addr.Port
+	err = listener.Close()
+	require.NoError(t, err)
+
 	builder := dynamodb.NewBuilder()
 	builder.WithContainerName("my-service")
-	builder.WithEndpointResolver("http://localhost:8000")
+	builder.WithEndpointResolver(fmt.Sprintf("http://0.0.0.0:%d", port))
 	builder.WithTTL(5 * time.Minute)
 
 	actual := builder.Build(aws.Config{})
