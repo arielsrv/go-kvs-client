@@ -1,11 +1,11 @@
 module gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client
 
-go 1.25.2
+go 1.25.3
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.39.3
-	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.16
-	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.52.0
+	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.17
+	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.52.1
 	github.com/aws/smithy-go v1.23.1
 	github.com/coocood/freecache v1.2.4
 	github.com/eko/gocache/lib/v4 v4.2.2
@@ -15,7 +15,7 @@ require (
 	github.com/stretchr/testify v1.11.1
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.32
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.30
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.94
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.98
 	golang.org/x/sync v0.17.0
 )
 
@@ -51,7 +51,7 @@ require (
 	github.com/ashanbrown/makezero/v2 v2.0.1 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.10 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.10 // indirect
-	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.31.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.31.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.11.10 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect

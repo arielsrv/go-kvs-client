@@ -48,11 +48,18 @@ tasks:
             - 'awslocal dynamodb describe-table --table-name {{.TABLE_NAME}} --region {{.REGION}}'
             - 'awslocal dynamodb describe-time-to-live --table-name {{.TABLE_NAME}} --region {{.REGION}}'
             - 'curl -X DELETE localhost:4566/_aws/dynamodb/expired'
-    lint:
+    lint-tools:
         cmds:
             - go tool golangci-lint run --fix
             - go tool gofumpt -w -l .
             - go tool betteralign -test_files -generated_files -apply ./...
+
+    lint:
+        cmds:
+            - cd examples
+            -   task: lint-tools
+            - cd ..
+            -   task: lint-tools
     test:race:
         cmds:
             - go test -race -count 5 ./... -v

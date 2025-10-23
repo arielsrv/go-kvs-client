@@ -24,6 +24,7 @@ report.xml
 .fleet
 coverage-report.html
 coverage-report.out
+coverage-func.txt
 gl-code-quality-report.json
 dump.lsif
 build

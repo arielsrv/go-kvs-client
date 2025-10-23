@@ -3,23 +3,23 @@ module gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples
 go 1.25.3
 
 require (
-	github.com/aws/aws-sdk-go-v2/config v1.31.13
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.74
+	github.com/aws/aws-sdk-go-v2/config v1.31.14
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.76
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.32
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.66
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic v0.0.68
 	go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws v0.63.0
 )
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.39.3 // indirect
-	github.com/aws/aws-sdk-go-v2/credentials v1.18.17 // indirect
-	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.16 // indirect
+	github.com/aws/aws-sdk-go-v2/credentials v1.18.18 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.17 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.10 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.10 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.10 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.8.4 // indirect
-	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.52.0 // indirect
-	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.31.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.52.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.31.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.11.10 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.10 // indirect
@@ -27,7 +27,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sqs v1.42.3 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.29.7 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.35.2 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.38.7 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.38.8 // indirect
 	github.com/aws/smithy-go v1.23.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
@@ -59,6 +59,7 @@ require (
 	github.com/spf13/viper v1.21.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.30 // indirect
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.98 // indirect
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-sdk-config v0.0.24 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/otel v1.38.0 // indirect
