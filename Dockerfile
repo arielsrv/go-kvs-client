@@ -8,5 +8,5 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 COPY . .
 ARG COMMIT_HASH
 RUN --mount=type=cache,target=/go/pkg/mod \
-    go test -v -p 1 ./... && \
+    go test -v ./... && \
     CGO_ENABLED=0 go build -ldflags="-X 'kvs.CommitHash=${COMMIT_HASH}'" ./...

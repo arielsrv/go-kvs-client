@@ -26,7 +26,7 @@ type AWSFakeClient struct {
 // The cache is initialized with the maximum possible size to avoid evictions.
 // Returns a pointer to the new AWSFakeClient.
 func NewAWSFakeClient() *AWSFakeClient {
-	cacheStore := freecachestore.NewFreecache(freecache.NewCache(math.MaxInt32))
+	cacheStore := freecachestore.NewFreecache(freecache.NewCache(math.MaxInt8))
 
 	return &AWSFakeClient{
 		cache: cache.New[[]byte](cacheStore),
