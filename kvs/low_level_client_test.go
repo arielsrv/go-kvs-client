@@ -61,3 +61,16 @@ func TestLowLevelClientProxy_BulkSave(t *testing.T) {
 	err := proxy.BulkSave(items)
 	require.NoError(t, err)
 }
+
+func TestLowLevelClientProxy_ContainerName(t *testing.T) {
+	// Arrange
+	const container = "__kvs-test-container"
+	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), container)
+
+	// Act
+	proxy := kvs.NewLowLevelClientProxy(lowLevelClient)
+	name := proxy.ContainerName()
+
+	// Assert
+	require.Equal(t, container, name)
+}
