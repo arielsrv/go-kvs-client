@@ -1,7 +1,3 @@
-[![pipeline status](https://gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/badges/main/pipeline.svg)](https://gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/-/commits/main)
-[![coverage report](https://gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/badges/main/coverage.svg)](https://gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/-/commits/main)
-[![release](https://gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/-/badges/release.svg)](https://gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/-/releases)
-
 Go client for a distributed Key-Value Store (KVS) on AWS DynamoDB, with optional in‑memory cache, Prometheus metrics, and OpenTelemetry tracing. Status: beta.
 
 Features
