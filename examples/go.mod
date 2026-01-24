@@ -1,4 +1,4 @@
-module gitlab.com/arielsrv/go-kvs-client/examples
+module github.com/arielsrv/go-kvs-client/examples
 
 go 1.25.6
 
