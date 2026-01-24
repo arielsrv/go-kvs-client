@@ -3,6 +3,7 @@ package kvs_test
 import (
 	"testing"
 
+	"github.com/arielsrv/go-kvs-client/kvs"
 	"github.com/stretchr/testify/require"
 )
 
