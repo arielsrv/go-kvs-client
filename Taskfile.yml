@@ -6,7 +6,6 @@ env:
     CGO_ENABLED: '{{if eq OS "linux"}}1{{else}}0{{end}}'
     DOCKER_IMAGE: 'go-kvs-client:latest'
 
-
 tasks:
     docker:compose:
         vars:
