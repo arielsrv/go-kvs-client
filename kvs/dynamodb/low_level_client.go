@@ -9,7 +9,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/apex/log"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
@@ -40,10 +39,7 @@ func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...time.Du
 		AWSClient: awsClient,
 	}
 
-	log.Debugf("[kvs]: setting container name to %s", containerName)
-
 	if len(ttl) > 0 {
-		log.Debugf("[kvs]: setting TTL to %d", ttl[0])
 		lowLevelClient.ttl = ttl[0]
 	}
 
@@ -158,15 +154,13 @@ func (r *LowLevelClient) SaveWithContext(ctx context.Context, key string, item *
 		return err
 	}
 
-	putItemOutput, err := r.AWSClient.PutItem(ctx, &dynamodb.PutItemInput{
+	_, err = r.AWSClient.PutItem(ctx, &dynamodb.PutItemInput{
 		TableName: r.getTableName(),
 		Item:      r.newItem(item, bytes),
 	})
 	if err != nil {
 		return err
 	}
-
-	log.Debugf("[kvs]: putItemOutput: %+v", putItemOutput)
 
 	return nil
 }
@@ -212,13 +206,10 @@ func (r *LowLevelClient) BulkGetWithContext(ctx context.Context, keys []string) 
 
 	items := new(kvs.Items)
 
-	for key, value := range batchGetItemOutput.Responses {
-		log.Debugf("[kvs]: key: %v", key)
-
+	for _, value := range batchGetItemOutput.Responses {
 		var item []Item
 		err = attributevalue.UnmarshalListOfMaps(value, &item)
 		if err != nil {
-			log.Errorf("[kvs]: error unmarshalling value: %v", err)
 			return nil, err
 		}
 
@@ -230,8 +221,6 @@ func (r *LowLevelClient) BulkGetWithContext(ctx context.Context, keys []string) 
 			})
 		}
 	}
-
-	log.Debugf("[kvs]: batchGetItemOutput: %+v", batchGetItemOutput)
 
 	return items, nil
 }
@@ -254,7 +243,6 @@ func (r *LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.
 	for item := range kvsItems.All() {
 		bytes, err := json.Marshal(item.Value)
 		if err != nil {
-			log.Errorf("[kvs]: error marshalling value: %v", err)
 			continue
 		}
 
@@ -271,13 +259,10 @@ func (r *LowLevelClient) BulkSaveWithContext(ctx context.Context, kvsItems *kvs.
 		},
 	}
 
-	batchWriteItemOutput, err := r.AWSClient.BatchWriteItem(ctx, batchInput)
+	_, err := r.AWSClient.BatchWriteItem(ctx, batchInput)
 	if err != nil {
-		log.Errorf("[kvs]: error writing kvsItems to DynamoDB: %v", err)
 		return err
 	}
-
-	log.Debugf("[kvs]: batchWriteItemOutput: %+v", batchWriteItemOutput)
 
 	return nil
 }
