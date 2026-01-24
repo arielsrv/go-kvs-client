@@ -3,15 +3,16 @@ package kvs_test
 import (
 	"testing"
 
-	"github.com/arielsrv/go-kvs-client/kvs"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/arielsrv/go-kvs-client/kvs"
 )
 
 func TestNewItem(t *testing.T) {
 	item := kvs.NewItem("key", `{"name": "value"}`)
 
-	var out map[string]interface{}
+	var out map[string]any
 	err := item.TryGetValueAsObjectType(&out)
 
 	require.NoError(t, err)
@@ -23,7 +24,7 @@ func TestNewItem(t *testing.T) {
 func TestNewItem_Err(t *testing.T) {
 	item := kvs.NewItem("key", `invalid`)
 
-	var out map[string]interface{}
+	var out map[string]any
 	err := item.TryGetValueAsObjectType(&out)
 
 	require.Error(t, err)

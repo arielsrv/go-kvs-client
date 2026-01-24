@@ -11,13 +11,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/arielsrv/go-kvs-client/kvs"
-	"github.com/arielsrv/go-kvs-client/kvs/dynamodb"
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient/rest"
+
+	"github.com/arielsrv/go-kvs-client/kvs"
+	"github.com/arielsrv/go-kvs-client/kvs/dynamodb"
 )
 
 var times uint64

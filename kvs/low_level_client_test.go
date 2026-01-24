@@ -3,9 +3,10 @@ package kvs_test
 import (
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/arielsrv/go-kvs-client/kvs"
 	"github.com/arielsrv/go-kvs-client/kvs/dynamodb"
-	"github.com/stretchr/testify/require"
 )
 
 func TestLowLevelClientProxy_Get(t *testing.T) {

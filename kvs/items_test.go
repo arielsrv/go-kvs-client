@@ -4,8 +4,9 @@ import (
 	"iter"
 	"testing"
 
-	"github.com/arielsrv/go-kvs-client/kvs"
 	"github.com/stretchr/testify/require"
+
+	"github.com/arielsrv/go-kvs-client/kvs"
 )
 
 func TestItems_Add(t *testing.T) {

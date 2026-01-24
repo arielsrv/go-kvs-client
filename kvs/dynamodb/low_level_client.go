@@ -9,13 +9,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/arielsrv/go-kvs-client/kvs"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 	"golang.org/x/sync/singleflight"
+
+	"github.com/arielsrv/go-kvs-client/kvs"
 )
 
 // LowLevelClient is a client for interacting with AWS DynamoDB.
@@ -86,7 +87,7 @@ func (r *LowLevelClient) GetWithContext(ctx context.Context, key string) (*kvs.I
 		return nil, kvs.ErrEmptyKey
 	}
 
-	result, err, _ := r.read.Do(key, func() (interface{}, error) {
+	result, err, _ := r.read.Do(key, func() (any, error) {
 		select {
 		case <-ctx.Done():
 			return nil, fmt.Errorf("GetWithContext: operation cancelled or timed out: %w", ctx.Err())

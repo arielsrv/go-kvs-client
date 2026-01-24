@@ -6,11 +6,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/arielsrv/go-kvs-client/kvs"
-	"github.com/arielsrv/go-kvs-client/kvs/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/arielsrv/go-kvs-client/kvs"
+	"github.com/arielsrv/go-kvs-client/kvs/dynamodb"
 )
 
 func TestBuilder_WithOptions(t *testing.T) {

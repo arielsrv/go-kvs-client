@@ -5,10 +5,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/arielsrv/go-kvs-client/kvs"
 	"github.com/arielsrv/go-kvs-client/kvs/dynamodb"
 	"github.com/arielsrv/go-kvs-client/kvs/model"
-	"github.com/stretchr/testify/require"
 )
 
 func TestKVSClient_SaveAndGet(t *testing.T) {

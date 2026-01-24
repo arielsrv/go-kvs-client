@@ -3,8 +3,9 @@ package model_test
 import (
 	"testing"
 
-	"github.com/arielsrv/go-kvs-client/kvs/model"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/arielsrv/go-kvs-client/kvs/model"
 )
 
 func TestNewUserDTO(t *testing.T) {

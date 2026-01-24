@@ -4,9 +4,10 @@ import (
 	"slices"
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/arielsrv/go-kvs-client/kvs"
 	"github.com/arielsrv/go-kvs-client/kvs/dynamodb"
-	"github.com/stretchr/testify/require"
 )
 
 type Test struct {

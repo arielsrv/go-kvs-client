@@ -5,11 +5,12 @@ import (
 	"net"
 	"testing"
 
-	"github.com/arielsrv/go-kvs-client/kvs/dynamodb"
 	aws "github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	smithyendpoints "github.com/aws/smithy-go/endpoints"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/arielsrv/go-kvs-client/kvs/dynamodb"
 )
 
 func TestNewResolver(t *testing.T) {
