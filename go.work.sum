@@ -18,6 +18,7 @@ github.com/apex/logs v1.0.0 h1:adOwhOTeXzZTnVuEK13wuJNBFutP0sOfutRS8NY+G6A=
 github.com/aphistic/golf v0.0.0-20180712155816-02c07f170c5a h1:2KLQMJ8msqoPHIPDufkxVcoTtcmE5+1sL9950m4R9Pk=
 github.com/aphistic/sweet v0.2.0 h1:I4z+fAUqvKfvZV/CHi5dV0QuwbmIvYYFDjG0Ss5QpAs=
 github.com/arielsrv/go-kvs-client v0.0.1/go.mod h1:WsM4Nsqs4KtjWmmgdCUrS6j0F4TTgON1Mx1vKrP/OZM=
+github.com/arielsrv/go-kvs-client v0.0.2/go.mod h1:8ytYpxnaVs9dzfnjVfGRqUwDIeqjMjCdBzV4TVXWC6U=
 github.com/aws/aws-sdk-go v1.20.6 h1:kmy4Gvdlyez1fV4kw5RYxZzWKVyuHZHgPWeU/YvRsV4=
 github.com/aws/aws-sdk-go-v2/config v1.32.2/go.mod h1:l0hs06IFz1eCT+jTacU/qZtC33nvcnLADAPL/XyrkZI=
 github.com/aws/aws-sdk-go-v2/credentials v1.19.2/go.mod h1:YUqm5a1/kBnoK+/NY5WEiMocZihKSo15/tJdmdXnM5g=

@@ -29,7 +29,7 @@ task awslocal:start tf:init tf:apply
 ```
 2) Run simple example:
 ```shell
-go run gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/simple@latest
+go run gitlab.com/arielsrv/go-kvs-client/examples/simple@latest
 ```
 3) Inspect DynamoDB data (LocalStack UI):
 ```shell
@@ -47,11 +47,11 @@ import (
 	"strconv"
 	"time"
 
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/trace/model"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
+	"gitlab.com/arielsrv/go-kvs-client/examples/trace/model"
+	"gitlab.com/arielsrv/go-kvs-client/kvs"
 	"github.com/aws/aws-sdk-go-v2/config"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
+	"gitlab.com/arielsrv/go-kvs-client/kvs/dynamodb"
+	"gitlab.com/arielsrv/go-logger/log"
 )
 
 func main() {

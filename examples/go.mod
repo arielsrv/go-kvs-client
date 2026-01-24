@@ -1,15 +1,14 @@
-module gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples
+module gitlab.com/arielsrv/go-kvs-client/examples
 
 go 1.25.6
 
 require (
-	github.com/arielsrv/go-kvs-client v0.0.1
+	github.com/arielsrv/go-kvs-client v0.0.2
 	github.com/aws/aws-sdk-go-v2/config v1.32.2
 	go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws v0.63.0
 )
 
 require (
-	github.com/apex/log v1.9.0 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.40.0 // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.19.2 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.26 // indirect
@@ -37,7 +36,6 @@ require (
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.23.2 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
 	github.com/prometheus/common v0.66.1 // indirect
