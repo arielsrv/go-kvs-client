@@ -1,6 +1,6 @@
-module gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client
+module github.com/arielsrv/go-kvs-client
 
-go 1.25.4
+go 1.25.6
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.40.0
@@ -13,9 +13,10 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/prometheus/client_golang v1.23.2
 	github.com/stretchr/testify v1.11.1
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client v0.0.80
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger v0.0.32
 	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector v0.0.30
-	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.3.0
+	gitlab.com/iskaypetcom/digital/sre/tools/dev/go-restclient v0.2.98
 	golang.org/x/sync v0.18.0
 )
 

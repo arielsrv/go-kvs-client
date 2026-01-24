@@ -3,9 +3,9 @@ package kvs_test
 import (
 	"testing"
 
+	"github.com/arielsrv/go-kvs-client/kvs"
+	"github.com/arielsrv/go-kvs-client/kvs/dynamodb"
 	"github.com/stretchr/testify/require"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
 )
 
 func TestLowLevelClientProxy_Get(t *testing.T) {

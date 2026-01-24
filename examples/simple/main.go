@@ -7,18 +7,17 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/arielsrv/go-kvs-client/examples/trace/model"
+	"github.com/arielsrv/go-kvs-client/kvs"
+	"github.com/arielsrv/go-kvs-client/kvs/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/config"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/trace/model"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
 
 func main() {
 	ctx := context.Background()
 	cfg, err := config.LoadDefaultConfig(ctx)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](
@@ -34,15 +33,13 @@ func main() {
 		key := fmt.Sprintf("USER:%d:v1", i)
 		user := &model.UserDTO{ID: i, FirstName: "John", LastName: "Doe", FullName: fmt.Sprintf("%s %s", "John", "Doe")}
 		if kvsError := kvsClient.SaveWithContext(ctx, key, user, time.Duration(10)*time.Second); kvsError != nil {
-			log.Error(kvsError)
 			continue
 		}
 		value, kvsErr := kvsClient.Get(key)
 		if kvsErr != nil {
-			log.Error(kvsErr)
 			continue
 		}
-		log.Infof("Item %s: %+v", key, value)
+		fmt.Printf("Item %s: %+v\n", key, value)
 	}
 
 	// Bulk save + get
@@ -53,16 +50,16 @@ func main() {
 	}, func(userDTO model.UserDTO) string {
 		return strconv.Itoa(userDTO.ID)
 	}); err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	keys := []string{"101", "102", "103"}
 	items, err := kvsClient.BulkGetWithContext(ctx, keys)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	for item := range slices.Values(items) {
-		log.Infof("Item: %+v", item)
+		fmt.Printf("Item: %+v\n", item)
 	}
 }

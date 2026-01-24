@@ -3,8 +3,8 @@ package kvs_test
 import (
 	"testing"
 
+	"github.com/arielsrv/go-kvs-client/kvs"
 	"github.com/stretchr/testify/assert"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 )
 
 func TestIsValidKey(t *testing.T) {

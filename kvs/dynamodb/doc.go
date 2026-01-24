@@ -42,4 +42,5 @@
 //	)
 //
 // The package also provides testing utilities like AWS fake clients for unit testing.
+// Cambiar referencia de import en doc.go
 package dynamodb

@@ -6,28 +6,15 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/arielsrv/go-kvs-client/examples/trace/model"
+	"github.com/arielsrv/go-kvs-client/kvs"
+	"github.com/arielsrv/go-kvs-client/kvs/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/config"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/examples/trace/model"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs/dynamodb"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-relic/otel/tracing"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws"
 )
 
 func main() {
 	ctx := context.Background()
-
-	app, err := tracing.New(ctx,
-		tracing.WithAppName("users-api"),
-		tracing.WithProtocol(tracing.NewStdOutProtocol()))
-	checkErr(err)
-	defer func(app *tracing.App, ctx context.Context) {
-		shutdownErr := app.Shutdown(ctx)
-		if shutdownErr != nil {
-			log.Error(shutdownErr)
-		}
-	}(app, ctx)
 
 	cfg, err := config.LoadDefaultConfig(ctx)
 	checkErr(err)
@@ -43,24 +30,18 @@ func main() {
 
 	// Single item: Save + Get
 	for i := 1; i <= 20; i++ {
-		newCtx, transaction := tracing.StartTransaction(
-			ctx,
-			"Users.LowLevelClient",
-			tracing.SetTransactionType(tracing.Client),
-		)
 		key := fmt.Sprintf("USER:%d:v1", i)
 		user := &model.UserDTO{ID: i, FirstName: "John Doe"}
-		if kvsError := kvsClient.SaveWithContext(newCtx, key, user, time.Second); kvsError != nil {
-			log.Error(kvsError)
+		if kvsError := kvsClient.SaveWithContext(ctx, key, user, time.Second); kvsError != nil {
+			fmt.Println(kvsError)
 			continue
 		}
 		value, kvsErr := kvsClient.Get(key)
 		if kvsErr != nil {
-			log.Error(kvsErr)
+			fmt.Println(kvsErr)
 			continue
 		}
-		log.Infof("Item %s: %+v", key, value)
-		transaction.End()
+		fmt.Printf("Item %s: %+v\n", key, value)
 	}
 
 	// Bulk save + get
@@ -79,12 +60,12 @@ func main() {
 	checkErr(err)
 
 	for i, item := range items {
-		log.Infof("Item %d: %+v", i+1, item)
+		fmt.Printf("Item %d: %+v\n", i+1, item)
 	}
 }
 
 func checkErr(err error) {
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 }

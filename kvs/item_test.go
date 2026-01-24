@@ -3,9 +3,9 @@ package kvs_test
 import (
 	"testing"
 
+	"github.com/arielsrv/go-kvs-client/kvs"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-kvs-client/kvs"
 )
 
 func TestNewItem(t *testing.T) {
