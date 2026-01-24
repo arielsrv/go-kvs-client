@@ -3,8 +3,6 @@ package kvs
 import (
 	"context"
 	"time"
-
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 )
 
 // AWSKVSClient is an implementation of the Client interface for AWS services.
@@ -88,7 +86,6 @@ func (r AWSKVSClient[T]) BulkGetWithContext(ctx context.Context, keys []string) 
 		value := new(T)
 		mErr := item.TryGetValueAsObjectType(&value)
 		if mErr != nil {
-			log.Errorf("[kvs]: error unmarshalling value for item %v", item)
 			continue
 		}
 
@@ -106,7 +103,6 @@ func (r AWSKVSClient[T]) SaveWithContext(ctx context.Context, key string, value 
 	item := NewItem(key, value, ttl...)
 	err := r.lowLevelClient.SaveWithContext(ctx, key, item)
 	if err != nil {
-		log.Errorf("[kvs]: error saving item %s: %v", key, err)
 		return err
 	}
 
@@ -132,7 +128,6 @@ func (r AWSKVSClient[T]) BulkSaveWithContext(
 
 	err := r.lowLevelClient.BulkSaveWithContext(ctx, kvsItems)
 	if err != nil {
-		log.Errorf("[kvs]: error saving items: %v", err)
 		return err
 	}
 

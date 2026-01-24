@@ -2,10 +2,6 @@ package kvs
 
 import (
 	"context"
-	"errors"
-	"time"
-
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-metrics-collector/metrics"
 )
 
 // LowLevelClient is the interface for low-level key-value store operations.
@@ -88,38 +84,10 @@ func (r LowLevelClientProxy) BulkSave(items *Items) error {
 // This method collects metrics about the operation, including execution time and success/failure.
 // Returns the item if found, or an error if not found or if retrieval fails.
 func (r LowLevelClientProxy) GetWithContext(ctx context.Context, key string) (*Item, error) {
-	metrics.Collector.Prometheus().IncrementCounter("__kvs_operations", metrics.Tags{
-		"client_name": r.lowLevelClient.ContainerName(),
-		"type":        "get",
-	})
-
-	start := time.Now()
 	value, err := r.lowLevelClient.GetWithContext(ctx, key)
-
-	metrics.Collector.Prometheus().RecordExecutionTime("__kvs_connection", time.Since(start), metrics.Tags{
-		"client_name": r.lowLevelClient.ContainerName(),
-		"type":        "get",
-	})
-
 	if err != nil {
-		if errors.Is(err, ErrKeyNotFound) {
-			metrics.Collector.Prometheus().IncrementCounter("__kvs_stats", metrics.Tags{
-				"client_name": r.lowLevelClient.ContainerName(),
-				"stats":       "miss",
-			})
-		} else {
-			metrics.Collector.Prometheus().IncrementCounter("__kvs_stats", metrics.Tags{
-				"client_name": r.lowLevelClient.ContainerName(),
-				"stats":       "error",
-			})
-		}
 		return nil, err
 	}
-
-	metrics.Collector.Prometheus().IncrementCounter("__kvs_stats", metrics.Tags{
-		"client_name": r.lowLevelClient.ContainerName(),
-		"stats":       "hit",
-	})
 
 	return value, nil
 }
@@ -129,17 +97,7 @@ func (r LowLevelClientProxy) GetWithContext(ctx context.Context, key string) (*I
 // This method collects metrics about the operation, including execution time.
 // Returns an error if the save operation fails.
 func (r LowLevelClientProxy) SaveWithContext(ctx context.Context, key string, item *Item) error {
-	metrics.Collector.Prometheus().IncrementCounter("__kvs_stats", metrics.Tags{
-		"client_name": r.lowLevelClient.ContainerName(),
-		"stats":       "save",
-	})
-
-	start := time.Now()
 	err := r.lowLevelClient.SaveWithContext(ctx, key, item)
-	metrics.Collector.Prometheus().RecordExecutionTime("__kvs_connection", time.Since(start), metrics.Tags{
-		"client_name": r.lowLevelClient.ContainerName(),
-		"type":        "save",
-	})
 	if err != nil {
 		return err
 	}
@@ -152,17 +110,7 @@ func (r LowLevelClientProxy) SaveWithContext(ctx context.Context, key string, it
 // This method collects metrics about the operation, including execution time.
 // Returns a collection of items that were found, or an error if retrieval fails.
 func (r LowLevelClientProxy) BulkGetWithContext(ctx context.Context, key []string) (*Items, error) {
-	metrics.Collector.Prometheus().IncrementCounter("__kvs_stats", metrics.Tags{
-		"client_name": r.lowLevelClient.ContainerName(),
-		"stats":       "bulk_get",
-	})
-
-	start := time.Now()
 	values, err := r.lowLevelClient.BulkGetWithContext(ctx, key)
-	metrics.Collector.Prometheus().RecordExecutionTime("__kvs_connection", time.Since(start), metrics.Tags{
-		"client_name": r.lowLevelClient.ContainerName(),
-		"type":        "bulk_get",
-	})
 	if err != nil {
 		return nil, err
 	}
@@ -175,17 +123,7 @@ func (r LowLevelClientProxy) BulkGetWithContext(ctx context.Context, key []strin
 // This method collects metrics about the operation, including execution time.
 // Returns an error if the save operation fails.
 func (r LowLevelClientProxy) BulkSaveWithContext(ctx context.Context, items *Items) error {
-	metrics.Collector.Prometheus().IncrementCounter("__kvs_stats", metrics.Tags{
-		"client_name": r.lowLevelClient.ContainerName(),
-		"stats":       "bulk_save",
-	})
-
-	start := time.Now()
 	err := r.lowLevelClient.BulkSaveWithContext(ctx, items)
-	metrics.Collector.Prometheus().RecordExecutionTime("__kvs_connection", time.Since(start), metrics.Tags{
-		"client_name": r.lowLevelClient.ContainerName(),
-		"type":        "bulk_save",
-	})
 	if err != nil {
 		return err
 	}

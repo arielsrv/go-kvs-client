@@ -9,11 +9,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/apex/log"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	"gitlab.com/iskaypetcom/digital/sre/tools/dev/go-logger/log"
 	"golang.org/x/sync/singleflight"
 
 	"github.com/arielsrv/go-kvs-client/kvs"
