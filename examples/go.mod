@@ -1,6 +1,6 @@
 module github.com/arielsrv/go-kvs-client/examples
 
-go 1.25.7
+go 1.26.0
 
 require (
 	github.com/arielsrv/go-kvs-client v0.0.6
