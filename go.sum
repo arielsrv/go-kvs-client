@@ -70,8 +70,8 @@ github.com/ashanbrown/makezero/v2 v2.1.0/go.mod h1:aEGT/9q3S8DHeE57C88z2a6xydvgx
 github.com/aws/aws-sdk-go v1.20.6/go.mod h1:KmX6BPdI08NWTb3/sm4ZGu5ShLoqVDhKgpiN924inxo=
 github.com/aws/aws-sdk-go-v2 v1.41.4 h1:10f50G7WyU02T56ox1wWXq+zTX9I1zxG46HYuG1hH/k=
 github.com/aws/aws-sdk-go-v2 v1.41.4/go.mod h1:mwsPRE8ceUUpiTgF7QmQIJ7lgsKUPQOUl3o72QBrE1o=
-github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.35 h1:CQ2kB9Q4xQ2PDBmn+KCr/pw1DvK7pH6NkR2nl2KV7ng=
-github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.35/go.mod h1:ypTMB9nZhpqfMeRVesGj4dEknIg0YS+aXGtLMidw/Ek=
+github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.36 h1:XcjNmPgLTEs0w6DJjpavfSQJDThJnZ4uycZVjczTCSs=
+github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.36/go.mod h1:8Wv0h8MAgsXEjqL3THcg/epsp6paJEASt/xHVLAzq3o=
 github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.20 h1:CNXO7mvgThFGqOFgbNAP2nol2qAWBOGfqR/7tQlvLmc=
 github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.20/go.mod h1:oydPDJKcfMhgfcgBUZaG+toBbwy8yPWubJXBVERtI4o=
 github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.20 h1:tN6W/hg+pkM+tf9XDkWUbDEjGLb+raoBMFsTodcoYKw=
