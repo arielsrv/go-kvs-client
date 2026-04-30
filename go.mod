@@ -3,10 +3,10 @@ module github.com/arielsrv/go-kvs-client
 go 1.26.2
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.41.6
+	github.com/aws/aws-sdk-go-v2 v1.41.7
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.38
 	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.57.2
-	github.com/aws/smithy-go v1.25.0
+	github.com/aws/smithy-go v1.25.1
 	github.com/coocood/freecache v1.2.7
 	github.com/eko/gocache/lib/v4 v4.2.3
 	github.com/eko/gocache/store/freecache/v4 v4.2.4
