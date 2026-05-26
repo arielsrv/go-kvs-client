@@ -143,7 +143,8 @@ func (r AWSFakeClient) BatchGetItem(
 						Value: string(value),
 					},
 				},
-			}...)
+			}...,
+		)
 	}
 	return batchGetItemOutput, nil
 }
