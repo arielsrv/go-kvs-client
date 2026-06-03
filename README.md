@@ -1,4 +1,14 @@
-Go client for a distributed Key-Value Store (KVS) on AWS DynamoDB, with optional in‑memory cache, Prometheus metrics, and OpenTelemetry tracing. Status: beta.
+# go-kvs-client
+
+[![Go Reference](https://pkg.go.dev/badge/github.com/arielsrv/go-kvs-client.svg)](https://pkg.go.dev/github.com/arielsrv/go-kvs-client)
+[![Go Report Card](https://goreportcard.com/badge/github.com/arielsrv/go-kvs-client)](https://goreportcard.com/report/github.com/arielsrv/go-kvs-client)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![Go Version](https://img.shields.io/badge/go-%3E%3D1.26-blue)
+![Status](https://img.shields.io/badge/status-beta-orange)
+
+A **generic**, **observable** Go client for distributed Key-Value Stores. Ships with an AWS DynamoDB backend, an optional in-memory cache, Prometheus metrics and OpenTelemetry tracing out of the box.
+
+> ⚠️ **Status:** Beta. The public API may change before `v1.0.0`.
 
 Features
 - Generic, typed API (Go generics) for Get, Save, BulkGet, and BulkSave; context-enabled variants are available.
