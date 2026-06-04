@@ -61,21 +61,21 @@ func (r *GoRedisClient) MGet(ctx context.Context, keys []string) ([]GetResult, e
 		cmds[i] = pipe.Get(ctx, key)
 	}
 
+	// go-redis aggregates per-command errors into the pipeline error and
+	// special-cases redis.Nil as "not really an error". If we reach this point
+	// with any non-Nil aggregated error there is no point inspecting individual
+	// commands, because the same error would surface per-key in the loop below.
 	if _, err := pipe.Exec(ctx); err != nil && !errors.Is(err, goredis.Nil) {
 		return nil, err
 	}
 
 	results := make([]GetResult, len(keys))
 	for i, cmd := range cmds {
-		value, err := cmd.Result()
-		switch {
-		case errors.Is(err, goredis.Nil):
+		if errors.Is(cmd.Err(), goredis.Nil) {
 			results[i] = GetResult{Key: keys[i], Found: false}
-		case err != nil:
-			return nil, err
-		default:
-			results[i] = GetResult{Key: keys[i], Value: value, Found: true}
+			continue
 		}
+		results[i] = GetResult{Key: keys[i], Value: cmd.Val(), Found: true}
 	}
 	return results, nil
 }
