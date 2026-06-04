@@ -14,7 +14,7 @@
 // Basic Usage:
 //
 //	// Create a new KVS client for a specific type
-//	client := kvs.NewAWSKVSClient[MyType](options...)
+//	client := kvs.NewKVSClient[MyType](options...)
 //
 //	// Get an item
 //	item, err := client.Get("myKey")

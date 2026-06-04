@@ -20,7 +20,7 @@ func main() {
 	checkErr(err)
 	otelaws.AppendMiddlewares(&cfg.APIOptions)
 
-	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](
+	kvsClient := kvs.NewKVSClient[model.UserDTO](
 		dynamodb.NewBuilder(
 			dynamodb.WithTTL(time.Hour),
 			dynamodb.WithContainerName("__kvs-users-store"),

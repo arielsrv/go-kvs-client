@@ -19,7 +19,7 @@
 //	user.ID = 123
 //
 //	// Use with KVS client
-//	client := kvs.NewAWSKVSClient[model.UserDTO](options...)
+//	client := kvs.NewKVSClient[model.UserDTO](options...)
 //	err := client.Save("user:123", user)
 //
 // This package is intended to serve as an example of how to create and use data models

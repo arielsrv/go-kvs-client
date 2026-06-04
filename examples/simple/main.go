@@ -20,7 +20,7 @@ func main() {
 		panic(err)
 	}
 
-	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](
+	kvsClient := kvs.NewKVSClient[model.UserDTO](
 		dynamodb.NewBuilder(
 			dynamodb.WithTTL(time.Duration(24)*time.Hour),
 			dynamodb.WithContainerName("__kvs-users-store"),

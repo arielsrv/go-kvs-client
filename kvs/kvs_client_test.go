@@ -14,7 +14,7 @@ import (
 
 func TestKVSClient_SaveAndGet(t *testing.T) {
 	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "__kvs_test")
-	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](lowLevelClient)
+	kvsClient := kvs.NewKVSClient[model.UserDTO](lowLevelClient)
 
 	userDTO := model.NewUserDTO("John", "Doe")
 	userDTO.ID = 1
@@ -34,7 +34,7 @@ func TestKVSClient_SaveAndGet(t *testing.T) {
 
 func TestKVSClient_BulkSaveAndBulkGet(t *testing.T) {
 	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "__kvs-test")
-	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](lowLevelClient)
+	kvsClient := kvs.NewKVSClient[model.UserDTO](lowLevelClient)
 
 	users := []model.UserDTO{
 		{ID: 1, FirstName: "John Doe"},
@@ -59,7 +59,7 @@ func TestKVSClient_BulkSaveAndBulkGet(t *testing.T) {
 
 func TestKVSClient_GetWithContext(t *testing.T) {
 	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "__kvs_test")
-	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](lowLevelClient)
+	kvsClient := kvs.NewKVSClient[model.UserDTO](lowLevelClient)
 
 	userDTO := model.NewUserDTO("John", "Doe")
 	userDTO.ID = 1
@@ -90,7 +90,7 @@ func TestKVSClient_GetWithContext(t *testing.T) {
 
 func TestKVSClient_BulkGetWithContext(t *testing.T) {
 	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "__kvs-test")
-	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](lowLevelClient)
+	kvsClient := kvs.NewKVSClient[model.UserDTO](lowLevelClient)
 
 	users := []model.UserDTO{
 		{ID: 1, FirstName: "John Doe"},
@@ -126,7 +126,7 @@ func TestKVSClient_BulkGetWithContext(t *testing.T) {
 
 func TestKVSClient_SaveWithContext(t *testing.T) {
 	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "__kvs_test")
-	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](lowLevelClient)
+	kvsClient := kvs.NewKVSClient[model.UserDTO](lowLevelClient)
 
 	userDTO := model.NewUserDTO("John", "Doe")
 	userDTO.ID = 1
@@ -160,7 +160,7 @@ func TestKVSClient_SaveWithContext(t *testing.T) {
 
 func TestKVSClient_BulkSaveWithContext(t *testing.T) {
 	lowLevelClient := dynamodb.NewLowLevelClient(dynamodb.NewAWSFakeClient(), "__kvs-test")
-	kvsClient := kvs.NewAWSKVSClient[model.UserDTO](lowLevelClient)
+	kvsClient := kvs.NewKVSClient[model.UserDTO](lowLevelClient)
 
 	users := []model.UserDTO{
 		{ID: 1, FirstName: "John Doe"},

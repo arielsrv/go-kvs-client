@@ -41,6 +41,18 @@ tasks:
     tf:apply:
         cmds:
             - (cd {{.TF_FOLDER}} || exit ; tflocal apply -auto-approve)
+    redis:start:
+        desc: Start a local Redis instance (standalone)
+        cmds:
+            - docker run --rm -d --name kvs-redis -p 6379:6379 redis:7-alpine
+    redis:stop:
+        desc: Stop the local Redis instance started with redis:start
+        cmds:
+            - docker rm -f kvs-redis
+    redis:cli:
+        desc: Open a redis-cli session against the local Redis
+        cmds:
+            - docker exec -it kvs-redis redis-cli
     aws:dynamodb:
         vars:
             TABLE_NAME: '__kvs-users-store'

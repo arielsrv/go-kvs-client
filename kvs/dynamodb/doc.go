@@ -36,7 +36,7 @@
 //	dynamoClient := dynamodb.NewFromConfig(cfg)
 //
 //	// Create KVS client with DynamoDB backend
-//	client := kvs.NewAWSKVSClient[MyType](
+//	client := kvs.NewKVSClient[MyType](
 //	    kvs.WithAWSClient(dynamoClient),
 //	    kvs.WithTableName("my-table"),
 //	)
