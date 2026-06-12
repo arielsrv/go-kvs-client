@@ -117,7 +117,7 @@ type MockClient_Get_Call struct {
 // Get is a helper method to define mock.On call
 //   - ctx context.Context
 //   - key string
-func (_e *MockClient_Expecter) Get(ctx interface{}, key interface{}) *MockClient_Get_Call {
+func (_e *MockClient_Expecter) Get(ctx any, key any) *MockClient_Get_Call {
 	return &MockClient_Get_Call{Call: _e.mock.On("Get", ctx, key)}
 }
 
@@ -185,7 +185,7 @@ type MockClient_MGet_Call struct {
 // MGet is a helper method to define mock.On call
 //   - ctx context.Context
 //   - keys []string
-func (_e *MockClient_Expecter) MGet(ctx interface{}, keys interface{}) *MockClient_MGet_Call {
+func (_e *MockClient_Expecter) MGet(ctx any, keys any) *MockClient_MGet_Call {
 	return &MockClient_MGet_Call{Call: _e.mock.On("MGet", ctx, keys)}
 }
 
@@ -242,7 +242,7 @@ type MockClient_MSet_Call struct {
 // MSet is a helper method to define mock.On call
 //   - ctx context.Context
 //   - pairs []redis.Pair
-func (_e *MockClient_Expecter) MSet(ctx interface{}, pairs interface{}) *MockClient_MSet_Call {
+func (_e *MockClient_Expecter) MSet(ctx any, pairs any) *MockClient_MSet_Call {
 	return &MockClient_MSet_Call{Call: _e.mock.On("MSet", ctx, pairs)}
 }
 
@@ -301,7 +301,7 @@ type MockClient_Set_Call struct {
 //   - key string
 //   - value string
 //   - ttl time.Duration
-func (_e *MockClient_Expecter) Set(ctx interface{}, key interface{}, value interface{}, ttl interface{}) *MockClient_Set_Call {
+func (_e *MockClient_Expecter) Set(ctx any, key any, value any, ttl any) *MockClient_Set_Call {
 	return &MockClient_Set_Call{Call: _e.mock.On("Set", ctx, key, value, ttl)}
 }
 

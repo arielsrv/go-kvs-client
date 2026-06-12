@@ -74,7 +74,7 @@ type MockClient_BulkGet_Call[T any] struct {
 
 // BulkGet is a helper method to define mock.On call
 //   - key []string
-func (_e *MockClient_Expecter[T]) BulkGet(key interface{}) *MockClient_BulkGet_Call[T] {
+func (_e *MockClient_Expecter[T]) BulkGet(key any) *MockClient_BulkGet_Call[T] {
 	return &MockClient_BulkGet_Call[T]{Call: _e.mock.On("BulkGet", key)}
 }
 
@@ -137,7 +137,7 @@ type MockClient_BulkGetWithContext_Call[T any] struct {
 // BulkGetWithContext is a helper method to define mock.On call
 //   - ctx context.Context
 //   - keys []string
-func (_e *MockClient_Expecter[T]) BulkGetWithContext(ctx interface{}, keys interface{}) *MockClient_BulkGetWithContext_Call[T] {
+func (_e *MockClient_Expecter[T]) BulkGetWithContext(ctx any, keys any) *MockClient_BulkGetWithContext_Call[T] {
 	return &MockClient_BulkGetWithContext_Call[T]{Call: _e.mock.On("BulkGetWithContext", ctx, keys)}
 }
 
@@ -172,11 +172,11 @@ func (_c *MockClient_BulkGetWithContext_Call[T]) RunAndReturn(run func(ctx conte
 // BulkSave provides a mock function for the type MockClient
 func (_mock *MockClient[T]) BulkSave(items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...time.Duration) error {
 	// time.Duration
-	_va := make([]interface{}, len(ttl))
+	_va := make([]any, len(ttl))
 	for _i := range ttl {
 		_va[_i] = ttl[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, items, keyMapper)
 	_ca = append(_ca, _va...)
 	ret := _mock.Called(_ca...)
@@ -203,9 +203,9 @@ type MockClient_BulkSave_Call[T any] struct {
 //   - items []T
 //   - keyMapper kvs.KeyMapperFunc[T]
 //   - ttl ...time.Duration
-func (_e *MockClient_Expecter[T]) BulkSave(items interface{}, keyMapper interface{}, ttl ...interface{}) *MockClient_BulkSave_Call[T] {
+func (_e *MockClient_Expecter[T]) BulkSave(items any, keyMapper any, ttl ...any) *MockClient_BulkSave_Call[T] {
 	return &MockClient_BulkSave_Call[T]{Call: _e.mock.On("BulkSave",
-		append([]interface{}{items, keyMapper}, ttl...)...)}
+		append([]any{items, keyMapper}, ttl...)...)}
 }
 
 func (_c *MockClient_BulkSave_Call[T]) Run(run func(items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...time.Duration)) *MockClient_BulkSave_Call[T] {
@@ -248,11 +248,11 @@ func (_c *MockClient_BulkSave_Call[T]) RunAndReturn(run func(items []T, keyMappe
 // BulkSaveWithContext provides a mock function for the type MockClient
 func (_mock *MockClient[T]) BulkSaveWithContext(ctx context.Context, items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...time.Duration) error {
 	// time.Duration
-	_va := make([]interface{}, len(ttl))
+	_va := make([]any, len(ttl))
 	for _i := range ttl {
 		_va[_i] = ttl[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, items, keyMapper)
 	_ca = append(_ca, _va...)
 	ret := _mock.Called(_ca...)
@@ -280,9 +280,9 @@ type MockClient_BulkSaveWithContext_Call[T any] struct {
 //   - items []T
 //   - keyMapper kvs.KeyMapperFunc[T]
 //   - ttl ...time.Duration
-func (_e *MockClient_Expecter[T]) BulkSaveWithContext(ctx interface{}, items interface{}, keyMapper interface{}, ttl ...interface{}) *MockClient_BulkSaveWithContext_Call[T] {
+func (_e *MockClient_Expecter[T]) BulkSaveWithContext(ctx any, items any, keyMapper any, ttl ...any) *MockClient_BulkSaveWithContext_Call[T] {
 	return &MockClient_BulkSaveWithContext_Call[T]{Call: _e.mock.On("BulkSaveWithContext",
-		append([]interface{}{ctx, items, keyMapper}, ttl...)...)}
+		append([]any{ctx, items, keyMapper}, ttl...)...)}
 }
 
 func (_c *MockClient_BulkSaveWithContext_Call[T]) Run(run func(ctx context.Context, items []T, keyMapper kvs.KeyMapperFunc[T], ttl ...time.Duration)) *MockClient_BulkSaveWithContext_Call[T] {
@@ -362,7 +362,7 @@ type MockClient_Get_Call[T any] struct {
 
 // Get is a helper method to define mock.On call
 //   - key string
-func (_e *MockClient_Expecter[T]) Get(key interface{}) *MockClient_Get_Call[T] {
+func (_e *MockClient_Expecter[T]) Get(key any) *MockClient_Get_Call[T] {
 	return &MockClient_Get_Call[T]{Call: _e.mock.On("Get", key)}
 }
 
@@ -425,7 +425,7 @@ type MockClient_GetWithContext_Call[T any] struct {
 // GetWithContext is a helper method to define mock.On call
 //   - ctx context.Context
 //   - key string
-func (_e *MockClient_Expecter[T]) GetWithContext(ctx interface{}, key interface{}) *MockClient_GetWithContext_Call[T] {
+func (_e *MockClient_Expecter[T]) GetWithContext(ctx any, key any) *MockClient_GetWithContext_Call[T] {
 	return &MockClient_GetWithContext_Call[T]{Call: _e.mock.On("GetWithContext", ctx, key)}
 }
 
@@ -460,11 +460,11 @@ func (_c *MockClient_GetWithContext_Call[T]) RunAndReturn(run func(ctx context.C
 // Save provides a mock function for the type MockClient
 func (_mock *MockClient[T]) Save(key string, item *T, ttl ...time.Duration) error {
 	// time.Duration
-	_va := make([]interface{}, len(ttl))
+	_va := make([]any, len(ttl))
 	for _i := range ttl {
 		_va[_i] = ttl[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, key, item)
 	_ca = append(_ca, _va...)
 	ret := _mock.Called(_ca...)
@@ -491,9 +491,9 @@ type MockClient_Save_Call[T any] struct {
 //   - key string
 //   - item *T
 //   - ttl ...time.Duration
-func (_e *MockClient_Expecter[T]) Save(key interface{}, item interface{}, ttl ...interface{}) *MockClient_Save_Call[T] {
+func (_e *MockClient_Expecter[T]) Save(key any, item any, ttl ...any) *MockClient_Save_Call[T] {
 	return &MockClient_Save_Call[T]{Call: _e.mock.On("Save",
-		append([]interface{}{key, item}, ttl...)...)}
+		append([]any{key, item}, ttl...)...)}
 }
 
 func (_c *MockClient_Save_Call[T]) Run(run func(key string, item *T, ttl ...time.Duration)) *MockClient_Save_Call[T] {
@@ -536,11 +536,11 @@ func (_c *MockClient_Save_Call[T]) RunAndReturn(run func(key string, item *T, tt
 // SaveWithContext provides a mock function for the type MockClient
 func (_mock *MockClient[T]) SaveWithContext(ctx context.Context, key string, item *T, ttl ...time.Duration) error {
 	// time.Duration
-	_va := make([]interface{}, len(ttl))
+	_va := make([]any, len(ttl))
 	for _i := range ttl {
 		_va[_i] = ttl[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, key, item)
 	_ca = append(_ca, _va...)
 	ret := _mock.Called(_ca...)
@@ -568,9 +568,9 @@ type MockClient_SaveWithContext_Call[T any] struct {
 //   - key string
 //   - item *T
 //   - ttl ...time.Duration
-func (_e *MockClient_Expecter[T]) SaveWithContext(ctx interface{}, key interface{}, item interface{}, ttl ...interface{}) *MockClient_SaveWithContext_Call[T] {
+func (_e *MockClient_Expecter[T]) SaveWithContext(ctx any, key any, item any, ttl ...any) *MockClient_SaveWithContext_Call[T] {
 	return &MockClient_SaveWithContext_Call[T]{Call: _e.mock.On("SaveWithContext",
-		append([]interface{}{ctx, key, item}, ttl...)...)}
+		append([]any{ctx, key, item}, ttl...)...)}
 }
 
 func (_c *MockClient_SaveWithContext_Call[T]) Run(run func(ctx context.Context, key string, item *T, ttl ...time.Duration)) *MockClient_SaveWithContext_Call[T] {

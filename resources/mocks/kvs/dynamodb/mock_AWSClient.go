@@ -41,11 +41,11 @@ func (_m *MockAWSClient) EXPECT() *MockAWSClient_Expecter {
 // BatchGetItem provides a mock function for the type MockAWSClient
 func (_mock *MockAWSClient) BatchGetItem(ctx context.Context, params *dynamodb.BatchGetItemInput, optFns ...func(*dynamodb.Options)) (*dynamodb.BatchGetItemOutput, error) {
 	// func(*dynamodb.Options)
-	_va := make([]interface{}, len(optFns))
+	_va := make([]any, len(optFns))
 	for _i := range optFns {
 		_va[_i] = optFns[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, params)
 	_ca = append(_ca, _va...)
 	ret := _mock.Called(_ca...)
@@ -83,9 +83,9 @@ type MockAWSClient_BatchGetItem_Call struct {
 //   - ctx context.Context
 //   - params *dynamodb.BatchGetItemInput
 //   - optFns ...func(*dynamodb.Options)
-func (_e *MockAWSClient_Expecter) BatchGetItem(ctx interface{}, params interface{}, optFns ...interface{}) *MockAWSClient_BatchGetItem_Call {
+func (_e *MockAWSClient_Expecter) BatchGetItem(ctx any, params any, optFns ...any) *MockAWSClient_BatchGetItem_Call {
 	return &MockAWSClient_BatchGetItem_Call{Call: _e.mock.On("BatchGetItem",
-		append([]interface{}{ctx, params}, optFns...)...)}
+		append([]any{ctx, params}, optFns...)...)}
 }
 
 func (_c *MockAWSClient_BatchGetItem_Call) Run(run func(ctx context.Context, params *dynamodb.BatchGetItemInput, optFns ...func(*dynamodb.Options))) *MockAWSClient_BatchGetItem_Call {
@@ -128,11 +128,11 @@ func (_c *MockAWSClient_BatchGetItem_Call) RunAndReturn(run func(ctx context.Con
 // BatchWriteItem provides a mock function for the type MockAWSClient
 func (_mock *MockAWSClient) BatchWriteItem(ctx context.Context, params *dynamodb.BatchWriteItemInput, optFns ...func(*dynamodb.Options)) (*dynamodb.BatchWriteItemOutput, error) {
 	// func(*dynamodb.Options)
-	_va := make([]interface{}, len(optFns))
+	_va := make([]any, len(optFns))
 	for _i := range optFns {
 		_va[_i] = optFns[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, params)
 	_ca = append(_ca, _va...)
 	ret := _mock.Called(_ca...)
@@ -170,9 +170,9 @@ type MockAWSClient_BatchWriteItem_Call struct {
 //   - ctx context.Context
 //   - params *dynamodb.BatchWriteItemInput
 //   - optFns ...func(*dynamodb.Options)
-func (_e *MockAWSClient_Expecter) BatchWriteItem(ctx interface{}, params interface{}, optFns ...interface{}) *MockAWSClient_BatchWriteItem_Call {
+func (_e *MockAWSClient_Expecter) BatchWriteItem(ctx any, params any, optFns ...any) *MockAWSClient_BatchWriteItem_Call {
 	return &MockAWSClient_BatchWriteItem_Call{Call: _e.mock.On("BatchWriteItem",
-		append([]interface{}{ctx, params}, optFns...)...)}
+		append([]any{ctx, params}, optFns...)...)}
 }
 
 func (_c *MockAWSClient_BatchWriteItem_Call) Run(run func(ctx context.Context, params *dynamodb.BatchWriteItemInput, optFns ...func(*dynamodb.Options))) *MockAWSClient_BatchWriteItem_Call {
@@ -215,11 +215,11 @@ func (_c *MockAWSClient_BatchWriteItem_Call) RunAndReturn(run func(ctx context.C
 // GetItem provides a mock function for the type MockAWSClient
 func (_mock *MockAWSClient) GetItem(ctx context.Context, params *dynamodb.GetItemInput, optFns ...func(*dynamodb.Options)) (*dynamodb.GetItemOutput, error) {
 	// func(*dynamodb.Options)
-	_va := make([]interface{}, len(optFns))
+	_va := make([]any, len(optFns))
 	for _i := range optFns {
 		_va[_i] = optFns[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, params)
 	_ca = append(_ca, _va...)
 	ret := _mock.Called(_ca...)
@@ -257,9 +257,9 @@ type MockAWSClient_GetItem_Call struct {
 //   - ctx context.Context
 //   - params *dynamodb.GetItemInput
 //   - optFns ...func(*dynamodb.Options)
-func (_e *MockAWSClient_Expecter) GetItem(ctx interface{}, params interface{}, optFns ...interface{}) *MockAWSClient_GetItem_Call {
+func (_e *MockAWSClient_Expecter) GetItem(ctx any, params any, optFns ...any) *MockAWSClient_GetItem_Call {
 	return &MockAWSClient_GetItem_Call{Call: _e.mock.On("GetItem",
-		append([]interface{}{ctx, params}, optFns...)...)}
+		append([]any{ctx, params}, optFns...)...)}
 }
 
 func (_c *MockAWSClient_GetItem_Call) Run(run func(ctx context.Context, params *dynamodb.GetItemInput, optFns ...func(*dynamodb.Options))) *MockAWSClient_GetItem_Call {
@@ -302,11 +302,11 @@ func (_c *MockAWSClient_GetItem_Call) RunAndReturn(run func(ctx context.Context,
 // PutItem provides a mock function for the type MockAWSClient
 func (_mock *MockAWSClient) PutItem(ctx context.Context, params *dynamodb.PutItemInput, optFns ...func(*dynamodb.Options)) (*dynamodb.PutItemOutput, error) {
 	// func(*dynamodb.Options)
-	_va := make([]interface{}, len(optFns))
+	_va := make([]any, len(optFns))
 	for _i := range optFns {
 		_va[_i] = optFns[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, params)
 	_ca = append(_ca, _va...)
 	ret := _mock.Called(_ca...)
@@ -344,9 +344,9 @@ type MockAWSClient_PutItem_Call struct {
 //   - ctx context.Context
 //   - params *dynamodb.PutItemInput
 //   - optFns ...func(*dynamodb.Options)
-func (_e *MockAWSClient_Expecter) PutItem(ctx interface{}, params interface{}, optFns ...interface{}) *MockAWSClient_PutItem_Call {
+func (_e *MockAWSClient_Expecter) PutItem(ctx any, params any, optFns ...any) *MockAWSClient_PutItem_Call {
 	return &MockAWSClient_PutItem_Call{Call: _e.mock.On("PutItem",
-		append([]interface{}{ctx, params}, optFns...)...)}
+		append([]any{ctx, params}, optFns...)...)}
 }
 
 func (_c *MockAWSClient_PutItem_Call) Run(run func(ctx context.Context, params *dynamodb.PutItemInput, optFns ...func(*dynamodb.Options))) *MockAWSClient_PutItem_Call {

@@ -51,7 +51,7 @@ type MockList_Add_Call struct {
 
 // Add is a helper method to define mock.On call
 //   - item *kvs.Item
-func (_e *MockList_Expecter) Add(item interface{}) *MockList_Add_Call {
+func (_e *MockList_Expecter) Add(item any) *MockList_Add_Call {
 	return &MockList_Add_Call{Call: _e.mock.On("Add", item)}
 }
 

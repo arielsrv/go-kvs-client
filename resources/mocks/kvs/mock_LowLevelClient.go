@@ -73,7 +73,7 @@ type MockLowLevelClient_BulkGet_Call struct {
 
 // BulkGet is a helper method to define mock.On call
 //   - keys []string
-func (_e *MockLowLevelClient_Expecter) BulkGet(keys interface{}) *MockLowLevelClient_BulkGet_Call {
+func (_e *MockLowLevelClient_Expecter) BulkGet(keys any) *MockLowLevelClient_BulkGet_Call {
 	return &MockLowLevelClient_BulkGet_Call{Call: _e.mock.On("BulkGet", keys)}
 }
 
@@ -136,7 +136,7 @@ type MockLowLevelClient_BulkGetWithContext_Call struct {
 // BulkGetWithContext is a helper method to define mock.On call
 //   - ctx context.Context
 //   - key []string
-func (_e *MockLowLevelClient_Expecter) BulkGetWithContext(ctx interface{}, key interface{}) *MockLowLevelClient_BulkGetWithContext_Call {
+func (_e *MockLowLevelClient_Expecter) BulkGetWithContext(ctx any, key any) *MockLowLevelClient_BulkGetWithContext_Call {
 	return &MockLowLevelClient_BulkGetWithContext_Call{Call: _e.mock.On("BulkGetWithContext", ctx, key)}
 }
 
@@ -192,7 +192,7 @@ type MockLowLevelClient_BulkSave_Call struct {
 
 // BulkSave is a helper method to define mock.On call
 //   - items *kvs.Items
-func (_e *MockLowLevelClient_Expecter) BulkSave(items interface{}) *MockLowLevelClient_BulkSave_Call {
+func (_e *MockLowLevelClient_Expecter) BulkSave(items any) *MockLowLevelClient_BulkSave_Call {
 	return &MockLowLevelClient_BulkSave_Call{Call: _e.mock.On("BulkSave", items)}
 }
 
@@ -244,7 +244,7 @@ type MockLowLevelClient_BulkSaveWithContext_Call struct {
 // BulkSaveWithContext is a helper method to define mock.On call
 //   - ctx context.Context
 //   - items *kvs.Items
-func (_e *MockLowLevelClient_Expecter) BulkSaveWithContext(ctx interface{}, items interface{}) *MockLowLevelClient_BulkSaveWithContext_Call {
+func (_e *MockLowLevelClient_Expecter) BulkSaveWithContext(ctx any, items any) *MockLowLevelClient_BulkSaveWithContext_Call {
 	return &MockLowLevelClient_BulkSaveWithContext_Call{Call: _e.mock.On("BulkSaveWithContext", ctx, items)}
 }
 
@@ -355,7 +355,7 @@ type MockLowLevelClient_Get_Call struct {
 
 // Get is a helper method to define mock.On call
 //   - key string
-func (_e *MockLowLevelClient_Expecter) Get(key interface{}) *MockLowLevelClient_Get_Call {
+func (_e *MockLowLevelClient_Expecter) Get(key any) *MockLowLevelClient_Get_Call {
 	return &MockLowLevelClient_Get_Call{Call: _e.mock.On("Get", key)}
 }
 
@@ -418,7 +418,7 @@ type MockLowLevelClient_GetWithContext_Call struct {
 // GetWithContext is a helper method to define mock.On call
 //   - ctx context.Context
 //   - key string
-func (_e *MockLowLevelClient_Expecter) GetWithContext(ctx interface{}, key interface{}) *MockLowLevelClient_GetWithContext_Call {
+func (_e *MockLowLevelClient_Expecter) GetWithContext(ctx any, key any) *MockLowLevelClient_GetWithContext_Call {
 	return &MockLowLevelClient_GetWithContext_Call{Call: _e.mock.On("GetWithContext", ctx, key)}
 }
 
@@ -475,7 +475,7 @@ type MockLowLevelClient_Save_Call struct {
 // Save is a helper method to define mock.On call
 //   - key string
 //   - item *kvs.Item
-func (_e *MockLowLevelClient_Expecter) Save(key interface{}, item interface{}) *MockLowLevelClient_Save_Call {
+func (_e *MockLowLevelClient_Expecter) Save(key any, item any) *MockLowLevelClient_Save_Call {
 	return &MockLowLevelClient_Save_Call{Call: _e.mock.On("Save", key, item)}
 }
 
@@ -533,7 +533,7 @@ type MockLowLevelClient_SaveWithContext_Call struct {
 //   - ctx context.Context
 //   - key string
 //   - item *kvs.Item
-func (_e *MockLowLevelClient_Expecter) SaveWithContext(ctx interface{}, key interface{}, item interface{}) *MockLowLevelClient_SaveWithContext_Call {
+func (_e *MockLowLevelClient_Expecter) SaveWithContext(ctx any, key any, item any) *MockLowLevelClient_SaveWithContext_Call {
 	return &MockLowLevelClient_SaveWithContext_Call{Call: _e.mock.On("SaveWithContext", ctx, key, item)}
 }
 
