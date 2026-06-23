@@ -79,6 +79,18 @@ tasks:
     test:mock:
         cmds:
             - go tool mockery --config .mockery.yaml
+    test:integration:
+        desc: Run integration tests using testcontainers (requires Docker)
+        cmds:
+            - go test -tags integration -v -timeout 300s ./kvs/dynamodb/... ./kvs/redis/...
+    test:integration:dynamodb:
+        desc: Run DynamoDB integration tests only (uses LocalStack via testcontainers)
+        cmds:
+            - go test -tags integration -v -timeout 300s ./kvs/dynamodb/... -run "^TestIntegration_"
+    test:integration:redis:
+        desc: Run Redis integration tests only (uses Redis via testcontainers)
+        cmds:
+            - go test -tags integration -v -timeout 300s ./kvs/redis/... -run "^TestIntegration_"
     test:
         cmds:
             -   task: test:mock
