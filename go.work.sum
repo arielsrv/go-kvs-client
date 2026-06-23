@@ -173,6 +173,12 @@ github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55 h1:o4JXh1EVt
 github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55/go.mod h1:OmDBASR4679mdNQnz2pUhc2G8CO2JrUAVFDRBDP/hJE=
 github.com/quasilyte/go-ruleguard/rules v0.0.0-20211022131956-028d6511ab71 h1:CNooiryw5aisadVfzneSZPswRWvnVW8hF1bS/vo8ReI=
 github.com/quasilyte/go-ruleguard/rules v0.0.0-20211022131956-028d6511ab71/go.mod h1:4cgAphtvu7Ftv7vOT2ZOYhC6CvBxZixcasr8qIOTA50=
+github.com/redis/go-redis/extra/rediscmd/v9 v9.21.0 h1:jsV3tyMeJrEoc2f3EhNf7qoBW3NEZW7l/4ziT3M+OJI=
+github.com/redis/go-redis/extra/rediscmd/v9 v9.21.0/go.mod h1:e5t17bY9cEpVV+xw2U7jsPOKkXBtL5IQmNVABShnHUk=
+github.com/redis/go-redis/extra/redisotel/v9 v9.21.0 h1:36qq3rbF2If2CP0zGHHF8o/4XDluErn6DD0c9/L2iNI=
+github.com/redis/go-redis/extra/redisotel/v9 v9.21.0/go.mod h1:7y2cVB/LXXLHqHOO2jCVzBqimIQk1w7Rp9WSpyVY/o8=
+github.com/redis/go-redis/v9 v9.21.0 h1:FPBE4hhbAke+TLmcY3WkpbDffJEomdqPn3HYiqAtL9E=
+github.com/redis/go-redis/v9 v9.21.0/go.mod h1:v/M13XI1PVCDcm01VtPFOADfZtHf8YW3baQf57KlIkA=
 github.com/rogpeppe/fastuuid v1.1.0 h1:INyGLmTCMGFr6OVIb977ghJvABML2CMVjPoRfNDdYDo=
 github.com/rs/xid v1.6.0 h1:fV591PaemRlL6JfRxGDEPl69wICngIQ3shQtzfy2gxU=
 github.com/sagikazarmark/crypt v0.6.0 h1:REOEXCs/NFY/1jOCEouMuT4zEniE5YoXbvpC5X/TLF8=
