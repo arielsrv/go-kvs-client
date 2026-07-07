@@ -8,7 +8,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/config v1.32.27
 	github.com/aws/aws-sdk-go-v2/credentials v1.19.26
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.50
-	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.59.2
+	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.60.0
 	github.com/aws/smithy-go v1.27.3
 	github.com/coocood/freecache v1.2.7
 	github.com/eko/gocache/lib/v4 v4.2.3
