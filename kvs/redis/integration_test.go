@@ -23,7 +23,7 @@ func setupRedisClient(t *testing.T, opts ...kvsredis.BuilderOptions) *kvsredis.L
 
 	ctx := context.Background()
 
-	container, err := tcredis.Run(ctx, "redis:7-alpine")
+	container, err := tcredis.Run(ctx, "redis:8-alpine")
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		_ = testcontainers.TerminateContainer(container)

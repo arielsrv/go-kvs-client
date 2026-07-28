@@ -44,7 +44,7 @@ tasks:
     redis:start:
         desc: Start a local Redis instance (standalone)
         cmds:
-            - docker run --rm -d --name kvs-redis -p 6379:6379 redis:7-alpine
+            - docker run --rm -d --name kvs-redis -p 6379:6379 redis:8-alpine
     redis:stop:
         desc: Stop the local Redis instance started with redis:start
         cmds:
