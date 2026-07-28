@@ -28,7 +28,7 @@ func setupLocalStackDynamoDB(t *testing.T) *kvsdynamo.LowLevelClient {
 
 	ctx := context.Background()
 
-	container, err := localstack.Run(ctx, "localstack/localstack:3.8.1")
+	container, err := localstack.Run(ctx, "localstack/localstack:4.14.0")
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		_ = testcontainers.TerminateContainer(container)
