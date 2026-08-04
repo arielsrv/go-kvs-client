@@ -4,17 +4,17 @@ go 1.26.5
 
 require (
 	github.com/alicebob/miniredis/v2 v2.38.0
-	github.com/aws/aws-sdk-go-v2 v1.43.2
-	github.com/aws/aws-sdk-go-v2/config v1.32.33
-	github.com/aws/aws-sdk-go-v2/credentials v1.19.32
-	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.56
-	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.62.2
-	github.com/aws/smithy-go v1.27.5
+	github.com/aws/aws-sdk-go-v2 v1.43.3
+	github.com/aws/aws-sdk-go-v2/config v1.32.34
+	github.com/aws/aws-sdk-go-v2/credentials v1.19.33
+	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.58
+	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.63.0
+	github.com/aws/smithy-go v1.27.6
 	github.com/coocood/freecache v1.2.7
 	github.com/eko/gocache/lib/v4 v4.2.4
 	github.com/eko/gocache/store/freecache/v4 v4.2.4
-	github.com/redis/go-redis/extra/redisotel/v9 v9.21.0
-	github.com/redis/go-redis/v9 v9.21.0
+	github.com/redis/go-redis/extra/redisotel/v9 v9.22.0
+	github.com/redis/go-redis/v9 v9.22.0
 	github.com/stretchr/testify v1.11.1
 	github.com/testcontainers/testcontainers-go v0.43.0
 	github.com/testcontainers/testcontainers-go/modules/localstack v0.43.0
@@ -58,18 +58,18 @@ require (
 	github.com/apex/log v1.9.0 // indirect
 	github.com/ashanbrown/forbidigo/v2 v2.3.1 // indirect
 	github.com/ashanbrown/makezero/v2 v2.2.1 // indirect
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.33 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.33 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.33 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.34 // indirect
-	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.36.2 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.14 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.12.10 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.33 // indirect
-	github.com/aws/aws-sdk-go-v2/service/signin v1.5.2 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.33.2 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.38.2 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.45.2 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.34 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.34 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.34 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.35 // indirect
+	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.36.3 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.15 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.12.11 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.34 // indirect
+	github.com/aws/aws-sdk-go-v2/service/signin v1.5.3 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.33.3 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.38.3 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.45.3 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bitfield/gotestdox v0.2.2 // indirect
 	github.com/bkielbasa/cyclop v1.2.3 // indirect
@@ -125,7 +125,7 @@ require (
 	github.com/fzipp/gocyclo v0.6.0 // indirect
 	github.com/ghostiam/protogetter v0.3.20 // indirect
 	github.com/go-critic/go-critic v0.14.3 // indirect
-	github.com/go-logr/logr v1.4.3 // indirect
+	github.com/go-logr/logr v1.4.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/go-toolsmith/astcast v1.1.0 // indirect
@@ -248,7 +248,7 @@ require (
 	github.com/quasilyte/regex/syntax v0.0.0-20210819130434-b3f0c404a727 // indirect
 	github.com/quasilyte/stdinfo v0.0.0-20220114132959-f7386bf02567 // indirect
 	github.com/raeperd/recvcheck v0.2.0 // indirect
-	github.com/redis/go-redis/extra/rediscmd/v9 v9.21.0 // indirect
+	github.com/redis/go-redis/extra/rediscmd/v9 v9.22.0 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/rogpeppe/go-internal v1.15.0 // indirect
 	github.com/rs/zerolog v1.34.0 // indirect
@@ -307,11 +307,11 @@ require (
 	go.augendre.info/fatcontext v0.9.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.61.0 // indirect
-	go.opentelemetry.io/otel v1.44.0 // indirect
-	go.opentelemetry.io/otel/metric v1.44.0 // indirect
-	go.opentelemetry.io/otel/sdk v1.44.0 // indirect
-	go.opentelemetry.io/otel/sdk/metric v1.44.0 // indirect
-	go.opentelemetry.io/otel/trace v1.44.0 // indirect
+	go.opentelemetry.io/otel v1.45.0 // indirect
+	go.opentelemetry.io/otel/metric v1.45.0 // indirect
+	go.opentelemetry.io/otel/sdk v1.45.0 // indirect
+	go.opentelemetry.io/otel/sdk/metric v1.45.0 // indirect
+	go.opentelemetry.io/otel/trace v1.45.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
