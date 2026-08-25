@@ -1,6 +1,6 @@
 module github.com/arielsrv/go-kvs-client/examples
 
-go 1.26.6
+go 1.27.0
 
 // Always resolve the parent module from the local checkout so that
 // `go mod tidy` (run via `task download`) picks up unreleased packages
