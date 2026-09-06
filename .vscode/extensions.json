@@ -1,0 +1,16 @@
+{
+	"recommendations": [
+		"golang.go",
+		"ms-azuretools.vscode-docker",
+		"editorconfig.editorconfig",
+		"redhat.vscode-yaml",
+		"task.vscode-task",
+		"sonarsource.sonarlint-vscode",
+		"github.vscode-github-actions",
+		"eamodio.gitlens",
+		"streetsidesoftware.code-spell-checker"
+	],
+	"unwantedRecommendations": [
+		"ms-vscode.go"
+	]
+}

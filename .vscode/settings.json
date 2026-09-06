@@ -1,0 +1,88 @@
+{
+	"go.useLanguageServer": true,
+	"go.lintTool": "golangci-lint",
+	"go.lintFlags": [
+		"--fast-only"
+	],
+	"go.lintOnSave": "workspace",
+	"go.formatTool": "gofumpt",
+	"go.testFlags": [
+		"-v",
+		"-race",
+		"-count=1"
+	],
+	"go.testTimeout": "300s",
+	"go.coverOnSingleTest": true,
+	"go.coverageDecorator": {
+		"type": "gutter"
+	},
+	"go.toolsManagement.autoUpdate": true,
+	"gopls": {
+		"formatting.gofumpt": true,
+		"ui.semanticTokens": true,
+		"ui.completion.usePlaceholders": true,
+		"ui.diagnostic.staticcheck": true,
+		"ui.diagnostic.analyses": {
+			"nilness": true,
+			"unusedparams": true,
+			"unusedwrite": true,
+			"useany": true,
+			"shadow": true
+		}
+	},
+	"[go]": {
+		"editor.defaultFormatter": "golang.go",
+		"editor.formatOnSave": true,
+		"editor.insertSpaces": false,
+		"editor.codeActionsOnSave": {
+			"source.organizeImports": "explicit"
+		}
+	},
+	"[go.mod]": {
+		"editor.defaultFormatter": "golang.go",
+		"editor.formatOnSave": true,
+		"editor.codeActionsOnSave": {
+			"source.organizeImports": "explicit"
+		}
+	},
+	"[yaml]": {
+		"editor.defaultFormatter": "redhat.vscode-yaml",
+		"editor.insertSpaces": false
+	},
+	"yaml.schemas": {
+		"https://json.schemastore.org/taskfile.json": "Taskfile.yml",
+		"https://golangci-lint.run/jsonschema/golangci.v2.jsonschema.json": ".golangci.yml"
+	},
+	"files.eol": "\n",
+	"files.insertFinalNewline": true,
+	"files.trimTrailingWhitespace": true,
+	"files.exclude": {
+		"**/.idea": true
+	},
+	"search.exclude": {
+		"**/go.sum": true,
+		"**/go.work.sum": true,
+		"**/resources/mocks": true,
+		"coverage*": true
+	},
+	"editor.rulers": [
+		120
+	],
+	"cSpell.words": [
+		"arielsrv",
+		"awslocal",
+		"dynamodb",
+		"freecache",
+		"gocache",
+		"gofumpt",
+		"golangci",
+		"localstack",
+		"miniredis",
+		"mockery",
+		"otel",
+		"redisotel",
+		"smithy",
+		"testcontainers",
+		"testify"
+	]
+}
