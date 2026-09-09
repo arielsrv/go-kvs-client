@@ -12,7 +12,7 @@ require (
 	github.com/aws/smithy-go v1.28.1
 	github.com/coocood/freecache v1.2.7
 	github.com/eko/gocache/lib/v4 v4.2.4
-	github.com/eko/gocache/store/freecache/v4 v4.2.4
+	github.com/eko/gocache/store/freecache/v4 v4.2.7
 	github.com/redis/go-redis/extra/redisotel/v9 v9.22.0
 	github.com/redis/go-redis/v9 v9.22.0
 	github.com/stretchr/testify v1.12.1
