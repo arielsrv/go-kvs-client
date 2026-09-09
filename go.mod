@@ -19,7 +19,7 @@ require (
 	github.com/testcontainers/testcontainers-go v0.44.0
 	github.com/testcontainers/testcontainers-go/modules/localstack v0.44.0
 	github.com/testcontainers/testcontainers-go/modules/redis v0.44.0
-	golang.org/x/sync v0.22.0
+	golang.org/x/sync v0.23.0
 )
 
 require (
