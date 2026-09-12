@@ -88,8 +88,8 @@ github.com/ebitengine/purego v0.10.2 h1:W809HbnvzAxgdm+aOvlSekrM16wGCdT/e76+9tS7
 github.com/ebitengine/purego v0.10.2/go.mod h1:iIjxzd6CiRiOG0UyXP+V1+jWqUXVjPKLAI0mRfJZTmQ=
 github.com/eko/gocache/lib/v4 v4.2.4 h1:BRKeSVesCA+ujcdS72GhAwMmJcYnp46DRu7w9ZL8Gp8=
 github.com/eko/gocache/lib/v4 v4.2.4/go.mod h1:Zus8mwmaPu1VYOzfomb+Dvx2wV7fT5jDRbHYtQM6MEY=
-github.com/eko/gocache/store/freecache/v4 v4.2.4 h1:QaRYnoh4eEEL/NYDJl7HqRHhp9rlwR0LSRgek8+PYrY=
-github.com/eko/gocache/store/freecache/v4 v4.2.4/go.mod h1:bSQzTOqmidOM7NARAKU67cRfZyEnME8FHU77ICl9b8E=
+github.com/eko/gocache/store/freecache/v4 v4.2.7 h1:i1OkSbfzhm0y/K8yEgcpQe5dCqkTXaKFE1MXVt/6PT4=
+github.com/eko/gocache/store/freecache/v4 v4.2.7/go.mod h1:tzja9HMWCFbKUxtYs6zHfDSxtVM6r1HEn0955HMz5/g=
 github.com/felixge/httpsnoop v1.1.0 h1:3YtUj32ZZkqZtt3sZZsClsymw/QDuVfpNhoA31zeORc=
 github.com/felixge/httpsnoop v1.1.0/go.mod h1:Zqxgdd+1Rkcz8euOqdr7lqgCRJztwr5hp9vDSi5UZCE=
 github.com/go-logr/logr v1.2.2/go.mod h1:jdQByPbusPIv2/zmleS9BjJVeZ6kBagPoEUsqbVz/1A=
