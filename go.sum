@@ -228,10 +228,10 @@ github.com/docker/go-units v0.5.0 h1:69rxXcBk27SvSaaxTtLh/8llcHD8vYHT7WSdRZ/jvr4
 github.com/docker/go-units v0.5.0/go.mod h1:fgPhTUdO+D/Jk86RDLlptpiXQzgHJF7gydDDbaIK4Dk=
 github.com/ebitengine/purego v0.10.2 h1:W809HbnvzAxgdm+aOvlSekrM16wGCdT/e76+9tS7gzE=
 github.com/ebitengine/purego v0.10.2/go.mod h1:iIjxzd6CiRiOG0UyXP+V1+jWqUXVjPKLAI0mRfJZTmQ=
-github.com/eko/gocache/lib/v4 v4.2.4 h1:BRKeSVesCA+ujcdS72GhAwMmJcYnp46DRu7w9ZL8Gp8=
-github.com/eko/gocache/lib/v4 v4.2.4/go.mod h1:Zus8mwmaPu1VYOzfomb+Dvx2wV7fT5jDRbHYtQM6MEY=
-github.com/eko/gocache/store/freecache/v4 v4.2.7 h1:i1OkSbfzhm0y/K8yEgcpQe5dCqkTXaKFE1MXVt/6PT4=
-github.com/eko/gocache/store/freecache/v4 v4.2.7/go.mod h1:tzja9HMWCFbKUxtYs6zHfDSxtVM6r1HEn0955HMz5/g=
+github.com/eko/gocache/lib/v4 v4.4.0 h1:oG3bwd+QagAQck8veR9uSbG/B89pet4TSOuHoi8oFEU=
+github.com/eko/gocache/lib/v4 v4.4.0/go.mod h1:Zus8mwmaPu1VYOzfomb+Dvx2wV7fT5jDRbHYtQM6MEY=
+github.com/eko/gocache/store/freecache/v4 v4.2.10 h1:SehP8SSrZucCmEbmg1bBd5sb1fiDH8PMfemO2KvP1YA=
+github.com/eko/gocache/store/freecache/v4 v4.2.10/go.mod h1:H6fqkwA4a2GyOBeDzZL8V8Dv1CCP0KavRn83Z2ODlnU=
 github.com/ettle/strcase v0.2.0 h1:fGNiVF21fHXpX1niBgk0aROov1LagYsOwV/xqKDKR/Q=
 github.com/ettle/strcase v0.2.0/go.mod h1:DajmHElDSaX76ITe3/VHVyMin4LWSJN5Z909Wp+ED1A=
 github.com/fatih/color v1.7.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5KwzbycvMj4=

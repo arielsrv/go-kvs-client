@@ -41,8 +41,8 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/coocood/freecache v1.2.7 // indirect
-	github.com/eko/gocache/lib/v4 v4.2.4 // indirect
-	github.com/eko/gocache/store/freecache/v4 v4.2.7 // indirect
+	github.com/eko/gocache/lib/v4 v4.4.0 // indirect
+	github.com/eko/gocache/store/freecache/v4 v4.2.10 // indirect
 	github.com/go-logr/logr v1.4.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
