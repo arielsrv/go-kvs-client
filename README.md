@@ -3,8 +3,8 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/arielsrv/go-kvs-client.svg)](https://pkg.go.dev/github.com/arielsrv/go-kvs-client)
 [![CI](https://github.com/arielsrv/go-kvs-client/actions/workflows/ci.yml/badge.svg)](https://github.com/arielsrv/go-kvs-client/actions/workflows/ci.yml)
 [![golangci-lint](https://github.com/arielsrv/go-kvs-client/actions/workflows/lint.yml/badge.svg)](https://github.com/arielsrv/go-kvs-client/actions/workflows/lint.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/arielsrv/go-kvs-client)](https://goreportcard.com/report/github.com/arielsrv/go-kvs-client)
 [![Release](https://img.shields.io/github/v/release/arielsrv/go-kvs-client)](https://github.com/arielsrv/go-kvs-client/releases/latest)
+![Coverage](https://img.shields.io/badge/coverage-97.9%25-brightgreen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Go Version](https://img.shields.io/badge/go-%3E%3D1.27-blue)
 

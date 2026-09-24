@@ -1,5 +1,3 @@
-// Package kvs provides a generic key-value store client interface and implementation.
-// It supports operations like Get, Save, BulkGet, and BulkSave with optional context and TTL.
 package kvs
 
 import (

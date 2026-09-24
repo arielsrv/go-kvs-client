@@ -1,4 +1,3 @@
-// Package dynamodb provides AWS DynamoDB specific implementation of the KVS client.
 package dynamodb
 
 // Item represents a key-value pair in DynamoDB.

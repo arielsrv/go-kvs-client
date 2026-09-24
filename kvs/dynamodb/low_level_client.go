@@ -1,4 +1,3 @@
-// Package dynamodb provides AWS DynamoDB specific implementation of the KVS client.
 package dynamodb
 
 import (
@@ -46,10 +45,15 @@ func NewLowLevelClient(awsClient AWSClient, containerName string, ttl ...time.Du
 	return lowLevelClient
 }
 
+// TableName returns the DynamoDB table this client reads from and writes to.
+// It is the container name passed to NewLowLevelClient, used as-is.
 func (r *LowLevelClient) TableName() string {
 	return r.tableName
 }
 
+// TTL returns the default time-to-live applied to written items.
+// A zero value means items are written without an expiration attribute.
+// Per-item TTLs take precedence over this default.
 func (r *LowLevelClient) TTL() time.Duration {
 	return r.ttl
 }
@@ -61,8 +65,9 @@ const (
 	TTLName   = "ttl"   // Attribute name for the item's TTL
 )
 
-// getTableName returns the full name of the DynamoDB table.
-// The table name is prefixed with "__kvs-" followed by the container name.
+// getTableName returns the name of the DynamoDB table as configured.
+// The name is used verbatim: callers pass the fully qualified table name
+// (for example "__kvs-users-store") to NewLowLevelClient.
 func (r *LowLevelClient) getTableName() *string {
 	return aws.String(r.tableName)
 }

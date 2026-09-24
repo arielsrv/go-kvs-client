@@ -1,4 +1,3 @@
-// Package redis provides a Redis implementation of the KVS client.
 package redis
 
 import (

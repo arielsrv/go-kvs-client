@@ -1,4 +1,3 @@
-// Package kvs provides a generic key-value store client interface and implementation.
 package kvs
 
 // Error constants for common key-value store errors.
