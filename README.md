@@ -1,14 +1,17 @@
 # go-kvs-client
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/arielsrv/go-kvs-client.svg)](https://pkg.go.dev/github.com/arielsrv/go-kvs-client)
+[![CI](https://github.com/arielsrv/go-kvs-client/actions/workflows/ci.yml/badge.svg)](https://github.com/arielsrv/go-kvs-client/actions/workflows/ci.yml)
+[![golangci-lint](https://github.com/arielsrv/go-kvs-client/actions/workflows/lint.yml/badge.svg)](https://github.com/arielsrv/go-kvs-client/actions/workflows/lint.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/arielsrv/go-kvs-client)](https://goreportcard.com/report/github.com/arielsrv/go-kvs-client)
+[![Release](https://img.shields.io/github/v/release/arielsrv/go-kvs-client)](https://github.com/arielsrv/go-kvs-client/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Go Version](https://img.shields.io/badge/go-%3E%3D1.26-blue)
-![Status](https://img.shields.io/badge/status-beta-orange)
+![Go Version](https://img.shields.io/badge/go-%3E%3D1.27-blue)
 
-A **generic**, **observable** Go client for distributed Key-Value Stores. Ships with **AWS DynamoDB** and **Redis** backends, an optional in-memory cache, Prometheus metrics and OpenTelemetry tracing out of the box.
+A **generic**, **observable** Go client for distributed Key-Value Stores. Ships with **AWS DynamoDB** and **Redis** backends, OpenTelemetry tracing and metrics, in-memory fakes for testing, and runnable examples.
 
-> ⚠️ **Status:** Beta. The public API may change before `v1.0.0`.
+> **Status:** Released and versioned with SemVer — the public API is stable across `v1.x`.
+> See the [releases](https://github.com/arielsrv/go-kvs-client/releases) page for the changelog.
 
 ---
 
@@ -23,11 +26,15 @@ A **generic**, **observable** Go client for distributed Key-Value Stores. Ships 
   - [Single item operations](#single-item-operations)
   - [Bulk operations](#bulk-operations)
 - [API Reference](#api-reference)
+- [Error handling](#error-handling)
 - [Builder options (DynamoDB)](#builder-options-dynamodb)
+- [Builder options (Redis)](#builder-options-redis)
+  - [Testing without Redis](#testing-without-redis)
 - [Observability](#observability)
-  - [Prometheus metrics](#prometheus-metrics)
   - [OpenTelemetry tracing](#opentelemetry-tracing)
+  - [Metrics](#metrics)
 - [Local development](#local-development)
+  - [Integration tests](#integration-tests)
 - [Project layout](#project-layout)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
@@ -41,15 +48,15 @@ A **generic**, **observable** Go client for distributed Key-Value Stores. Ships 
 - ☁️ **Pluggable backends**:
   - **AWS DynamoDB** implementation with a fluent builder (TTL, table name, custom endpoint/LocalStack, etc.).
   - **Redis** implementation (standalone, Sentinel and Cluster) backed by `go-redis/v9`, with a fluent builder (TTL, key prefix, TLS, pooling, timeouts, ACL, etc.).
-- ⚡ **Optional in-memory cache** (`freecache` via `gocache`) to reduce latency; hits/misses exported as metrics.
-- 📈 **Prometheus metrics**: operation counters, connection latencies, hit/miss/error stats.
-- 🔭 **OpenTelemetry tracing** integrated with AWS SDK v2 (`otelaws`); demo with Tempo + Grafana.
-- 🧪 **Mocks included** under `resources/mocks/` (generated with `mockery`) for easy unit testing.
+- 🔭 **OpenTelemetry**: opt-in tracing *and* metrics for Redis (`redisotel`); DynamoDB traces through the AWS SDK v2 `otelaws` middlewares. End-to-end demo with Tempo + Grafana.
+- 🧪 **Hermetic test doubles**: in-memory fakes for both backends (`FakeBuild()` for Redis, `NewAWSFakeClient()` for DynamoDB) — unit tests need no Docker, no LocalStack and no network.
+- 🐳 **Integration tests** against real engines via [testcontainers](https://testcontainers.com/) (LocalStack + Redis), behind the `integration` build tag.
+- 🎭 **Mocks included** under `resources/mocks/` (generated with `mockery`) for easy unit testing.
 - 📦 **Runnable examples**: `examples/simple`, `examples/trace` and `examples/redis`.
 
 ## Requirements
 
-- Go **1.26+**
+- Go **1.27+**
 - AWS credentials or [LocalStack](https://www.localstack.cloud/) for local development
 - (Optional) [Docker](https://www.docker.com/) + Docker Compose for the local observability stack
 - (Optional) [Task](https://taskfile.dev/) to run the project tasks
@@ -193,6 +200,36 @@ The public `kvs.Client[T any]` interface:
 
 `KeyMapperFunc[T] = func(item T) string`.
 
+## Error handling
+
+Every error returned by the client is a `kvs.KeyValueError` sentinel, so it can be
+matched with `errors.Is`:
+
+| Sentinel | Returned when |
+| --- | --- |
+| `kvs.ErrKeyNotFound` | The key does not exist, or its TTL already expired. |
+| `kvs.ErrEmptyKey` | An empty key was passed. |
+| `kvs.ErrNilItem` | A `nil` item was passed to `Save` / `BulkSave`. |
+| `kvs.ErrConvert` | The stored value could not be converted to the expected type. |
+| `kvs.ErrMarshal` | (Un)marshalling the item failed. |
+| `kvs.ErrTooManyKeys` | A bulk call exceeded the backend batch limit (`redis.MaxBulkKeys` = 100). |
+| `kvs.ErrInternal` | The backend returned an unexpected error. |
+
+A miss is an ordinary, expected outcome — not a failure — so treat it explicitly:
+
+```go
+user, err := client.GetWithContext(ctx, key)
+switch {
+case errors.Is(err, kvs.ErrKeyNotFound):
+    user, err = loadFromSourceOfTruth(ctx, key) // cache miss
+    if err != nil {
+        return err
+    }
+case err != nil:
+    return fmt.Errorf("kvs get %q: %w", key, err)
+}
+```
+
 ## Builder options (DynamoDB)
 
 | Option | Purpose |
@@ -251,24 +288,28 @@ inject any implementation of [`redis.Client`](kvs/redis/client.go) via
 
 ## Observability
 
-### Prometheus metrics
-
-The client exports the following series (indicative):
-
-```text
-__kvs_operations{client_name="<name>", type="get|save|bulk_get|bulk_save"}   counter
-__kvs_stats     {client_name="<name>", stats="hit|miss|error"}              counter
-__kvs_connection{client_name="<name>", type="get|save|bulk_get|bulk_save"}  histogram (seconds)
-```
-
-Grafana dashboards are provided in [`resources/grafana/`](resources/grafana) and can be imported as-is.
-
 ### OpenTelemetry tracing
 
-The DynamoDB client integrates with AWS SDK v2 through `otelaws.AppendMiddlewares`. A complete end-to-end example (OTLP exporter → Tempo → Grafana) lives in [`examples/trace`](examples/trace).
+**DynamoDB.** Instrumentation rides on the AWS SDK v2 config you inject, so you
+enable it in your own `main` before handing the config to `Build`:
 
-The Redis client integrates with `redisotel` and is enabled with a single
-builder option:
+```go
+cfg, err := config.LoadDefaultConfig(ctx)
+if err != nil {
+    return err
+}
+otelaws.AppendMiddlewares(&cfg.APIOptions) // every DynamoDB call now emits spans
+
+client := kvs.NewKVSClient[UserDTO](
+    dynamodb.NewBuilder(dynamodb.WithContainerName("__kvs-users-store")).Build(cfg),
+)
+```
+
+A complete end-to-end example (OTLP exporter → Tempo → Grafana) lives in
+[`examples/trace`](examples/trace).
+
+**Redis.** Instrumentation is built into the builder and enabled with a single
+option:
 
 ```go
 llClient := kvsredis.NewBuilder(
@@ -285,6 +326,19 @@ you still need to wire up a tracer/meter provider somewhere in your `main`.
 
 ![Tracing screenshot](img.png)
 
+### Metrics
+
+The library does **not** register Prometheus collectors of its own. The metrics
+available today are the OpenTelemetry ones emitted by `redisotel` when the Redis
+backend is built with `WithMetrics()` — command-latency histograms, connection
+pool stats and error counts. Export them to Prometheus the usual way, through the
+OTLP endpoint of your collector.
+
+The dashboards under [`resources/grafana/`](resources/grafana) come from an
+internal deployment and query `__kvs_*` series that this library does not emit;
+treat them as a starting point to adapt, not as drop-in imports. First-class
+Prometheus instrumentation is on the [roadmap](#roadmap).
+
 ## Local development
 
 Common commands (via [Taskfile](Taskfile.yml)):
@@ -292,6 +346,7 @@ Common commands (via [Taskfile](Taskfile.yml)):
 ```shell
 task download         # sync workspace + tidy modules
 task test             # generate mocks + run tests (incl. -race)
+task test:integration # testcontainers suite (requires Docker)
 task lint             # golangci-lint + gofumpt + betteralign
 task docker:compose   # bring up Prometheus + Grafana + Tempo + Redis
 task awslocal:start   # start LocalStack
@@ -307,6 +362,21 @@ go test ./...
 go run ./examples/simple
 go run ./examples/trace
 go run ./examples/redis
+```
+
+### Integration tests
+
+Integration tests sit behind the `integration` build tag, so `go test ./...`
+never starts a container. They spin up LocalStack and Redis through
+[testcontainers](https://testcontainers.com/), which means a running Docker
+daemon is the only prerequisite:
+
+```shell
+go test -tags integration -timeout 300s ./kvs/dynamodb/... ./kvs/redis/...
+
+# or, one backend at a time
+task test:integration:dynamodb
+task test:integration:redis
 ```
 
 ## Project layout
@@ -333,10 +403,11 @@ go run ./examples/redis
 - [x] Redis backend (standalone / Sentinel / Cluster)
 - [x] OpenTelemetry tracing & metrics for the Redis backend (`redisotel`)
 - [x] Backend-agnostic naming (`kvs.KVSClient[T]`; `kvs.AWSKVSClient[T]` kept as a deprecated alias)
+- [x] `v1.0.0` API stabilization
+- [ ] First-class Prometheus metrics (operation counters, latency histograms, hit/miss/error stats)
+- [ ] Optional in-memory read-through cache in front of the backends (Ristretto)
 - [ ] Additional providers: AWS ElastiCache / MemoryDB Auth helpers
 - [ ] GCP and Azure KVS backends
-- [ ] Pluggable cache backends (Ristretto)
-- [ ] `v1.0.0` API stabilization
 
 Proposals and PRs are welcome.
 
