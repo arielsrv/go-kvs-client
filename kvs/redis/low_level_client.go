@@ -16,7 +16,7 @@ import (
 // LowLevelClient is the Redis implementation of kvs.LowLevelClient.
 //
 // It mirrors the behaviour of the DynamoDB backend so that the high-level
-// kvs.AWSKVSClient[T] can be backed by either provider transparently:
+// kvs.KVSClient[T] can be backed by either provider transparently:
 //
 //   - Values are stored as JSON strings (identical wire format).
 //   - TTL is honoured on a per-item basis (item.TTL takes precedence over the
